@@ -2,14 +2,14 @@ package nl.averageflow.joeswarehouse.articles;
 
 import javax.persistence.Entity;
 
-import java.math.BigInteger;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Table(name = "articles")
 @Entity
 public class Article {
     @Id
@@ -20,10 +20,10 @@ public class Article {
     private String name;
 
     @Column(name = "created_at", nullable = false)
-    private BigInteger createdAt;
+    private Long createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private BigInteger updatedAt;
+    private Long updatedAt;
 
     public Long getId() {
         return this.id;
@@ -41,29 +41,35 @@ public class Article {
         this.name = name;
     }
 
-    public BigInteger getCreatedAt() {
+    public Long getCreatedAt() {
         return this.createdAt;
     }
 
-    public void setCreatedAt(BigInteger createdAt) {
+    public void setCreatedAt(Long createdAt) {
         this.createdAt = createdAt;
     }
 
-    public BigInteger getUpdatedAt() {
+    public Long getUpdatedAt() {
         return this.updatedAt;
     }
 
-    public void setUpdatedAt(BigInteger updatedAt) {
+    public void setUpdatedAt(Long updatedAt) {
         this.updatedAt = updatedAt;
     }
 
     protected Article() {
     }
 
-    public Article(String name, BigInteger createdAt, BigInteger updatedAt) {
+    public Article(String name, Long createdAt) {
         this.setName(name);
         this.setCreatedAt(createdAt);
-        this.setUpdatedAt(updatedAt);
+        this.setUpdatedAt(createdAt);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Article[id=%d, name=%s, created_at=%d, updated_at=%d]", this.getId(), this.getName(),
+                this.getCreatedAt(), this.getUpdatedAt());
     }
 
 }

@@ -1,0 +1,775 @@
+_type: export
+__export_format: 4
+__export_date: 2021-10-27T11:54:05.162Z
+__export_source: insomnia.desktop.app:v2021.5.3
+resources:
+  - _id: req_bbba59c685da4ec6a923248604c4b591
+    parentId: fld_86fed7c334d14f8496847f2368825551
+    modified: 1635185183999
+    created: 1635183725162
+    url: "{{ _.protocol }}://{{ _.host }}/ui/products/sell"
+    name: Sell products form
+    description: >-
+      Sell a given amount of products. This request will only be successful if
+      enough stock is present to perform the sale transaction.
+
+
+      Success or error responses will be returned in HTML form but HTTP statuses will still be respected.
+    method: POST
+    body:
+      mimeType: application/x-www-form-urlencoded
+      params:
+        - id: pair_f57f89a2a51a4917a7815707de847b7d
+          name: productID
+          value: "1"
+          description: ""
+        - id: pair_0cb3857427eb4b7db8666c8cf03b59b0
+          name: amount
+          value: "1"
+          description: ""
+    parameters: []
+    headers:
+      - id: pair_9494d7fbb85a4e4d953014c2bacc344d
+        name: Content-Type
+        value: application/x-www-form-urlencoded
+        description: ""
+    authentication: {}
+    metaSortKey: -1635183725162
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_86fed7c334d14f8496847f2368825551
+    parentId: wrk_0a1f343a01d147dfa61c5a4646358989
+    modified: 1635183699245
+    created: 1635183699245
+    name: Forms
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1635183699245
+    _type: request_group
+  - _id: wrk_0a1f343a01d147dfa61c5a4646358989
+    parentId: null
+    modified: 1635173019366
+    created: 1635173004483
+    name: Joe's Warehouse
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_f8ea322466b64ec6bc98bc03d3c9dd34
+    parentId: fld_86fed7c334d14f8496847f2368825551
+    modified: 1635185214562
+    created: 1635183749415
+    url: "{{ _.protocol }}://{{ _.host }}/ui/products/file-submission"
+    name: Upload products file
+    description: >-
+      Add products to the warehouse by uploading a `json` file.. The articles
+      included per product must already be present in the warehouse.
+
+
+      Success or error responses will be returned in HTML form but HTTP statuses will still be respected.
+    method: POST
+    body:
+      mimeType: multipart/form-data
+      params:
+        - id: pair_404b8d2d35ce474baf6199f628ed33da
+          name: fileData
+          value: ""
+          description: ""
+          type: file
+          fileName: /Users/joe/Development/Personal/Repositories/joes-warehouse/storage/payload-files/products.json
+          disabled: false
+    parameters: []
+    headers:
+      - id: pair_539ffe0b0f0b460983f655a642f259a0
+        name: Content-Type
+        value: multipart/form-data
+        description: ""
+    authentication: {}
+    metaSortKey: -1635181030501.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_890571b4b8b04bb19685b83849d12364
+    parentId: fld_86fed7c334d14f8496847f2368825551
+    modified: 1635185205678
+    created: 1635183752600
+    url: "{{ _.protocol }}://{{ _.host }}/ui/articles/file-submission"
+    name: Upload articles file
+    description: >-
+      Add articles to the warehouse by uploading a `json` file.
+
+
+      Success or error responses will be returned in HTML form but HTTP statuses will still be respected.
+    method: POST
+    body:
+      mimeType: multipart/form-data
+      params:
+        - id: pair_685783081b3348a7a3860c209a6cf939
+          name: fileData
+          value: ""
+          description: ""
+          type: file
+          fileName: /Users/joe/Development/Personal/Repositories/joes-warehouse/storage/payload-files/inventory.json
+    parameters: []
+    headers:
+      - id: pair_316786046d884afdb177975d4661f472
+        name: Content-Type
+        value: multipart/form-data
+        description: ""
+    authentication: {}
+    metaSortKey: -1635179683170.875
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_147378d82cc84e6081c2751f0364404a
+    parentId: fld_5dfb8cb4c3ba4d33a003a3caf356090c
+    modified: 1635334540870
+    created: 1635173010240
+    url: "{{ _.protocol }}://{{ _.host }}/api/products"
+    name: Get products
+    description: >-
+      Get a list of products present in the warehouse including the related
+      articles.
+
+
+      Example successful response:
+
+      ```json
+
+      {
+          "data": {
+            "1": {
+              "id": 1,
+              "name": "Dining Chair",
+              "price": 0,
+              "amount_in_stock": 1,
+              "articles": {
+                "1": {
+                  "id": 1,
+                  "name": "leg",
+                  "amount_of": 4,
+                  "stock": 8,
+                  "created_at": 1635105413,
+                  "updated_at": 1635105413
+                }
+              },
+              "created_at": 1635105417,
+              "updated_at": 1635105417
+            }
+          },
+          "sort": [
+              1
+            ]
+      }
+
+      ```
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    parameters:
+      - id: pair_d08c21d32deb40b7b048af05fe48aa7b
+        name: limit
+        value: "30"
+        description: ""
+      - id: pair_ddce5d316c7d4c73a09d798a2ab34863
+        name: offset
+        value: "0"
+        description: ""
+    headers:
+      - value: application/json; charset=utf-8
+        name: Content-Type
+        id: pair_32ff7cb328f34895a59ccb2f88281d31
+    authentication:
+      type: bearer
+      token: 387bf0c7-86dc-410e-ba05-1362cc1979ab-a6466675-fa39-46de-9e0b-d8b4bd94b52d
+    metaSortKey: -1635178335840.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_5dfb8cb4c3ba4d33a003a3caf356090c
+    parentId: wrk_0a1f343a01d147dfa61c5a4646358989
+    modified: 1635183661237
+    created: 1635183661237
+    name: JSON
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1635183661237
+    _type: request_group
+  - _id: req_1f2b3ac3349d422bb4e54bfebf1d17f4
+    parentId: fld_5dfb8cb4c3ba4d33a003a3caf356090c
+    modified: 1635334800345
+    created: 1635257123957
+    url: "{{ _.protocol }}://{{ _.host }}/api/transactions"
+    name: Get transactions
+    description: |-
+      Get a list of transactions (sales) that occurred in the warehouse.
+
+      Example successful response:
+      ```json
+      {
+        "data": {
+          "1": [{
+            "id": 1,
+            "product_id": 4,
+            "product_name": "ALVE laptop table",
+            "product_amount": 12,
+            "created_at": 1635255529
+          }
+        }],
+        "sort": [
+          1
+        ]
+      }
+      ```
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    parameters:
+      - id: pair_d08c21d32deb40b7b048af05fe48aa7b
+        name: limit
+        value: "30"
+        description: ""
+      - id: pair_ddce5d316c7d4c73a09d798a2ab34863
+        name: offset
+        value: "0"
+        description: ""
+    headers:
+      - value: application/json; charset=utf-8
+        name: Content-Type
+        id: pair_32ff7cb328f34895a59ccb2f88281d31
+    authentication:
+      type: bearer
+      token: 387bf0c7-86dc-410e-ba05-1362cc1979ab-a6466675-fa39-46de-9e0b-d8b4bd94b52d
+    metaSortKey: -1635178335828
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_dbe5912e35c84de0a26b5b360bcd30d8
+    parentId: fld_5dfb8cb4c3ba4d33a003a3caf356090c
+    modified: 1635335487833
+    created: 1635173010237
+    url: "{{ _.protocol }}://{{ _.host }}/api/articles"
+    name: Get articles
+    description: |-
+      Get a list of articles present in the warehouse.
+
+      Example successful response:
+      ```json
+      {
+          "data": {
+              "1": {
+                  "id": 1,
+                  "name": "leg",
+                  "stock": 12,
+                  "created_at": 1635105413,
+                  "updated_at": 1635184929
+              }
+          },
+          "sort": [
+              1
+          ]
+      }
+      ```
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    parameters:
+      - id: pair_c8f289226a1345b58084709f4041e1fd
+        name: limit
+        value: "30"
+        description: ""
+      - id: pair_db0f2dc107bf4ada8cbfc1338ba5c88f
+        name: offset
+        value: "0"
+        description: ""
+    headers:
+      - value: application/json; charset=utf-8
+        name: Content-Type
+        id: pair_cc623060d4d443b5b1d1da2fcb3eb91c
+    authentication:
+      type: bearer
+      token: 387bf0c7-86dc-410e-ba05-1362cc1979ab-a6466675-fa39-46de-9e0b-d8b4bd94b52d
+    metaSortKey: -1635178335815.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_fc5c6c2e9e904e0ca8a8a2c50744c75a
+    parentId: fld_5dfb8cb4c3ba4d33a003a3caf356090c
+    modified: 1635335492124
+    created: 1635173010223
+    url: "{{ _.protocol }}://{{ _.host }}/api/articles"
+    name: Add articles
+    description: >-
+      Add articles to the warehouse.
+
+
+      Example request body:
+
+      ```json
+
+      {
+          "inventory": [
+              {
+                  "art_id": "1",
+                  "name": "leg",
+                  "stock": "12"
+              }
+          ]
+      }
+
+      ```
+
+
+      Example successful response:
+
+      ```json
+
+      {
+        "message": "ok",
+        "unix_timestamp": 1635184841
+      }
+
+      ```
+
+
+      Example error response:
+
+      ```json
+
+      {
+        "message": "unprocessable entity, likely due to an invalid payload",
+        "error": "json: cannot unmarshal object into Go struct field RawArticleUploadRequest.inventory of type []articles.RawArticle",
+        "unix_timestamp": 1635184905
+      }
+
+      ```
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "inventory": [
+                {
+                    "art_id": "1",
+                    "name": "leg",
+                    "stock": "12"
+                },
+                {
+                    "art_id": "2",
+                    "name": "screw",
+                    "stock": "17"
+                },
+                {
+                    "art_id": "3",
+                    "name": "seat",
+                    "stock": "2"
+                },
+                {
+                    "art_id": "4",
+                    "name": "table top",
+                    "stock": "1"
+                }
+            ]
+        }
+    parameters: []
+    headers:
+      - value: application/json; charset=utf-8
+        name: Content-Type
+        id: pair_5d2ceddcb5fa413c886ecedf360adb83
+    authentication:
+      type: bearer
+      token: 387bf0c7-86dc-410e-ba05-1362cc1979ab-a6466675-fa39-46de-9e0b-d8b4bd94b52d
+    metaSortKey: -1635178335803
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_fa1dbd81a6534ff2a2dc536696c5c784
+    parentId: fld_5dfb8cb4c3ba4d33a003a3caf356090c
+    modified: 1635335590211
+    created: 1635314200642
+    url: "{{ _.protocol }}://{{ _.host }}/api/products/4"
+    name: Delete product
+    description: >-
+      Delete products from the warehouse by specifying the product ID in the
+      URL.
+
+
+      Example successful response:
+
+      ```json
+
+      {
+        "message": "ok",
+        "unix_timestamp": 1635184841
+      }
+
+      ```
+
+
+      Example error response:
+
+      ```json
+
+      {
+        "message": "unprocessable entity, likely due to an invalid payload",
+        "error": "json: cannot unmarshal object into Go struct field ...",
+        "unix_timestamp": 1635184905
+      }
+
+      ```
+    method: DELETE
+    body:
+      mimeType: application/json
+      text: ""
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: 387bf0c7-86dc-410e-ba05-1362cc1979ab-a6466675-fa39-46de-9e0b-d8b4bd94b52d
+    metaSortKey: -1635178335796.75
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_6c8beb7ea7084190b57f519d60744460
+    parentId: fld_5dfb8cb4c3ba4d33a003a3caf356090c
+    modified: 1635335594048
+    created: 1635321162064
+    url: "{{ _.protocol }}://{{ _.host }}/api/articles/4"
+    name: Delete article
+    description: >-
+      Delete articles from the warehouse by specifying the article ID in the
+      URL.
+
+
+      Example successful response:
+
+      ```json
+
+      {
+        "message": "ok",
+        "unix_timestamp": 1635184841
+      }
+
+      ```
+
+
+      Example error response:
+
+      ```json
+
+      {
+        "message": "unprocessable entity, likely due to an invalid payload",
+        "error": "json: cannot unmarshal object into Go struct field ...",
+        "unix_timestamp": 1635184905
+      }
+
+      ```
+    method: DELETE
+    body:
+      mimeType: application/json
+      text: ""
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: 387bf0c7-86dc-410e-ba05-1362cc1979ab-a6466675-fa39-46de-9e0b-d8b4bd94b52d
+    metaSortKey: -1635178335793.625
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_98a638b7c0c94b49bac9b0817f2af088
+    parentId: fld_5dfb8cb4c3ba4d33a003a3caf356090c
+    modified: 1635335598943
+    created: 1635173010242
+    url: "{{ _.protocol }}://{{ _.host }}/api/products/sell"
+    name: Sell products
+    description: >-
+      Sell a given amount of products. `data` is a a list of items to be sold
+      with respective amounts. This request will only be successful if enough
+      stock is present to perform the sale transaction.
+
+
+      Example request body:
+
+      ```json
+
+      {
+          "data": [
+              {
+                  "productID": 1,
+                  "amount": 1
+              }
+          ]
+      }
+
+      ```
+
+
+      Example successful response body:
+
+      ```json
+
+      {
+        "message": "ok",
+        "unix_timestamp": 1635183965
+      }
+
+      ```
+
+
+      Example error response body:
+
+      ```json
+
+      {
+        "message": "error ocurred while processing the request",
+        "error": "sale failed, did not have enough stock for wanted product",
+        "unix_timestamp": 1635184124
+      }
+
+      ```
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "data": [
+                {
+                    "productID": 5,
+                    "amount": 10
+                },
+        			{
+                    "productID": 2,
+                    "amount": 1
+                },{
+                    "productID": 3,
+                    "amount": 2
+                }
+            ]
+        }
+    parameters: []
+    headers:
+      - value: application/json; charset=utf-8
+        name: Content-Type
+        id: pair_db834180cf4f4f27b1ee84c45779235e
+    authentication:
+      type: bearer
+      token: 387bf0c7-86dc-410e-ba05-1362cc1979ab-a6466675-fa39-46de-9e0b-d8b4bd94b52d
+    metaSortKey: -1635178335790.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_b33e3e33d91744738bb4c0d1bc9344c7
+    parentId: fld_5dfb8cb4c3ba4d33a003a3caf356090c
+    modified: 1635335603097
+    created: 1635173010244
+    url: "{{ _.protocol }}://{{ _.host }}/api/products"
+    name: Add products
+    description: >-
+      Add products to the warehouse. The articles included per product must
+      already be present in the warehouse.
+
+
+      Example request body:
+
+      ```json
+
+      {
+          "products": [
+              {
+                  "name": "Dining Chair",
+                  "price": 99.99,
+                  "contain_articles": [
+                      {
+                          "art_id": "1",
+                          "amount_of": "4"
+                      }
+                  ]
+              }
+          ]
+      }
+
+      ```
+
+
+      Example successful response:
+
+      ```json
+
+      {
+        "message": "ok",
+        "unix_timestamp": 1635184379
+      }
+
+      ```
+
+
+      Example error response:
+
+      ```json
+
+      {
+        "message": "error ocurred while processing the request",
+        "error": "ERROR: insert or update on table \"product_articles\" violates foreign key constraint \"fk_product_articles_article\" (SQLSTATE 23503)",
+        "unix_timestamp": 1635184411
+      }
+
+      ```
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "products": [
+                {
+                    "name": "Dining Chair",
+        						"price": 99.99,
+                    "contain_articles": [
+                        {
+                            "art_id": "1",
+                            "amount_of": "4"
+                        },
+                        {
+                            "art_id": "2",
+                            "amount_of": "8"
+                        },
+                        {
+                            "art_id": "3",
+                            "amount_of": "1"
+                        }
+                    ]
+                },
+                {
+                    "name": "Dinning Table",
+        						"price": 99.99,
+                    "contain_articles": [
+                        {
+                            "art_id": "1",
+                            "amount_of": "4"
+                        },
+                        {
+                            "art_id": "2",
+                            "amount_of": "8"
+                        },
+                        {
+                            "art_id": "4",
+                            "amount_of": "1"
+                        }
+                    ]
+                }
+            ]
+        }
+    parameters: []
+    headers:
+      - value: application/json; charset=utf-8
+        name: Content-Type
+        id: pair_b33063293d98443cab234b8369200f6c
+    authentication:
+      type: bearer
+      token: 387bf0c7-86dc-410e-ba05-1362cc1979ab-a6466675-fa39-46de-9e0b-d8b4bd94b52d
+    metaSortKey: -1635178335740.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_2a167ab3bfac41f408dd743cc7b5037c0d075e91
+    parentId: wrk_0a1f343a01d147dfa61c5a4646358989
+    modified: 1635173004488
+    created: 1635173004488
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1635173004488
+    _type: environment
+  - _id: jar_2a167ab3bfac41f408dd743cc7b5037c0d075e91
+    parentId: wrk_0a1f343a01d147dfa61c5a4646358989
+    modified: 1635173004489
+    created: 1635173004489
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_55239adcb1344a30ba7fb1384434ab78
+    parentId: wrk_0a1f343a01d147dfa61c5a4646358989
+    modified: 1635173004484
+    created: 1635173004484
+    fileName: My Collection
+    contents: ""
+    contentType: yaml
+    _type: api_spec
+  - _id: env_a072d29e22e24bb48470b45a65015f75
+    parentId: env_2a167ab3bfac41f408dd743cc7b5037c0d075e91
+    modified: 1635173092282
+    created: 1635173060756
+    name: Local Development
+    data:
+      protocol: http
+      host: localhost:7000
+    dataPropertyOrder:
+      "&":
+        - protocol
+        - host
+    color: null
+    isPrivate: false
+    metaSortKey: 1635173060756
+    _type: environment

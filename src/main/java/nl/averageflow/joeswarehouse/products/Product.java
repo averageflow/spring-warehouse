@@ -1,13 +1,13 @@
 package nl.averageflow.joeswarehouse.products;
 
-import java.math.BigInteger;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Table(name = "products")
 @Entity
 public class Product {
     @Id
@@ -18,13 +18,13 @@ public class Product {
     private String name;
 
     @Column(name = "price", nullable = false)
-    private Float price;
+    private Double price;
 
     @Column(name = "created_at", nullable = false)
-    private BigInteger createdAt;
+    private Long createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private BigInteger updatedAt;
+    private Long updatedAt;
 
     public Long getId() {
         return this.id;
@@ -42,38 +42,38 @@ public class Product {
         this.name = name;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return this.price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public BigInteger getCreatedAt() {
+    public Long getCreatedAt() {
         return this.createdAt;
     }
 
-    public void setCreatedAt(BigInteger createdAt) {
+    public void setCreatedAt(Long createdAt) {
         this.createdAt = createdAt;
     }
 
-    public BigInteger getUpdatedAt() {
+    public Long getUpdatedAt() {
         return this.updatedAt;
     }
 
-    public void setUpdatedAt(BigInteger updatedAt) {
+    public void setUpdatedAt(Long updatedAt) {
         this.updatedAt = updatedAt;
     }
 
     protected Product() {
     }
 
-    public Product(String name, Float price, BigInteger createdAt, BigInteger updatedAt) {
+    public Product(String name, Double price, Long createdAt) {
         this.setName(name);
         this.setPrice(price);
         this.setCreatedAt(createdAt);
-        this.setUpdatedAt(updatedAt);
+        this.setUpdatedAt(createdAt);
     }
 
     @Override
