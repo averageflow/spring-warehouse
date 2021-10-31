@@ -1,4 +1,4 @@
-package nl.averageflow.joeswarehouse.controllers;
+package nl.averageflow.joeswarehouse.products;
 
 import java.time.Instant;
 import java.util.List;
@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import nl.averageflow.joeswarehouse.products.Product;
-import nl.averageflow.joeswarehouse.products.ProductRepository;
-
 @RestController
 public class ProductController {
+
     @Autowired
     private ProductService productService;
 
@@ -24,6 +22,6 @@ public class ProductController {
 
     @GetMapping("/api/products/{id}")
     public Optional<Product> getProduct(@PathVariable Long id) {
-        return this.productService.getProduct(id);
+        return this.productService.getProductByID(id);
     }
 }
