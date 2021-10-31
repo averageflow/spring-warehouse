@@ -14,17 +14,16 @@ import nl.averageflow.joeswarehouse.products.ProductRepository;
 
 @RestController
 public class ProductController {
-
     @Autowired
-    private ProductRepository repository;
+    private ProductService productService;
 
     @GetMapping("/api/products")
     public List<Product> getProducts() {
-        return this.repository.findAll();
+        return this.productService.getProducts();
     }
 
     @GetMapping("/api/products/{id}")
     public Optional<Product> getProduct(@PathVariable Long id) {
-        return this.repository.findById(id);
+        return this.productService.getProduct(id);
     }
 }
