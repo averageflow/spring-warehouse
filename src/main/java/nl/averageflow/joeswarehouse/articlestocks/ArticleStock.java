@@ -7,12 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import nl.averageflow.joeswarehouse.articles.Article;
 
 @Table(name = "article_stocks")
 @Entity
@@ -31,25 +26,8 @@ public class ArticleStock {
     @Column(name = "updated_at", nullable = false)
     private Long updatedAt;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "article_id")
-    private Article article;
-
-    public Long getId() {
-        return this.id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Article getArticle() {
-        return this.article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
     }
 
     public BigInteger getStock() {
@@ -60,16 +38,8 @@ public class ArticleStock {
         this.stock = stock;
     }
 
-    public Long getCreatedAt() {
-        return this.createdAt;
-    }
-
     public void setCreatedAt(Long createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Long getUpdatedAt() {
-        return this.updatedAt;
     }
 
     public void setUpdatedAt(Long updatedAt) {
@@ -79,8 +49,7 @@ public class ArticleStock {
     protected ArticleStock() {
     }
 
-    public ArticleStock(Article article, BigInteger stock, Long createdAt) {
-        this.setArticle(article);
+    public ArticleStock(BigInteger stock, Long createdAt) {
         this.setStock(stock);
         this.setCreatedAt(createdAt);
         this.setUpdatedAt(createdAt);

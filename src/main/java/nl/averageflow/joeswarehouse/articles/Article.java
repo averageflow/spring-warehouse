@@ -27,7 +27,7 @@ public class Article {
     private String name;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id", referencedColumnName = "article_id")
+    @PrimaryKeyJoinColumn
     private ArticleStock stock;
 
     @Column(name = "created_at", nullable = false)
