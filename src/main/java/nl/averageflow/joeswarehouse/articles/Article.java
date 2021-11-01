@@ -1,23 +1,34 @@
 package nl.averageflow.joeswarehouse.articles;
 
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import nl.averageflow.joeswarehouse.articlestocks.ArticleStock;
 
 @Table(name = "articles")
 @Entity
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "item_name", nullable = false)
     private String name;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id", referencedColumnName = "article_id")
+    private ArticleStock stock;
 
     @Column(name = "created_at", nullable = false)
     private Long createdAt;
@@ -57,10 +68,19 @@ public class Article {
         this.updatedAt = updatedAt;
     }
 
+    public void setStock(ArticleStock stock) {
+        this.stock = stock;
+    }
+
+    public ArticleStock getStock() {
+        return this.stock;
+    }
+
     protected Article() {
     }
 
-    public Article(String name, Long createdAt) {
+    public Article(String name, ArticleStock stock, Long createdAt) {
+        this.setStock(stock);
         this.setName(name);
         this.setCreatedAt(createdAt);
         this.setUpdatedAt(createdAt);

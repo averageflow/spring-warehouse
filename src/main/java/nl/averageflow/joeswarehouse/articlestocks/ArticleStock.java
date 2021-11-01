@@ -1,31 +1,40 @@
-package nl.averageflow.joeswarehouse.products;
+package nl.averageflow.joeswarehouse.articlestocks;
+
+import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@Table(name = "products")
+import nl.averageflow.joeswarehouse.articles.Article;
+
+@Table(name = "article_stocks")
 @Entity
-public class Product {
+public class ArticleStock {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "item_name", nullable = false)
-    private String name;
-
-    @Column(name = "price", nullable = false)
-    private Double price;
+    @Column(name = "stock", nullable = false)
+    private BigInteger stock;
 
     @Column(name = "created_at", nullable = false)
     private Long createdAt;
 
     @Column(name = "updated_at", nullable = false)
     private Long updatedAt;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "article_id")
+    private Article article;
 
     public Long getId() {
         return this.id;
@@ -35,20 +44,20 @@ public class Product {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
+    public Article getArticle() {
+        return this.article;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
-    public Double getPrice() {
-        return this.price;
+    public BigInteger getStock() {
+        return this.stock;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setStock(BigInteger stock) {
+        this.stock = stock;
     }
 
     public Long getCreatedAt() {
@@ -67,19 +76,14 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    protected Product() {
+    protected ArticleStock() {
     }
 
-    public Product(String name, Double price, Long createdAt) {
-        this.setName(name);
-        this.setPrice(price);
+    public ArticleStock(Article article, BigInteger stock, Long createdAt) {
+        this.setArticle(article);
+        this.setStock(stock);
         this.setCreatedAt(createdAt);
         this.setUpdatedAt(createdAt);
     }
 
-    @Override
-    public String toString() {
-        return String.format("Product[id=%d, name=%s, price=%.2f, created_at=%d, updated_at=%d]", this.getId(),
-                this.getName(), this.getPrice(), this.getCreatedAt(), this.getUpdatedAt());
-    }
 }
