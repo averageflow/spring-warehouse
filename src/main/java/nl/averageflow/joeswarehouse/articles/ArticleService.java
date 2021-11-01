@@ -1,5 +1,7 @@
 package nl.averageflow.joeswarehouse.articles;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,5 +11,11 @@ final class ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
 
-    public 
+    public ArticleResponse getArticles() {
+        return new ArticleResponse(this.articleRepository.findAll());
+    }
+
+    public Optional<Article> getArticleByID(Long id) {
+        return this.articleRepository.findById(id);
+    }
 }

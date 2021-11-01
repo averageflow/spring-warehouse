@@ -1,7 +1,7 @@
 _type: export
 __export_format: 4
-__export_date: 2021-10-27T11:54:05.162Z
-__export_source: insomnia.desktop.app:v2021.5.3
+__export_date: 2021-11-01T19:07:05.478Z
+__export_source: insomnia.desktop.app:v2021.6.0
 resources:
   - _id: req_bbba59c685da4ec6a923248604c4b591
     parentId: fld_86fed7c334d14f8496847f2368825551
@@ -218,6 +218,77 @@ resources:
     environmentPropertyOrder: null
     metaSortKey: -1635183661237
     _type: request_group
+  - _id: req_5792a71ee25d465fb98fe0e0ed93ad0a
+    parentId: fld_5dfb8cb4c3ba4d33a003a3caf356090c
+    modified: 1635793598672
+    created: 1635793447099
+    url: "{{ _.protocol }}://{{ _.host }}/api/products/4"
+    name: Get product by ID
+    description: >-
+      Get a list of products present in the warehouse including the related
+      articles.
+
+
+      Example successful response:
+
+      ```json
+
+      {
+          "data": {
+            "1": {
+              "id": 1,
+              "name": "Dining Chair",
+              "price": 0,
+              "amount_in_stock": 1,
+              "articles": {
+                "1": {
+                  "id": 1,
+                  "name": "leg",
+                  "amount_of": 4,
+                  "stock": 8,
+                  "created_at": 1635105413,
+                  "updated_at": 1635105413
+                }
+              },
+              "created_at": 1635105417,
+              "updated_at": 1635105417
+            }
+          },
+          "sort": [
+              1
+            ]
+      }
+
+      ```
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    parameters:
+      - id: pair_d08c21d32deb40b7b048af05fe48aa7b
+        name: limit
+        value: "30"
+        description: ""
+      - id: pair_ddce5d316c7d4c73a09d798a2ab34863
+        name: offset
+        value: "0"
+        description: ""
+    headers:
+      - value: application/json; charset=utf-8
+        name: Content-Type
+        id: pair_32ff7cb328f34895a59ccb2f88281d31
+    authentication:
+      type: bearer
+      token: 387bf0c7-86dc-410e-ba05-1362cc1979ab-a6466675-fa39-46de-9e0b-d8b4bd94b52d
+    metaSortKey: -1635178335834.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
   - _id: req_1f2b3ac3349d422bb4e54bfebf1d17f4
     parentId: fld_5dfb8cb4c3ba4d33a003a3caf356090c
     modified: 1635334800345
@@ -320,6 +391,61 @@ resources:
       type: bearer
       token: 387bf0c7-86dc-410e-ba05-1362cc1979ab-a6466675-fa39-46de-9e0b-d8b4bd94b52d
     metaSortKey: -1635178335815.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f11b7a7bd4e945a0bba804167059750f
+    parentId: fld_5dfb8cb4c3ba4d33a003a3caf356090c
+    modified: 1635793467661
+    created: 1635793455522
+    url: "{{ _.protocol }}://{{ _.host }}/api/articles/4"
+    name: Get article by ID
+    description: |-
+      Get a list of articles present in the warehouse.
+
+      Example successful response:
+      ```json
+      {
+          "data": {
+              "1": {
+                  "id": 1,
+                  "name": "leg",
+                  "stock": 12,
+                  "created_at": 1635105413,
+                  "updated_at": 1635184929
+              }
+          },
+          "sort": [
+              1
+          ]
+      }
+      ```
+    method: GET
+    body:
+      mimeType: application/json
+      text: ""
+    parameters:
+      - id: pair_c8f289226a1345b58084709f4041e1fd
+        name: limit
+        value: "30"
+        description: ""
+      - id: pair_db0f2dc107bf4ada8cbfc1338ba5c88f
+        name: offset
+        value: "0"
+        description: ""
+    headers:
+      - value: application/json; charset=utf-8
+        name: Content-Type
+        id: pair_cc623060d4d443b5b1d1da2fcb3eb91c
+    authentication:
+      type: bearer
+      token: 387bf0c7-86dc-410e-ba05-1362cc1979ab-a6466675-fa39-46de-9e0b-d8b4bd94b52d
+    metaSortKey: -1635178335809.25
     isPrivate: false
     settingStoreCookies: true
     settingSendCookies: true
@@ -759,12 +885,12 @@ resources:
     _type: api_spec
   - _id: env_a072d29e22e24bb48470b45a65015f75
     parentId: env_2a167ab3bfac41f408dd743cc7b5037c0d075e91
-    modified: 1635173092282
+    modified: 1635793486362
     created: 1635173060756
     name: Local Development
     data:
       protocol: http
-      host: localhost:7000
+      host: localhost:8080
     dataPropertyOrder:
       "&":
         - protocol

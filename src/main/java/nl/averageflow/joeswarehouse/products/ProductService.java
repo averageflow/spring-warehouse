@@ -12,7 +12,7 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public ProductResponse getProducts() {
-        return new ProductResponse(this.repository.findAll());
+        return new ProductResponse(this.productRepository.findAll());
     }
 
     public Optional<Product> getProductByID(Long id) {
