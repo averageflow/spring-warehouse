@@ -1,6 +1,5 @@
 package nl.averageflow.joeswarehouse.products;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +11,8 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public ProductService() {
-    }
-
-    public List<Product> getProducts() {
-        return this.productRepository.findAll();
+    public ProductResponse getProducts() {
+        return new ProductResponse(this.repository.findAll());
     }
 
     public Optional<Product> getProductByID(Long id) {

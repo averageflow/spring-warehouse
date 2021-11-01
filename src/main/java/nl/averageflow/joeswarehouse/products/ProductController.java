@@ -1,7 +1,5 @@
 package nl.averageflow.joeswarehouse.products;
 
-import java.time.Instant;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/api/products")
-    public List<Product> getProducts() {
+    public ProductResponse getProducts() {
         return this.productService.getProducts();
     }
 
