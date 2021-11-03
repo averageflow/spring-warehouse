@@ -2,6 +2,9 @@ package nl.averageflow.joeswarehouse.articles;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+
+import java.math.BigInteger;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -72,8 +75,8 @@ public class Article {
         this.stock = stock;
     }
 
-    public ArticleStock getStock() {
-        return this.stock;
+    public BigInteger getStock() {
+        return this.stock.getStock();
     }
 
     protected Article() {
