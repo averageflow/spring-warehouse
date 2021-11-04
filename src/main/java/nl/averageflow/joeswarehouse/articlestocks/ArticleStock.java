@@ -9,23 +9,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.lang.NonNull;
+
 @Table(name = "article_stocks")
 @Entity
 public class ArticleStock {
     @Id
+    @NonNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
+    @NonNull
     @Column(name = "stock", nullable = false)
     private BigInteger stock;
 
+    @NonNull
     @Column(name = "created_at", nullable = false)
     private Long createdAt;
 
+    @NonNull
     @Column(name = "updated_at", nullable = false)
     private Long updatedAt;
 
+    @NonNull
     public void setId(Long id) {
         this.id = id;
     }

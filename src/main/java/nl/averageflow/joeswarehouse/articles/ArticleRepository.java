@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -11,5 +12,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface ArticleRepository extends CrudRepository<Article, Long> {
     Optional<Article> findById(Long id);
 
-    List<Article> findAll();
+    Set<Article> findAll();
 }

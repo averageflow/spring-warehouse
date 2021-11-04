@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
 import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,32 +14,45 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.springframework.lang.NonNull;
+
 import nl.averageflow.joeswarehouse.articlestocks.ArticleStock;
+import nl.averageflow.joeswarehouse.products.Product;
 
 @Table(name = "articles")
 @Entity
 public class Article {
     @Id
+    @NonNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
+    @NonNull
     @Column(name = "item_name", nullable = false)
     private String name;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @NonNull
+    @OneToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private ArticleStock stock;
 
+    @NonNull
     @Column(name = "created_at", nullable = false)
     private Long createdAt;
 
+    @NonNull
     @Column(name = "updated_at", nullable = false)
     private Long updatedAt;
+
+    @ManyToMany(mappedBy = "articles")
+    private Set<Product> products;
 
     public Long getId() {
         return this.id;
@@ -88,11 +103,4 @@ public class Article {
         this.setCreatedAt(createdAt);
         this.setUpdatedAt(createdAt);
     }
-
-    @Override
-    public String toString() {
-        return String.format("Article[id=%d, name=%s, created_at=%d, updated_at=%d]", this.getId(), this.getName(),
-                this.getCreatedAt(), this.getUpdatedAt());
-    }
-
 }

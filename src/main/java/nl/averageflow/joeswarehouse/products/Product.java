@@ -1,31 +1,58 @@
 package nl.averageflow.joeswarehouse.products;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.lang.NonNull;
+
+import nl.averageflow.joeswarehouse.articles.Article;
+import nl.averageflow.joeswarehouse.articles.ArticleResponse;
 
 @Table(name = "products")
 @Entity
 public class Product {
     @Id
+    @NonNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
+    @NonNull
     @Column(name = "item_name", nullable = false)
     private String name;
 
+    @NonNull
     @Column(name = "price", nullable = false)
     private Double price;
 
+    @NonNull
     @Column(name = "created_at", nullable = false)
     private Long createdAt;
 
+    @NonNull
     @Column(name = "updated_at", nullable = false)
     private Long updatedAt;
+
+    @ManyToMany
+    @JoinTable(name = "product_articles", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "article_id"))
+    private Set<Article> articles;
+
+    protected Product() {
+    }
 
     public Long getId() {
         return this.id;
@@ -67,7 +94,12 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    protected Product() {
+    public ArticleResponse getArticles() {
+        return new ArticleResponse(this.articles);
+    }
+
+    public void setArticles(Set<Article> articles) {
+        this.articles = articles;
     }
 
     public Product(String name, Double price, Long createdAt) {
@@ -75,11 +107,5 @@ public class Product {
         this.setPrice(price);
         this.setCreatedAt(createdAt);
         this.setUpdatedAt(createdAt);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Product[id=%d, name=%s, price=%.2f, created_at=%d, updated_at=%d]", this.getId(),
-                this.getName(), this.getPrice(), this.getCreatedAt(), this.getUpdatedAt());
     }
 }

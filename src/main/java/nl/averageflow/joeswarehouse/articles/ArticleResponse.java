@@ -3,6 +3,7 @@ package nl.averageflow.joeswarehouse.articles;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class ArticleResponse {
     private HashMap<Long, Article> data;
@@ -25,7 +26,7 @@ public class ArticleResponse {
         this.sort = sort;
     }
 
-    public ArticleResponse(List<Article> data) {
+    public ArticleResponse(Set<Article> data) {
         HashMap<Long, Article> dataMap = new HashMap<Long, Article>();
         List<Long> dataSort = new ArrayList<Long>();
 
