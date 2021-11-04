@@ -97,10 +97,4 @@ public class Article {
     protected Article() {
     }
 
-    public Article(String name, ArticleStock stock, Long createdAt) {
-        this.setStock(stock);
-        this.setName(name);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(createdAt);
-    }
 }

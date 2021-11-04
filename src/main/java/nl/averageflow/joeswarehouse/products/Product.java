@@ -101,11 +101,4 @@ public class Product {
     public void setArticles(Set<Article> articles) {
         this.articles = articles;
     }
-
-    public Product(String name, Double price, Long createdAt) {
-        this.setName(name);
-        this.setPrice(price);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(createdAt);
-    }
 }
