@@ -18,4 +18,8 @@ final class ArticleService {
     public Optional<Article> getArticleByID(Long id) {
         return this.articleRepository.findById(id);
     }
+
+    public void deleteArticleByID(Long id) {
+        this.articleRepository.deleteById(id);
+    }
 }

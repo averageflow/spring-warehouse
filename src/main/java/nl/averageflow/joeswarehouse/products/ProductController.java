@@ -3,6 +3,7 @@ package nl.averageflow.joeswarehouse.products;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,5 +22,10 @@ public class ProductController {
     @GetMapping("/api/products/{id}")
     public Optional<Product> getProduct(@PathVariable Long id) {
         return this.productService.getProductByID(id);
+    }
+
+    @DeleteMapping("/api/products/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        this.productService.deleteProductByID(id);
     }
 }

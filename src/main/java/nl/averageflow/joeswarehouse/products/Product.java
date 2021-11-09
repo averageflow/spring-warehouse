@@ -47,7 +47,7 @@ public class Product {
     @Column(name = "updated_at", nullable = false)
     private Long updatedAt;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "product_articles", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "article_id"))
     private Set<Article> articles;
 

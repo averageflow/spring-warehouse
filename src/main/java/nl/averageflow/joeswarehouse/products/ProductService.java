@@ -18,4 +18,8 @@ public class ProductService {
     public Optional<Product> getProductByID(Long id) {
         return this.productRepository.findById(id);
     }
+
+    public void deleteProductByID(Long id) {
+        this.productRepository.deleteById(id);
+    }
 }

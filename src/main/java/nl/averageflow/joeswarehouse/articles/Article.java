@@ -39,7 +39,7 @@ public class Article {
     private String name;
 
     @NonNull
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @PrimaryKeyJoinColumn
     private ArticleStock stock;
 
@@ -51,7 +51,7 @@ public class Article {
     @Column(name = "updated_at", nullable = false)
     private Long updatedAt;
 
-    @ManyToMany(mappedBy = "articles")
+    @ManyToMany(mappedBy = "articles", cascade = CascadeType.ALL)
     private Set<Product> products;
 
     public Long getId() {
