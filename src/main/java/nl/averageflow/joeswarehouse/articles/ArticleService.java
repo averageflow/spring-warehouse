@@ -40,4 +40,8 @@ final class ArticleService {
     public void addArticles(List<AddArticlesRequestItem> rawItems) {
         this.articleRepository.saveAll(this.convertAddArticleRequestToMappedList(rawItems));
     }
+
+    public void deleteArticleByID(Long id) {
+        this.articleRepository.deleteById(id);
+    }
 }
