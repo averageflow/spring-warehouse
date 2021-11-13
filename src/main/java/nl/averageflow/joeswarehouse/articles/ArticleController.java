@@ -1,10 +1,13 @@
 package nl.averageflow.joeswarehouse.articles;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,4 +26,8 @@ public class ArticleController {
         return this.articleService.getArticleByID(id);
     }
 
+    @PostMapping("/api/articles")
+    public void addArticles(@RequestBody AddArticlesRequest request) {
+        this.articleService.addArticles(request.getInventory());
+    }
 }

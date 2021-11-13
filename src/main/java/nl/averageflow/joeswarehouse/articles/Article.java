@@ -1,20 +1,14 @@
 package nl.averageflow.joeswarehouse.articles;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-
 import java.math.BigInteger;
-import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -94,7 +88,18 @@ public class Article {
         return this.stock.getStock();
     }
 
+    public ArticleStock getStockEntity() {
+        return this.stock;
+    }
+
     protected Article() {
+    }
+
+    public Article(AddArticlesRequestItem rawItem) {
+        this.setId(Long.parseLong(rawItem.getArt_id()));
+        this.setName(rawItem.getName());
+        ArticleStock articleStock = new ArticleStock(new BigInteger(rawItem.getStock()), this.createdAt);
+        this.setStock(articleStock);
     }
 
 }
