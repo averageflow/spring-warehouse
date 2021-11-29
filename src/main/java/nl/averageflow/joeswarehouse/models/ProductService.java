@@ -9,7 +9,7 @@ import nl.averageflow.joeswarehouse.repositories.ProductRepository;
 import nl.averageflow.joeswarehouse.responses.ProductResponse;
 
 @Service
-public class ProductService {
+public final class ProductService {
 
     @Autowired
     private ProductRepository productRepository;

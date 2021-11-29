@@ -13,7 +13,7 @@ import org.springframework.lang.NonNull;
 
 @Table(name = "article_stocks")
 @Entity
-public class ArticleStock {
+public final class ArticleStock {
     @Id
     @NonNull
     @GeneratedValue(strategy = GenerationType.AUTO)

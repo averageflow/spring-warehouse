@@ -1,6 +1,6 @@
 package nl.averageflow.joeswarehouse.requests;
 
-public class AddArticlesRequestItem {
+public final class AddArticlesRequestItem {
     private String art_id;
     private String name;
     private String stock;

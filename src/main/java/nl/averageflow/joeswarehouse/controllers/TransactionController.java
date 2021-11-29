@@ -14,7 +14,7 @@ import nl.averageflow.joeswarehouse.services.TransactionService;
 
 @RestController
 @CrossOrigin
-public class TransactionController {
+public final class TransactionController {
     @Autowired
     private TransactionService transactionService;
 

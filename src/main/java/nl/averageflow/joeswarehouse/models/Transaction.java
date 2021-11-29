@@ -11,7 +11,7 @@ import org.springframework.lang.NonNull;
 
 @Entity
 @Table(name = "transactions")
-public class Transaction {
+public final class Transaction {
     @Id
     @NonNull
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -21,7 +21,7 @@ import nl.averageflow.joeswarehouse.requests.AddArticlesRequestItem;
 
 @Table(name = "articles")
 @Entity
-public class Article {
+public final class Article {
     @Id
     @NonNull
     @GeneratedValue(strategy = GenerationType.AUTO)

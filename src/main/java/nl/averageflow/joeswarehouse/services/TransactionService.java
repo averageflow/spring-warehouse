@@ -10,7 +10,7 @@ import nl.averageflow.joeswarehouse.repositories.TransactionRepository;
 import nl.averageflow.joeswarehouse.responses.TransactionResponse;
 
 @Service
-public class TransactionService {
+public final class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 

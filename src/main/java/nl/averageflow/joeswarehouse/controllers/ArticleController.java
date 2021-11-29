@@ -19,7 +19,7 @@ import nl.averageflow.joeswarehouse.services.ArticleService;
 
 @RestController
 @CrossOrigin
-public class ArticleController {
+public final class ArticleController {
 
     @Autowired
     private ArticleService articleService;

@@ -7,7 +7,7 @@ import java.util.Set;
 
 import nl.averageflow.joeswarehouse.models.Product;
 
-public class ProductResponse {
+public final class ProductResponse {
     private HashMap<Long, Product> data;
 
     private List<Long> sort;

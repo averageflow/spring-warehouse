@@ -19,7 +19,7 @@ import nl.averageflow.joeswarehouse.responses.ArticleResponse;
 
 @Table(name = "products")
 @Entity
-public class Product {
+public final class Product {
     @Id
     @NonNull
     @GeneratedValue(strategy = GenerationType.AUTO)

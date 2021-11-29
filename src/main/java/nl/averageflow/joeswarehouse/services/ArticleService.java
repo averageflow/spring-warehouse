@@ -14,7 +14,7 @@ import nl.averageflow.joeswarehouse.requests.AddArticlesRequestItem;
 import nl.averageflow.joeswarehouse.responses.ArticleResponse;
 
 @Service
-final class ArticleService {
+public final class ArticleService {
 
     @Autowired
     private ArticleRepository articleRepository;

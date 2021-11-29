@@ -18,7 +18,7 @@ import nl.averageflow.joeswarehouse.responses.ProductResponse;
 
 @RestController
 @CrossOrigin
-public class ProductController {
+public final class ProductController {
 
     @Autowired
     private ProductService productService;
