@@ -1,9 +1,12 @@
-package nl.averageflow.joeswarehouse.products;
+package nl.averageflow.joeswarehouse.models;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import nl.averageflow.joeswarehouse.repositories.ProductRepository;
+import nl.averageflow.joeswarehouse.responses.ProductResponse;
 
 @Service
 public class ProductService {

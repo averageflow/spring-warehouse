@@ -1,4 +1,4 @@
-package nl.averageflow.joeswarehouse.transactions;
+package nl.averageflow.joeswarehouse.controllers;
 
 import java.util.Optional;
 
@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import nl.averageflow.joeswarehouse.models.Transaction;
+import nl.averageflow.joeswarehouse.responses.TransactionResponse;
+import nl.averageflow.joeswarehouse.services.TransactionService;
 
 @RestController
 @CrossOrigin

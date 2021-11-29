@@ -1,4 +1,4 @@
-package nl.averageflow.joeswarehouse.articles;
+package nl.averageflow.joeswarehouse.models;
 
 import java.math.BigInteger;
 import java.util.Set;
@@ -17,8 +17,7 @@ import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
 
-import nl.averageflow.joeswarehouse.articlestocks.ArticleStock;
-import nl.averageflow.joeswarehouse.products.Product;
+import nl.averageflow.joeswarehouse.requests.AddArticlesRequestItem;
 
 @Table(name = "articles")
 @Entity
@@ -89,9 +88,9 @@ public class Article {
         return this.stock.getStock();
     }
 
-    public ArticleStock getStockEntity() {
-        return this.stock;
-    }
+    // public ArticleStock getStockEntity() {
+    //     return this.stock;
+    // }
 
     protected Article() {
     }

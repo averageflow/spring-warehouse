@@ -1,4 +1,4 @@
-package nl.averageflow.joeswarehouse.transactions;
+package nl.averageflow.joeswarehouse.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

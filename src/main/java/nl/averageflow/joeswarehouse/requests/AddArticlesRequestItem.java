@@ -1,4 +1,4 @@
-package nl.averageflow.joeswarehouse.articles;
+package nl.averageflow.joeswarehouse.requests;
 
 public class AddArticlesRequestItem {
     private String art_id;

@@ -1,4 +1,4 @@
-package nl.averageflow.joeswarehouse.products;
+package nl.averageflow.joeswarehouse.models;
 
 import java.util.Set;
 
@@ -15,8 +15,7 @@ import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
 
-import nl.averageflow.joeswarehouse.articles.Article;
-import nl.averageflow.joeswarehouse.articles.ArticleResponse;
+import nl.averageflow.joeswarehouse.responses.ArticleResponse;
 
 @Table(name = "products")
 @Entity

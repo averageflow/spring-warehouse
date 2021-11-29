@@ -1,4 +1,4 @@
-package nl.averageflow.joeswarehouse.products;
+package nl.averageflow.joeswarehouse.controllers;
 
 import java.util.Optional;
 
@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import nl.averageflow.joeswarehouse.models.Product;
+import nl.averageflow.joeswarehouse.models.ProductService;
+import nl.averageflow.joeswarehouse.requests.AddProductRequest;
+import nl.averageflow.joeswarehouse.responses.ProductResponse;
 
 @RestController
 @CrossOrigin

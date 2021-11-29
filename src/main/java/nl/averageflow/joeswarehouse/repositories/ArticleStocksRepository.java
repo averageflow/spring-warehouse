@@ -1,6 +1,8 @@
-package nl.averageflow.joeswarehouse.articlestocks;
+package nl.averageflow.joeswarehouse.repositories;
 
 import org.springframework.stereotype.Repository;
+
+import nl.averageflow.joeswarehouse.models.ArticleStock;
 
 import java.util.List;
 import java.util.Optional;

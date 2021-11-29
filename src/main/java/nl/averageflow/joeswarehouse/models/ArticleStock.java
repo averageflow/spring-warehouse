@@ -1,4 +1,4 @@
-package nl.averageflow.joeswarehouse.articlestocks;
+package nl.averageflow.joeswarehouse.models;
 
 import java.math.BigInteger;
 

@@ -1,4 +1,4 @@
-package nl.averageflow.joeswarehouse.articles;
+package nl.averageflow.joeswarehouse.requests;
 
 import java.util.List;
 

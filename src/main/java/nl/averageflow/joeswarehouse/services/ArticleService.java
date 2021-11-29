@@ -1,6 +1,5 @@
-package nl.averageflow.joeswarehouse.articles;
+package nl.averageflow.joeswarehouse.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -8,7 +7,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import nl.averageflow.joeswarehouse.articlestocks.ArticleStocksRepository;
+import nl.averageflow.joeswarehouse.models.Article;
+import nl.averageflow.joeswarehouse.repositories.ArticleRepository;
+import nl.averageflow.joeswarehouse.repositories.ArticleStocksRepository;
+import nl.averageflow.joeswarehouse.requests.AddArticlesRequestItem;
+import nl.averageflow.joeswarehouse.responses.ArticleResponse;
 
 @Service
 final class ArticleService {
@@ -33,7 +36,7 @@ final class ArticleService {
 
     private Article articleRequestItemConverter(AddArticlesRequestItem rawItem) {
         Article article = new Article(rawItem);
-        this.articleStocksRepository.save(article.getStockEntity());
+        //this.articleStocksRepository.save(article.getStockEntity());
         return article;
     }
 

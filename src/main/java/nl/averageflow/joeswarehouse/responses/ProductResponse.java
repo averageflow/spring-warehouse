@@ -1,9 +1,11 @@
-package nl.averageflow.joeswarehouse.products;
+package nl.averageflow.joeswarehouse.responses;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+
+import nl.averageflow.joeswarehouse.models.Product;
 
 public class ProductResponse {
     private HashMap<Long, Product> data;

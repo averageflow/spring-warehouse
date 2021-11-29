@@ -1,4 +1,4 @@
-package nl.averageflow.joeswarehouse.products;
+package nl.averageflow.joeswarehouse.repositories;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import nl.averageflow.joeswarehouse.models.Product;
 
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
