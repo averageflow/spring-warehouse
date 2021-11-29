@@ -16,16 +16,8 @@ public final class ProductResponse {
         return this.data;
     }
 
-    public void setData(HashMap<Long, Product> data) {
-        this.data = data;
-    }
-
     public List<Long> getSort() {
         return this.sort;
-    }
-
-    public void setSort(List<Long> sort) {
-        this.sort = sort;
     }
 
     public ProductResponse(Set<Product> data) {
@@ -37,7 +29,7 @@ public final class ProductResponse {
             dataSort.add(product.getId());
         }
 
-        this.setData(dataMap);
-        this.setSort(dataSort);
+        this.data = dataMap;
+        this.sort = dataSort;
     }
 }

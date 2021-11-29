@@ -1,5 +1,6 @@
 package nl.averageflow.joeswarehouse.models;
 
+import java.math.BigInteger;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -53,40 +54,33 @@ public final class Product {
         return this.id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Double getPrice() {
         return this.price;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
     public Long getCreatedAt() {
         return this.createdAt;
-    }
-
-    public void setCreatedAt(Long createdAt) {
-        this.createdAt = createdAt;
     }
 
     public Long getUpdatedAt() {
         return this.updatedAt;
     }
 
-    public void setUpdatedAt(Long updatedAt) {
-        this.updatedAt = updatedAt;
+    public Long getStock() {
+        for (ArticleAmountInProduct articleAmountInProduct : articleProductRelation) {
+            Long articleAmountNeeded = articleAmountInProduct.getAmountOf();
+            Long articleStockPresent = articleAmountInProduct.getArticle().getStock();
+
+            if (articleAmountNeeded < articleStockPresent) {
+                return (long) 0;
+            }
+        }
+
+        return (long) 1;
     }
 
     public Set<ArticleAmountInProduct> getArticles() {
@@ -94,7 +88,4 @@ public final class Product {
         return this.articleProductRelation;
     }
 
-    public void setArticles(Set<ArticleAmountInProduct> articles) {
-        this.articleProductRelation = articles;
-    }
 }

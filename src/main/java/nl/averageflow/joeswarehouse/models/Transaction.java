@@ -29,16 +29,8 @@ public final class Transaction {
         return this.id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getCreatedAt() {
         return this.createdAt;
-    }
-
-    public void setCreatedAt(Long createdAt) {
-        this.createdAt = createdAt;
     }
 
 }

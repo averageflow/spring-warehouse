@@ -23,7 +23,7 @@ public final class ArticleStock {
 
     @NonNull
     @Column(name = "stock", nullable = false)
-    private BigInteger stock;
+    private Long stock;
 
     @NonNull
     @Column(name = "created_at", nullable = false)
@@ -33,34 +33,17 @@ public final class ArticleStock {
     @Column(name = "updated_at", nullable = false)
     private Long updatedAt;
 
-    @NonNull
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public BigInteger getStock() {
+    public Long getStock() {
         return this.stock;
-    }
-
-    public void setStock(BigInteger stock) {
-        this.stock = stock;
-    }
-
-    public void setCreatedAt(Long createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setUpdatedAt(Long updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     protected ArticleStock() {
     }
 
-    public ArticleStock(BigInteger stock, Long createdAt) {
-        this.setStock(stock);
-        this.setCreatedAt(createdAt);
-        this.setUpdatedAt(createdAt);
+    public ArticleStock(Long stock, Long createdAt) {
+        this.stock = stock;
+        this.createdAt = createdAt;
+        this.updatedAt = createdAt;
     }
 
 }

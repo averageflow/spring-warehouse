@@ -50,54 +50,30 @@ public final class Article {
         return this.id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Long getCreatedAt() {
         return this.createdAt;
     }
 
-    public void setCreatedAt(Long createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Long getUpdatedAt() {
         return this.updatedAt;
     }
 
-    public void setUpdatedAt(Long updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setStock(ArticleStock stock) {
-        this.stock = stock;
-    }
-
-    public BigInteger getStock() {
+    public Long getStock() {
         return this.stock.getStock();
     }
-
-    // public ArticleStock getStockEntity() {
-    // return this.stock;
-    // }
 
     protected Article() {
     }
 
     public Article(AddArticlesRequestItem rawItem) {
-        this.setId(Long.parseLong(rawItem.getArt_id()));
-        this.setName(rawItem.getName());
-        ArticleStock articleStock = new ArticleStock(new BigInteger(rawItem.getStock()), this.createdAt);
-        this.setStock(articleStock);
+        this.id = Long.parseLong(rawItem.getArt_id());
+        this.name = rawItem.getName();
+        ArticleStock articleStock = new ArticleStock(Long.valueOf(rawItem.getStock()), this.createdAt);
+        this.stock = articleStock;
     }
 
 }
