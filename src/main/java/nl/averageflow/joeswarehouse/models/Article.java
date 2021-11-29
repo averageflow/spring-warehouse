@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -44,9 +45,6 @@ public final class Article {
     @NonNull
     @Column(name = "updated_at", nullable = false)
     private Long updatedAt;
-
-    @ManyToMany(mappedBy = "articles", cascade = CascadeType.ALL)
-    private Set<Product> products;
 
     public Long getId() {
         return this.id;
@@ -89,7 +87,7 @@ public final class Article {
     }
 
     // public ArticleStock getStockEntity() {
-    //     return this.stock;
+    // return this.stock;
     // }
 
     protected Article() {

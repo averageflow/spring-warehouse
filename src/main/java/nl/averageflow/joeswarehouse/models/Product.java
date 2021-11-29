@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
@@ -42,9 +43,8 @@ public final class Product {
     @Column(name = "updated_at", nullable = false)
     private Long updatedAt;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "product_articles", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "article_id"))
-    private Set<Article> articles;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Set<ArticleAmountInProduct> articleProductRelation;
 
     protected Product() {
     }
@@ -89,11 +89,12 @@ public final class Product {
         this.updatedAt = updatedAt;
     }
 
-    public ArticleResponse getArticles() {
-        return new ArticleResponse(this.articles);
+    public Set<ArticleAmountInProduct> getArticles() {
+        // return new ArticleResponse(this.articles);
+        return this.articleProductRelation;
     }
 
-    public void setArticles(Set<Article> articles) {
-        this.articles = articles;
+    public void setArticles(Set<ArticleAmountInProduct> articles) {
+        this.articleProductRelation = articles;
     }
 }
