@@ -36,10 +36,23 @@ public final class ArticleAmountInProduct implements Serializable {
     private Product product;
 
     @NonNull
+    @Column(name = "amount_of")
+    private Long amountOf;
+
+    @NonNull
     @Column(name = "created_at", nullable = false)
     private Long createdAt;
 
     @NonNull
     @Column(name = "updated_at", nullable = false)
     private Long updatedAt;
+
+    public Article getArticle() {
+        return this.article;
+    }
+
+    public Long getAmountOf() {
+        return this.amountOf;
+    }
+
 }
