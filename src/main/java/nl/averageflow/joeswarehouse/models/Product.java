@@ -1,6 +1,9 @@
 package nl.averageflow.joeswarehouse.models;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -71,16 +74,25 @@ public final class Product {
     }
 
     public Long getStock() {
+        List<Long> amountOfProductsPossibleList = new ArrayList<Long>();
+
         for (ArticleAmountInProduct articleAmountInProduct : articleProductRelation) {
             Long articleAmountNeeded = articleAmountInProduct.getAmountOf();
             Long articleStockPresent = articleAmountInProduct.getArticle().getStock();
 
-            if (articleAmountNeeded < articleStockPresent) {
+            // System.out.printf("articleAmountNeeded: %d, articleStockPresent: %d\n",
+            // articleAmountNeeded,
+            // articleStockPresent);
+            if (articleStockPresent < articleAmountNeeded) {
                 return (long) 0;
+            } else {
+                amountOfProductsPossibleList.add(articleStockPresent / articleAmountNeeded);
             }
         }
 
-        return (long) 1;
+        return amountOfProductsPossibleList.stream()
+                .min(Comparator.naturalOrder())
+                .get();
     }
 
     public Set<ArticleAmountInProduct> getArticles() {
