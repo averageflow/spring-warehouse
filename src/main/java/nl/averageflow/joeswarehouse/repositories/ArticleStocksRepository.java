@@ -15,4 +15,5 @@ public interface ArticleStocksRepository extends CrudRepository<ArticleStock, Lo
     Optional<ArticleStock> findById(Long id);
 
     Set<ArticleStock> findAll();
+
 }

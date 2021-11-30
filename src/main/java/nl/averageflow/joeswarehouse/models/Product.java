@@ -1,6 +1,5 @@
 package nl.averageflow.joeswarehouse.models;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,15 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
-
-import nl.averageflow.joeswarehouse.responses.ArticleResponse;
 
 @Table(name = "products")
 @Entity
@@ -73,12 +67,12 @@ public final class Product {
         return this.updatedAt;
     }
 
-    public Long getStock() {
+    public Long getProductStock() {
         List<Long> amountOfProductsPossibleList = new ArrayList<Long>();
 
         for (ArticleAmountInProduct articleAmountInProduct : articleProductRelation) {
             Long articleAmountNeeded = articleAmountInProduct.getAmountOf();
-            Long articleStockPresent = articleAmountInProduct.getArticle().getStock();
+            Long articleStockPresent = articleAmountInProduct.getArticle().getStock().getStock();
 
             // System.out.printf("articleAmountNeeded: %d, articleStockPresent: %d\n",
             // articleAmountNeeded,

@@ -62,8 +62,8 @@ public final class Article {
         return this.updatedAt;
     }
 
-    public Long getStock() {
-        return this.stock.getStock();
+    public ArticleStock getStock() {
+        return this.stock;
     }
 
     protected Article() {

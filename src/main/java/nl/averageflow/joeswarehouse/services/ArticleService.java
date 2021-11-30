@@ -36,7 +36,7 @@ public final class ArticleService {
 
     private Article articleRequestItemConverter(AddArticlesRequestItem rawItem) {
         Article article = new Article(rawItem);
-        //this.articleStocksRepository.save(article.getStockEntity());
+        this.articleStocksRepository.save(article.getStock());
         return article;
     }
 
