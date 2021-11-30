@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nl.averageflow.joeswarehouse.repositories.ProductRepository;
+import nl.averageflow.joeswarehouse.requests.AddProductRequest;
 import nl.averageflow.joeswarehouse.responses.ProductResponse;
 
 @Service
@@ -24,5 +25,9 @@ public final class ProductService {
 
     public void deleteProductByID(Long id) {
         this.productRepository.deleteById(id);
+    }
+
+    public void addProducts(AddProductRequest request) {
+        this.productRepository.saveAll(request.getProducts());
     }
 }

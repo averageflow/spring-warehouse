@@ -19,7 +19,7 @@ import org.springframework.lang.NonNull;
 public final class ArticleAmountInProduct implements Serializable {
     @Id
     @NonNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long id;
 

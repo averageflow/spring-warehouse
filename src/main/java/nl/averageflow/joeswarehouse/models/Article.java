@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
@@ -24,8 +25,9 @@ import nl.averageflow.joeswarehouse.requests.AddArticlesRequestItem;
 @Entity
 public final class Article {
     @Id
+    @SequenceGenerator(name = "articles_sequence_generator", sequenceName = "articles_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "articles_sequence_generator")
     @NonNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
@@ -72,7 +74,7 @@ public final class Article {
     public Article(AddArticlesRequestItem rawItem) {
         this.id = Long.parseLong(rawItem.getArt_id());
         this.name = rawItem.getName();
-        ArticleStock articleStock = new ArticleStock(Long.valueOf(rawItem.getStock()), this.createdAt);
+        ArticleStock articleStock = new ArticleStock(this.id, Long.valueOf(rawItem.getStock()), this.createdAt);
         this.stock = articleStock;
     }
 

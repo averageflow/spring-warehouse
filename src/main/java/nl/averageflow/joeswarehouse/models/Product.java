@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
@@ -20,25 +21,26 @@ import org.springframework.lang.NonNull;
 @Entity
 public final class Product {
     @Id
+    @SequenceGenerator(name = "products_sequence_generator", sequenceName = "products_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "products_sequence_generator")
     @NonNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
     @NonNull
-    @Column(name = "item_name", nullable = false)
+    @Column(name = "item_name")
     private String name;
 
     @NonNull
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     private Double price;
 
     @NonNull
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private Long createdAt;
 
     @NonNull
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private Long updatedAt;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
