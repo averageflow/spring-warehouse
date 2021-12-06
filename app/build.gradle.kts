@@ -20,12 +20,16 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation("com.google.guava:guava:30.1.1-jre")
+
+    // JAX-B dependencies for JDK 9+
+    implementation("jakarta.xml.bind:jakarta.xml.bind-api:2.3.2")
+    implementation("org.glassfish.jaxb:jaxb-runtime:2.3.2")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.6.1")
     implementation("org.springframework.boot:spring-boot-starter-web:2.6.1")
     runtimeOnly("org.springframework.boot:spring-boot-devtools:2.6.1")
     runtimeOnly("org.postgresql:postgresql:42.3.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.6.1")
-    testImplementation("junit:junit:4.12")
+    testImplementation("junit:junit:4.13.2")
 }
 
 testing {
