@@ -1,17 +1,12 @@
 package nl.averageflow.joeswarehouse.models;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Table(name = "product_articles")
 @Entity
@@ -22,13 +17,11 @@ public final class ArticleAmountInProduct implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Id
     @NonNull
     @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
 
-    @Id
     @NonNull
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -39,12 +32,14 @@ public final class ArticleAmountInProduct implements Serializable {
     private Long amountOf;
 
     @NonNull
-    @Column(name = "created_at", nullable = false)
-    private Long createdAt;
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private Timestamp createdAt;
 
     @NonNull
-    @Column(name = "updated_at", nullable = false)
-    private Long updatedAt;
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private Timestamp updatedAt;
 
     public Article getArticle() {
         return this.article;

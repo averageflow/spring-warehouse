@@ -1,22 +1,14 @@
 package nl.averageflow.joeswarehouse.models;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
+import nl.averageflow.joeswarehouse.requests.AddArticlesRequestItem;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
 
-import nl.averageflow.joeswarehouse.requests.AddArticlesRequestItem;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
-@Table(name = "articles")
+@Table(name = "articles", schema = "public")
 @Entity
 public final class Article {
     @Id
@@ -36,12 +28,23 @@ public final class Article {
     private ArticleStock stock;
 
     @NonNull
-    @Column(name = "created_at", nullable = false)
-    private Long createdAt;
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private Timestamp createdAt;
 
     @NonNull
-    @Column(name = "updated_at", nullable = false)
-    private Long updatedAt;
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private Timestamp updatedAt;
+
+    protected Article() {
+    }
+
+    public Article(AddArticlesRequestItem rawItem) {
+        this.id = Long.parseLong(rawItem.getArt_id());
+        this.name = rawItem.getName();
+        this.stock = new ArticleStock(this.id, Long.valueOf(rawItem.getStock()), this.createdAt);
+    }
 
     public Long getId() {
         return this.id;
@@ -51,26 +54,16 @@ public final class Article {
         return this.name;
     }
 
-    public Long getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return this.createdAt;
     }
 
-    public Long getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return this.updatedAt;
     }
 
     public ArticleStock getStock() {
         return this.stock;
-    }
-
-    protected Article() {
-    }
-
-    public Article(AddArticlesRequestItem rawItem) {
-        this.id = Long.parseLong(rawItem.getArt_id());
-        this.name = rawItem.getName();
-        ArticleStock articleStock = new ArticleStock(this.id, Long.valueOf(rawItem.getStock()), this.createdAt);
-        this.stock = articleStock;
     }
 
 }

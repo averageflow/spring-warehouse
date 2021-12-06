@@ -1,17 +1,16 @@
 package nl.averageflow.joeswarehouse.services;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import nl.averageflow.joeswarehouse.models.Article;
 import nl.averageflow.joeswarehouse.repositories.ArticleRepository;
 import nl.averageflow.joeswarehouse.repositories.ArticleStocksRepository;
 import nl.averageflow.joeswarehouse.requests.AddArticlesRequestItem;
 import nl.averageflow.joeswarehouse.responses.ArticleResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public final class ArticleService {
@@ -31,7 +30,7 @@ public final class ArticleService {
     }
 
     public List<Article> convertAddArticleRequestToMappedList(List<AddArticlesRequestItem> rawItems) {
-        return rawItems.stream().map(rawItem -> articleRequestItemConverter(rawItem)).collect(Collectors.toList());
+        return rawItems.stream().map(this::articleRequestItemConverter).collect(Collectors.toList());
     }
 
     private Article articleRequestItemConverter(AddArticlesRequestItem rawItem) {

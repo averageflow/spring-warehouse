@@ -1,13 +1,10 @@
 package nl.averageflow.joeswarehouse.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "transactions")
@@ -19,8 +16,9 @@ public final class Transaction {
     private Long id;
 
     @NonNull
-    @Column(name = "created_at", nullable = false)
-    private Long createdAt;
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private Timestamp createdAt;
 
     protected Transaction() {
     }
@@ -29,7 +27,7 @@ public final class Transaction {
         return this.id;
     }
 
-    public Long getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return this.createdAt;
     }
 

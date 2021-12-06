@@ -1,21 +1,15 @@
 package nl.averageflow.joeswarehouse.models;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.lang.NonNull;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import org.springframework.lang.NonNull;
 
 @Table(name = "products")
 @Entity
@@ -37,11 +31,14 @@ public final class Product {
 
     @NonNull
     @Column(name = "created_at")
-    private Long createdAt;
+    @CreationTimestamp
+    private Timestamp createdAt;
 
     @NonNull
     @Column(name = "updated_at")
-    private Long updatedAt;
+    @UpdateTimestamp
+    private Timestamp updatedAt;
+
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<ArticleAmountInProduct> articleProductRelation;
@@ -61,11 +58,15 @@ public final class Product {
         return this.price;
     }
 
-    public Long getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return this.createdAt;
     }
 
-    public Long getUpdatedAt() {
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdatedAt() {
         return this.updatedAt;
     }
 

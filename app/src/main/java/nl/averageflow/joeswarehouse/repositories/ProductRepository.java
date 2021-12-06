@@ -1,16 +1,18 @@
 package nl.averageflow.joeswarehouse.repositories;
 
+import nl.averageflow.joeswarehouse.models.Product;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Repository;
+
 import java.util.Optional;
 import java.util.Set;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-
-import nl.averageflow.joeswarehouse.models.Product;
-
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
-    Optional<Product> findById(Long id);
+    @NonNull
+    Optional<Product> findById(@NonNull Long id);
 
+    @NonNull
     Set<Product> findAll();
 }
