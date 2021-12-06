@@ -22,8 +22,8 @@ public final class Article {
     @Column(name = "item_name", nullable = false)
     private String name;
 
-    @NonNull
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    //@NonNull
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
     @PrimaryKeyJoinColumn
     private ArticleStock stock;
 
@@ -43,7 +43,7 @@ public final class Article {
     public Article(AddArticlesRequestItem rawItem) {
         this.id = Long.parseLong(rawItem.getArt_id());
         this.name = rawItem.getName();
-        this.stock = new ArticleStock(this.id, Long.valueOf(rawItem.getStock()), this.createdAt);
+        // this.stock = new ArticleStock(this.id, Long.valueOf(rawItem.getStock()), this.createdAt);
     }
 
     public Long getId() {

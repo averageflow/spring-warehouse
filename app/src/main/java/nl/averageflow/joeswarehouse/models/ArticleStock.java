@@ -1,5 +1,6 @@
 package nl.averageflow.joeswarehouse.models;
 
+import nl.averageflow.joeswarehouse.requests.AddArticlesRequestItem;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
@@ -21,7 +22,7 @@ public final class ArticleStock {
     @Column(name = "article_id")
     private Long articleId;
 
-    @NonNull
+    //@NonNull
     @Column(name = "stock", nullable = false)
     private Long stock;
 
@@ -38,11 +39,9 @@ public final class ArticleStock {
     protected ArticleStock() {
     }
 
-    public ArticleStock(Long articleId, Long stock, Timestamp createdAt) {
-        this.articleId = articleId;
-        this.stock = stock;
-        this.createdAt = createdAt;
-        this.updatedAt = createdAt;
+    public ArticleStock(AddArticlesRequestItem rawItem) {
+        this.articleId = Long.valueOf(rawItem.getArt_id());
+        this.stock = Long.valueOf(rawItem.getStock());
     }
 
     public Long getStock() {
