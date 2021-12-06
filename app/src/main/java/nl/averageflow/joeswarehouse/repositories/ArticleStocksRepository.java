@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import nl.averageflow.joeswarehouse.models.ArticleStock;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
