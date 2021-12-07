@@ -7,15 +7,16 @@ import org.springframework.lang.NonNull;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Table(name = "product_articles")
 @Entity
 public final class ArticleAmountInProduct implements Serializable {
     @Id
     @NonNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue
     @Column(name = "id")
-    private Long id;
+    private UUID id;
 
     @NonNull
     @ManyToOne

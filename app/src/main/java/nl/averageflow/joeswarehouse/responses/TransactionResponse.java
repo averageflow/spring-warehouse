@@ -2,19 +2,16 @@ package nl.averageflow.joeswarehouse.responses;
 
 import nl.averageflow.joeswarehouse.models.Transaction;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public final class TransactionResponse {
-    private HashMap<Long, Transaction> data;
+    private HashMap<UUID, Transaction> data;
 
-    private List<Long> sort;
+    private List<UUID> sort;
 
     public TransactionResponse(Set<Transaction> data) {
-        HashMap<Long, Transaction> dataMap = new HashMap<>();
-        List<Long> dataSort = new ArrayList<>();
+        HashMap<UUID, Transaction> dataMap = new HashMap<>();
+        List<UUID> dataSort = new ArrayList<>();
 
         for (Transaction transaction : data) {
             dataMap.put(transaction.getId(), transaction);
@@ -25,19 +22,19 @@ public final class TransactionResponse {
         this.setSort(dataSort);
     }
 
-    public HashMap<Long, Transaction> getData() {
+    public HashMap<UUID, Transaction> getData() {
         return this.data;
     }
 
-    public void setData(HashMap<Long, Transaction> data) {
+    public void setData(HashMap<UUID, Transaction> data) {
         this.data = data;
     }
 
-    public List<Long> getSort() {
+    public List<UUID> getSort() {
         return this.sort;
     }
 
-    public void setSort(List<Long> sort) {
+    public void setSort(List<UUID> sort) {
         this.sort = sort;
     }
 }

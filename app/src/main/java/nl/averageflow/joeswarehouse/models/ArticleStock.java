@@ -7,16 +7,16 @@ import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Table(name = "article_stocks")
 @Entity
 public final class ArticleStock {
     @Id
-    @SequenceGenerator(name = "article_stocks_sequence_generator", sequenceName = "article_stocks_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "article_stocks_sequence_generator")
+    @GeneratedValue
     @NonNull
     @Column(name = "id")
-    private Long id;
+    private UUID id;
 
     @NonNull
     @Column(name = "article_id")

@@ -7,16 +7,20 @@ import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Table(name = "articles", schema = "public")
 @Entity
 public final class Article {
     @Id
-    @SequenceGenerator(name = "articles_sequence_generator", sequenceName = "articles_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "articles_sequence_generator")
+    @GeneratedValue
     @NonNull
     @Column(name = "id")
-    private Long id;
+    private UUID id;
+
+    @NonNull
+    @Column(name = "item_id")
+    private Long itemId;
 
     @NonNull
     @Column(name = "item_name", nullable = false)
@@ -41,12 +45,12 @@ public final class Article {
     }
 
     public Article(AddArticlesRequestItem rawItem) {
-        this.id = Long.parseLong(rawItem.getArt_id());
+        this.itemId = Long.parseLong(rawItem.getArt_id());
         this.name = rawItem.getName();
         // this.stock = new ArticleStock(this.id, Long.valueOf(rawItem.getStock()), this.createdAt);
     }
 
-    public Long getId() {
+    public UUID getId() {
         return this.id;
     }
 

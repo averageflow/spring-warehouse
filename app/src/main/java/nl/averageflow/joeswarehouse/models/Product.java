@@ -6,21 +6,21 @@ import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Table(name = "products")
 @Entity
 public final class Product {
     @Id
-    @SequenceGenerator(name = "products_sequence_generator", sequenceName = "products_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "products_sequence_generator")
+    @GeneratedValue
     @NonNull
     @Column(name = "id")
-    private Long id;
+    private UUID id;
 
+    @NonNull
+    @Column(name = "item_id")
+    private Long itemId;
+    
     @NonNull
     @Column(name = "item_name")
     private String name;
@@ -46,7 +46,7 @@ public final class Product {
     protected Product() {
     }
 
-    public Long getId() {
+    public UUID getId() {
         return this.id;
     }
 

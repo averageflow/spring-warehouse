@@ -5,15 +5,16 @@ import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity
 @Table(name = "transactions")
 public final class Transaction {
     @Id
     @NonNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "id")
-    private Long id;
+    private UUID id;
 
     @NonNull
     @Column(name = "created_at")
@@ -23,7 +24,7 @@ public final class Transaction {
     protected Transaction() {
     }
 
-    public Long getId() {
+    public UUID getId() {
         return this.id;
     }
 
