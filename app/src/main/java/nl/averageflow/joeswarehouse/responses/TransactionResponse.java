@@ -16,10 +16,10 @@ public final class TransactionResponse {
         HashMap<UUID, Transaction> dataMap = new HashMap<>();
         ArrayList<UUID> dataSort = new ArrayList<>();
 
-        for (Transaction transaction : data) {
+        data.forEach(transaction -> {
             dataMap.put(transaction.getUid(), transaction);
             dataSort.add(transaction.getUid());
-        }
+        });
 
         this.setData(dataMap);
         this.setSort(dataSort);

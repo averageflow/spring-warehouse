@@ -16,10 +16,10 @@ public final class ArticleResponse {
         HashMap<UUID, Article> dataMap = new HashMap<>();
         ArrayList<UUID> dataSort = new ArrayList<>();
 
-        for (Article article : data) {
+        data.forEach(article -> {
             dataMap.put(article.getUid(), article);
             dataSort.add(article.getUid());
-        }
+        });
 
         this.data = dataMap;
         this.sort = dataSort;

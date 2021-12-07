@@ -16,10 +16,10 @@ public final class ProductResponse {
         HashMap<UUID, Product> dataMap = new HashMap<>();
         ArrayList<UUID> dataSort = new ArrayList<>();
 
-        for (Product product : data) {
+        data.forEach(product -> {
             dataMap.put(product.getUid(), product);
             dataSort.add(product.getUid());
-        }
+        });
 
         this.data = dataMap;
         this.sort = dataSort;
