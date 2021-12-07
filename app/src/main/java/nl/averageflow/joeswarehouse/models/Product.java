@@ -3,7 +3,6 @@ package nl.averageflow.joeswarehouse.models;
 import nl.averageflow.joeswarehouse.requests.AddProductsRequestItem;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -14,29 +13,23 @@ import java.util.*;
 public final class Product {
     @Id
     @GeneratedValue
-    @NonNull
-    @Column(name = "uid")
+    @Column(name = "uid", nullable = false)
     private UUID uid;
 
-    @NonNull
-    @Column(name = "item_id")
+    @Column(name = "item_id", nullable = false)
     private Long itemId;
 
-    @NonNull
-    @Column(name = "item_name")
+    @Column(name = "item_name", nullable = false)
     private String name;
 
-    @NonNull
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private Double price;
 
-    @NonNull
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @NonNull
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private Timestamp updatedAt;
 
@@ -69,10 +62,6 @@ public final class Product {
         return this.createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Timestamp getUpdatedAt() {
         return this.updatedAt;
     }
@@ -80,18 +69,17 @@ public final class Product {
     public Long getProductStock() {
         List<Long> amountOfProductsPossibleList = new ArrayList<Long>();
 
-        for (ArticleAmountInProduct articleAmountInProduct : articleProductRelation) {
+        articleProductRelation.forEach(articleAmountInProduct -> {
             Long articleAmountNeeded = articleAmountInProduct.getAmountOf();
-            Long articleStockPresent = articleAmountInProduct.getArticle().getStock().getStock();
+            Long articleStockPresent = articleAmountInProduct.getArticle().getStock();
 
-            // System.out.printf("articleAmountNeeded: %d, articleStockPresent: %d\n",
-            // articleAmountNeeded,
-            // articleStockPresent);
-            if (articleStockPresent < articleAmountNeeded) {
-                return (long) 0;
-            } else {
+            if (articleStockPresent >= articleAmountNeeded) {
                 amountOfProductsPossibleList.add(articleStockPresent / articleAmountNeeded);
             }
+        });
+
+        if (amountOfProductsPossibleList.size() == 0) {
+            return 0L;
         }
 
         return amountOfProductsPossibleList.stream()
@@ -100,7 +88,6 @@ public final class Product {
     }
 
     public Set<ArticleAmountInProduct> getArticles() {
-        // return new ArticleResponse(this.articles);
         return this.articleProductRelation;
     }
 

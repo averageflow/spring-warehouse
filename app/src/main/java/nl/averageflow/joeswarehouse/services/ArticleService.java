@@ -36,7 +36,7 @@ public final class ArticleService {
     }
 
     private ArticleStock articleRequestItemStockConverter(AddArticlesRequestItem rawItem) {
-        return new ArticleStock(this.articleRepository.findByItemId(rawItem.getItemId()).get().getUid(), rawItem.getStock());
+        return new ArticleStock(this.articleRepository.findByItemId(rawItem.getItemId()).get(), rawItem.getStock());
     }
 
     public ArticleResponse getArticles() {

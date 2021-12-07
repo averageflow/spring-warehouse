@@ -2,7 +2,6 @@ package nl.averageflow.joeswarehouse.models;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,32 +12,26 @@ import java.util.UUID;
 @Entity
 public final class ArticleAmountInProduct implements Serializable {
     @Id
-    @NonNull
     @GeneratedValue
-    @Column(name = "uid")
+    @Column(name = "uid", nullable = false)
     private UUID uid;
 
-    @NonNull
     @ManyToOne
-    @JoinColumn(name = "article_uid")
+    @JoinColumn(name = "article_uid", nullable = false)
     private Article article;
 
-    @NonNull
     @ManyToOne
-    @JoinColumn(name = "product_uid")
+    @JoinColumn(name = "product_uid", nullable = false)
     private Product product;
 
-    @NonNull
-    @Column(name = "amount_of")
+    @Column(name = "amount_of", nullable = false)
     private Long amountOf;
 
-    @NonNull
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @NonNull
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private Timestamp updatedAt;
 

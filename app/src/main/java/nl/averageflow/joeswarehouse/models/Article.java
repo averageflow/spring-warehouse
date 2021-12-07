@@ -3,7 +3,6 @@ package nl.averageflow.joeswarehouse.models;
 import nl.averageflow.joeswarehouse.requests.AddArticlesRequestItem;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -14,30 +13,23 @@ import java.util.UUID;
 public final class Article {
     @Id
     @GeneratedValue
-    @NonNull
-    @Column(name = "uid")
+    @Column(name = "uid", nullable = false)
     private UUID uid;
 
-    @NonNull
-    @Column(name = "item_id")
+    @Column(name = "item_id", nullable = false)
     private Long itemId;
 
-    @NonNull
     @Column(name = "item_name", nullable = false)
     private String name;
 
-    //@NonNull
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
-    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true, mappedBy = "article")
     private ArticleStock stock;
 
-    @NonNull
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @NonNull
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private Timestamp updatedAt;
 
@@ -65,8 +57,8 @@ public final class Article {
         return this.updatedAt;
     }
 
-    public ArticleStock getStock() {
-        return this.stock;
+    public Long getStock() {
+        return this.stock.getStock();
     }
 
 }
