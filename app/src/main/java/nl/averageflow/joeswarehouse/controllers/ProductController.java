@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -21,9 +22,9 @@ public final class ProductController {
         return this.productService.getProducts();
     }
 
-    @GetMapping("/api/products/{id}")
-    public Optional<Product> getProduct(@PathVariable Long id) {
-        return this.productService.getProductByID(id);
+    @GetMapping("/api/products/{uid}")
+    public Optional<Product> getProduct(@PathVariable UUID uid) {
+        return this.productService.getProductByUid(uid);
     }
 
     @PostMapping("/api/products")
@@ -31,8 +32,8 @@ public final class ProductController {
         this.productService.addProducts(request);
     }
 
-    @DeleteMapping("/api/products/{id}")
-    public void deleteProduct(@PathVariable Long id) {
-        this.productService.deleteProductByID(id);
+    @DeleteMapping("/api/products/{uid}")
+    public void deleteProduct(@PathVariable UUID uid) {
+        this.productService.deleteProductByUid(uid);
     }
 }

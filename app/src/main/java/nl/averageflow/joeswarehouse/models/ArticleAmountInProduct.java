@@ -20,12 +20,12 @@ public final class ArticleAmountInProduct implements Serializable {
 
     @NonNull
     @ManyToOne
-    @JoinColumn(name = "article_id")
+    @JoinColumn(name = "article_uid")
     private Article article;
 
     @NonNull
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_uid")
     private Product product;
 
     @NonNull

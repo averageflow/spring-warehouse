@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,8 +36,8 @@ public final class ProductService {
         return rawItems.stream().map(
                 item -> item.getContainArticles().stream().map(
                         articleItem -> new ArticleAmountInProduct(
-                                this.productRepository.findById(item.getItemId()).get(),
-                                this.articleRepository.findById(articleItem.getItemId()).get(),
+                                this.productRepository.findByItemId(item.getItemId()).get(),
+                                this.articleRepository.findByItemId(articleItem.getItemId()).get(),
                                 articleItem.getAmountOf()
                         )
                 ).collect(Collectors.toList())
@@ -47,12 +48,12 @@ public final class ProductService {
         return new ProductResponse(this.productRepository.findAll());
     }
 
-    public Optional<Product> getProductByID(Long id) {
-        return this.productRepository.findById(id);
+    public Optional<Product> getProductByUid(UUID uid) {
+        return this.productRepository.findByUid(uid);
     }
 
-    public void deleteProductByID(Long id) {
-        this.productRepository.deleteById(id);
+    public void deleteProductByUid(UUID uid) {
+        this.productRepository.deleteByUid(uid);
     }
 
     public void addProducts(AddProductRequest request) {

@@ -7,12 +7,18 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Repository
-public interface ProductRepository extends CrudRepository<Product, Long> {
+public interface ProductRepository extends CrudRepository<Product, UUID> {
     @NonNull
-    Optional<Product> findById(@NonNull Long id);
+    Optional<Product> findByItemId(@NonNull Long itemId);
+
+    @NonNull
+    Optional<Product> findByUid(@NonNull UUID uid);
 
     @NonNull
     Set<Product> findAll();
+
+    void deleteByUid(@NonNull UUID uid);
 }

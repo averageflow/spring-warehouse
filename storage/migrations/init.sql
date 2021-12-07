@@ -8,11 +8,11 @@ CREATE TABLE IF NOT EXISTS articles (
 
 CREATE TABLE IF NOT EXISTS article_stocks (
     uid UUID PRIMARY KEY,
-    article_id INT NOT NULL UNIQUE,
+    article_uid UUID NOT NULL UNIQUE,
     stock BIGINT NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
-    CONSTRAINT fk_article_stocks_article FOREIGN KEY(article_id) REFERENCES articles(item_id)
+    CONSTRAINT fk_article_stocks_article FOREIGN KEY(article_uid) REFERENCES articles(uid)
 );
 
 CREATE TABLE IF NOT EXISTS products (
@@ -26,13 +26,13 @@ CREATE TABLE IF NOT EXISTS products (
 
 CREATE TABLE IF NOT EXISTS product_articles (
     uid UUID PRIMARY KEY,
-    product_id INT NOT NULL,
-    article_id INT NOT NULL,
+    product_uid UUID NOT NULL,
+    article_uid UUID NOT NULL,
     amount_of BIGINT NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
-    CONSTRAINT fk_product_articles_product FOREIGN KEY(product_id) REFERENCES products(item_id),
-    CONSTRAINT fk_product_articles_article FOREIGN KEY(article_id) REFERENCES articles(item_id)
+    CONSTRAINT fk_product_articles_product FOREIGN KEY(product_uid) REFERENCES products(uid),
+    CONSTRAINT fk_product_articles_article FOREIGN KEY(article_uid) REFERENCES articles(uid)
 );
 
 CREATE TABLE IF NOT EXISTS transactions (
@@ -43,9 +43,9 @@ CREATE TABLE IF NOT EXISTS transactions (
 CREATE TABLE IF NOT EXISTS transaction_products (
     uid UUID PRIMARY KEY,
     transaction_uid UUID NOT NULL,
-    product_id INT NOT NULL,
+    product_uid UUID NOT NULL,
     amount_of BIGINT NOT NULL,
     created_at TIMESTAMP NOT NULL,
     CONSTRAINT fk_transaction_products_transaction FOREIGN KEY(transaction_uid) REFERENCES transactions(uid),
-    CONSTRAINT fk_transaction_products_product FOREIGN KEY(product_id) REFERENCES products(item_id)
+    CONSTRAINT fk_transaction_products_product FOREIGN KEY(product_uid) REFERENCES products(uid)
 );
