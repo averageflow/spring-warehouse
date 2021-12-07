@@ -14,8 +14,8 @@ public final class ProductResponse {
         List<UUID> dataSort = new ArrayList<>();
 
         for (Product product : data) {
-            dataMap.put(product.getId(), product);
-            dataSort.add(product.getId());
+            dataMap.put(product.getUid(), product);
+            dataSort.add(product.getUid());
         }
 
         this.data = dataMap;

@@ -14,13 +14,13 @@ public final class Product {
     @Id
     @GeneratedValue
     @NonNull
-    @Column(name = "id")
-    private UUID id;
+    @Column(name = "uid")
+    private UUID uid;
 
     @NonNull
     @Column(name = "item_id")
     private Long itemId;
-    
+
     @NonNull
     @Column(name = "item_name")
     private String name;
@@ -46,8 +46,8 @@ public final class Product {
     protected Product() {
     }
 
-    public UUID getId() {
-        return this.id;
+    public UUID getUid() {
+        return this.uid;
     }
 
     public String getName() {

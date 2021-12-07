@@ -1,16 +1,19 @@
 package nl.averageflow.joeswarehouse.requests;
 
 public final class AddArticlesRequestItem {
-    private String art_id;
+    private String itemId;
     private String name;
     private String stock;
 
+    protected AddArticlesRequestItem() {
+    }
+
     public String getArt_id() {
-        return this.art_id;
+        return this.itemId;
     }
 
     public void setArt_id(String art_id) {
-        this.art_id = art_id;
+        this.itemId = art_id;
     }
 
     public String getName() {
@@ -27,8 +30,5 @@ public final class AddArticlesRequestItem {
 
     public void setStock(String stock) {
         this.stock = stock;
-    }
-
-    protected AddArticlesRequestItem() {
     }
 }

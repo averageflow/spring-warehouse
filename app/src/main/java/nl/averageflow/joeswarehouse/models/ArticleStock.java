@@ -15,8 +15,8 @@ public final class ArticleStock {
     @Id
     @GeneratedValue
     @NonNull
-    @Column(name = "id")
-    private UUID id;
+    @Column(name = "uid")
+    private UUID uid;
 
     @NonNull
     @Column(name = "article_id")

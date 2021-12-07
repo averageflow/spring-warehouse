@@ -14,8 +14,8 @@ public final class ArticleResponse {
         List<UUID> dataSort = new ArrayList<>();
 
         for (Article article : data) {
-            dataMap.put(article.getId(), article);
-            dataSort.add(article.getId());
+            dataMap.put(article.getUid(), article);
+            dataSort.add(article.getUid());
         }
 
         this.data = dataMap;

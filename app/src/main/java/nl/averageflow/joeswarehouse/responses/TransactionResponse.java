@@ -14,8 +14,8 @@ public final class TransactionResponse {
         List<UUID> dataSort = new ArrayList<>();
 
         for (Transaction transaction : data) {
-            dataMap.put(transaction.getId(), transaction);
-            dataSort.add(transaction.getId());
+            dataMap.put(transaction.getUid(), transaction);
+            dataSort.add(transaction.getUid());
         }
 
         this.setData(dataMap);

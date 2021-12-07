@@ -15,8 +15,8 @@ public final class ArticleAmountInProduct implements Serializable {
     @Id
     @NonNull
     @GeneratedValue
-    @Column(name = "id")
-    private UUID id;
+    @Column(name = "uid")
+    private UUID uid;
 
     @NonNull
     @ManyToOne

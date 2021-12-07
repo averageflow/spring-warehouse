@@ -15,8 +15,8 @@ public final class Article {
     @Id
     @GeneratedValue
     @NonNull
-    @Column(name = "id")
-    private UUID id;
+    @Column(name = "uid")
+    private UUID uid;
 
     @NonNull
     @Column(name = "item_id")
@@ -50,8 +50,8 @@ public final class Article {
         // this.stock = new ArticleStock(this.id, Long.valueOf(rawItem.getStock()), this.createdAt);
     }
 
-    public UUID getId() {
-        return this.id;
+    public UUID getUid() {
+        return this.uid;
     }
 
     public String getName() {

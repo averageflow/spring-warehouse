@@ -13,8 +13,8 @@ public final class Transaction {
     @Id
     @NonNull
     @GeneratedValue
-    @Column(name = "id")
-    private UUID id;
+    @Column(name = "uid")
+    private UUID uid;
 
     @NonNull
     @Column(name = "created_at")
@@ -24,8 +24,8 @@ public final class Transaction {
     protected Transaction() {
     }
 
-    public UUID getId() {
-        return this.id;
+    public UUID getUid() {
+        return this.uid;
     }
 
     public Timestamp getCreatedAt() {
