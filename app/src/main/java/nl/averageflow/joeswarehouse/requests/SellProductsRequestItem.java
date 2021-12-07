@@ -1,18 +1,20 @@
 package nl.averageflow.joeswarehouse.requests;
 
+import java.util.UUID;
+
 public final class SellProductsRequestItem {
-    private String itemUid;
-    private Long amountOf;
+    private UUID itemUid;
+    private long amountOf;
 
     protected SellProductsRequestItem() {
     }
 
 
-    public String getItemUid() {
+    public UUID getItemUid() {
         return itemUid;
     }
 
-    public Long getAmountOf() {
+    public long getAmountOf() {
         return amountOf;
     }
 }

@@ -1,7 +1,7 @@
 package nl.averageflow.joeswarehouse.requests;
 
 public final class AddProductsRequestItem {
-    private Long itemId;
+    private long itemId;
     private String name;
     private Double price;
     private Iterable<AddProductsRequestArticleItem> containArticles;
@@ -11,7 +11,7 @@ public final class AddProductsRequestItem {
 
     }
 
-    public Long getItemId() {
+    public long getItemId() {
         return this.itemId;
     }
 

@@ -17,7 +17,7 @@ public final class Article {
     private UUID uid;
 
     @Column(name = "item_id", nullable = false)
-    private Long itemId;
+    private long itemId;
 
     @Column(name = "item_name", nullable = false)
     private String name;
@@ -57,8 +57,12 @@ public final class Article {
         return this.updatedAt;
     }
 
-    public Long getStock() {
+    public long getStock() {
         return this.stock.getStock();
+    }
+
+    public void performStockBooking(long amountOf) {
+        this.stock.setStock(this.getStock() - amountOf);
     }
 
 }

@@ -16,7 +16,7 @@ public final class ArticleStock {
     private UUID uid;
 
     @Column(name = "stock", nullable = false)
-    private Long stock;
+    private long stock;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "article_uid", nullable = false)
@@ -33,13 +33,17 @@ public final class ArticleStock {
     protected ArticleStock() {
     }
 
-    public ArticleStock(Article article, Long stock) {
+    public ArticleStock(Article article, long stock) {
         this.article = article;
         this.stock = stock;
     }
 
-    public Long getStock() {
+    public long getStock() {
         return this.stock;
+    }
+
+    public void setStock(long stock) {
+        this.stock = stock;
     }
 
 

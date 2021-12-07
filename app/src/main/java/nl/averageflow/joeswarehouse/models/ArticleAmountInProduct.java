@@ -25,7 +25,7 @@ public final class ArticleAmountInProduct implements Serializable {
     private Product product;
 
     @Column(name = "amount_of", nullable = false)
-    private Long amountOf;
+    private long amountOf;
 
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
@@ -38,7 +38,7 @@ public final class ArticleAmountInProduct implements Serializable {
     protected ArticleAmountInProduct() {
     }
 
-    public ArticleAmountInProduct(Product product, Article article, Long amountOf) {
+    public ArticleAmountInProduct(Product product, Article article, long amountOf) {
         this.product = product;
         this.article = article;
         this.amountOf = amountOf;
@@ -48,7 +48,7 @@ public final class ArticleAmountInProduct implements Serializable {
         return this.article;
     }
 
-    public Long getAmountOf() {
+    public long getAmountOf() {
         return this.amountOf;
     }
 

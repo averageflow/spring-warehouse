@@ -1,17 +1,17 @@
 package nl.averageflow.joeswarehouse.requests;
 
 public final class AddProductsRequestArticleItem {
-    private Long itemId;
-    private Long amountOf;
+    private long itemId;
+    private long amountOf;
 
     protected AddProductsRequestArticleItem() {
     }
 
-    public Long getItemId() {
+    public long getItemId() {
         return itemId;
     }
 
-    public Long getAmountOf() {
+    public long getAmountOf() {
         return amountOf;
     }
 }

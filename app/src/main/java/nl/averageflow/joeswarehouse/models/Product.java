@@ -20,7 +20,7 @@ public final class Product {
     private UUID uid;
 
     @Column(name = "item_id", nullable = false)
-    private Long itemId;
+    private long itemId;
 
     @Column(name = "item_name", nullable = false)
     private String name;
@@ -39,6 +39,7 @@ public final class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<ArticleAmountInProduct> articleProductRelation;
+
 
     protected Product() {
     }
@@ -69,12 +70,12 @@ public final class Product {
         return this.updatedAt;
     }
 
-    public Long getProductStock() {
+    public long getProductStock() {
         ArrayList<Long> amountOfProductsPossibleList = new ArrayList<>();
 
         articleProductRelation.forEach(articleAmountInProduct -> {
-            Long articleAmountNeeded = articleAmountInProduct.getAmountOf();
-            Long articleStockPresent = articleAmountInProduct.getArticle().getStock();
+            long articleAmountNeeded = articleAmountInProduct.getAmountOf();
+            long articleStockPresent = articleAmountInProduct.getArticle().getStock();
 
             if (articleStockPresent >= articleAmountNeeded) {
                 amountOfProductsPossibleList.add(articleStockPresent / articleAmountNeeded);
@@ -89,6 +90,7 @@ public final class Product {
                 .min(Comparator.naturalOrder())
                 .get();
     }
+
 
     public Set<ArticleAmountInProduct> getArticles() {
         return this.articleProductRelation;

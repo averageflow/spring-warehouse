@@ -8,10 +8,14 @@ import nl.averageflow.joeswarehouse.repositories.ProductRepository;
 import nl.averageflow.joeswarehouse.requests.AddProductRequest;
 import nl.averageflow.joeswarehouse.requests.AddProductsRequestItem;
 import nl.averageflow.joeswarehouse.requests.SellProductsRequest;
+import nl.averageflow.joeswarehouse.requests.SellProductsRequestItem;
 import nl.averageflow.joeswarehouse.responses.ProductResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -66,6 +70,31 @@ public final class ProductService {
     }
 
     public void sellProducts(SellProductsRequest request) {
+        Iterable<UUID> wantedUUIDs = StreamSupport.stream(request.getWantedItemsForSale().spliterator(), false)
+                .map(SellProductsRequestItem::getItemUid)
+                .collect(Collectors.toList());
+        HashMap<UUID, Long> wantedAmountsPerProduct = new HashMap<>();
+        StreamSupport.stream(request.getWantedItemsForSale().spliterator(), false).forEach(item -> {
+            wantedAmountsPerProduct.put(item.getItemUid(), item.getAmountOf());
+        });
 
+        Iterable<Product> wantedProducts = this.productRepository.findAllById(wantedUUIDs);
+
+        StreamSupport.stream(wantedProducts.spliterator(), false).forEach(wantedItemForSale -> {
+                    long wantedProductAmount = wantedAmountsPerProduct.get(wantedItemForSale.getUid());
+                    boolean isValidAmount = wantedItemForSale.getProductStock() < wantedProductAmount &&
+                            wantedItemForSale.getProductStock() - wantedProductAmount >= 0;
+
+                    if (!isValidAmount) {
+                        throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "not enough stock to perform sale");
+                    }
+
+                    wantedItemForSale.getArticles().forEach(articleAmountInProduct -> {
+                        articleAmountInProduct.getArticle().performStockBooking(articleAmountInProduct.getAmountOf());
+                    });
+
+                    this.productRepository.save(wantedItemForSale);
+                }
+        );
     }
 }

@@ -13,7 +13,7 @@ import java.util.UUID;
 @Repository
 public interface ArticleRepository extends CrudRepository<Article, UUID> {
     @NonNull
-    Optional<Article> findByItemId(@NonNull Long itemId);
+    Optional<Article> findByItemId(@NonNull long itemId);
 
     @NonNull
     Optional<Article> findByUid(@NonNull UUID uid);
