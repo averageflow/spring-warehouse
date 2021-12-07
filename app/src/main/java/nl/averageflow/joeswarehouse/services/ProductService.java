@@ -1,6 +1,9 @@
 package nl.averageflow.joeswarehouse.services;
 
+import nl.averageflow.joeswarehouse.models.ArticleAmountInProduct;
 import nl.averageflow.joeswarehouse.models.Product;
+import nl.averageflow.joeswarehouse.repositories.ArticleRepository;
+import nl.averageflow.joeswarehouse.repositories.ProductArticleRepository;
 import nl.averageflow.joeswarehouse.repositories.ProductRepository;
 import nl.averageflow.joeswarehouse.requests.AddProductRequest;
 import nl.averageflow.joeswarehouse.requests.AddProductsRequestItem;
@@ -18,12 +21,26 @@ public final class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ArticleRepository articleRepository;
+
+    @Autowired
+    private ProductArticleRepository productArticleRepository;
+
     private static List<Product> convertAddProductRequestToProductList(List<AddProductsRequestItem> rawItems) {
-        return rawItems.stream().map(ProductService::productRequestItemConverter).collect(Collectors.toList());
+        return rawItems.stream().map(Product::new).collect(Collectors.toList());
     }
 
-    private static Product productRequestItemConverter(AddProductsRequestItem item) {
-        return new Product(item);
+    private List<List<ArticleAmountInProduct>> convertAddProductArticleRequestToList(List<AddProductsRequestItem> rawItems) {
+        return rawItems.stream().map(
+                item -> item.getContainArticles().stream().map(
+                        articleItem -> new ArticleAmountInProduct(
+                                this.productRepository.findById(item.getItemId()).get(),
+                                this.articleRepository.findById(articleItem.getItemId()).get(),
+                                articleItem.getAmountOf()
+                        )
+                ).collect(Collectors.toList())
+        ).collect(Collectors.toList());
     }
 
     public ProductResponse getProducts() {
@@ -41,5 +58,8 @@ public final class ProductService {
     public void addProducts(AddProductRequest request) {
         List<Product> convertedProducts = convertAddProductRequestToProductList(request.getProducts());
         this.productRepository.saveAll(convertedProducts);
+
+        List<List<ArticleAmountInProduct>> convertedArticleProductRelations = convertAddProductArticleRequestToList(request.getProducts());
+        convertedArticleProductRelations.forEach(item -> this.productArticleRepository.saveAll(item));
     }
 }

@@ -3,8 +3,9 @@ package nl.averageflow.joeswarehouse.requests;
 import java.util.List;
 
 public final class AddProductsRequestItem {
-    private String itemId;
+    private Long itemId;
     private String name;
+    private Double price;
     private List<AddProductsRequestArticleItem> containArticles;
 
 
@@ -12,12 +13,16 @@ public final class AddProductsRequestItem {
 
     }
 
-    public String getItemId() {
-        return itemId;
+    public Long getItemId() {
+        return this.itemId;
+    }
+
+    public Double getPrice() {
+        return this.price;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public List<AddProductsRequestArticleItem> getContainArticles() {

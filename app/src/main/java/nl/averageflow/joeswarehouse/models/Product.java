@@ -48,6 +48,9 @@ public final class Product {
     }
 
     public Product(AddProductsRequestItem item) {
+        this.itemId = item.getItemId();
+        this.name = item.getName();
+        this.price = item.getPrice();
     }
 
     public UUID getUid() {

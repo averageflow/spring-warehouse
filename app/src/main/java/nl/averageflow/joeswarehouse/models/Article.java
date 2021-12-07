@@ -45,9 +45,8 @@ public final class Article {
     }
 
     public Article(AddArticlesRequestItem rawItem) {
-        this.itemId = Long.parseLong(rawItem.getArt_id());
+        this.itemId = rawItem.getItemId();
         this.name = rawItem.getName();
-        // this.stock = new ArticleStock(this.id, Long.valueOf(rawItem.getStock()), this.createdAt);
     }
 
     public UUID getUid() {

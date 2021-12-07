@@ -40,8 +40,8 @@ public final class ArticleStock {
     }
 
     public ArticleStock(AddArticlesRequestItem rawItem) {
-        this.articleId = Long.valueOf(rawItem.getArt_id());
-        this.stock = Long.valueOf(rawItem.getStock());
+        this.articleId = rawItem.getItemId();
+        this.stock = rawItem.getStock();
     }
 
     public Long getStock() {

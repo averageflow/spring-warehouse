@@ -42,6 +42,15 @@ public final class ArticleAmountInProduct implements Serializable {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
+    protected ArticleAmountInProduct() {
+    }
+
+    public ArticleAmountInProduct(Product product, Article article, Long amountOf) {
+        this.product = product;
+        this.article = article;
+        this.amountOf = amountOf;
+    }
+
     public Article getArticle() {
         return this.article;
     }
