@@ -82,8 +82,9 @@ public final class ProductService {
 
         StreamSupport.stream(wantedProducts.spliterator(), false).forEach(wantedItemForSale -> {
                     long wantedProductAmount = wantedAmountsPerProduct.get(wantedItemForSale.getUid());
-                    boolean isValidAmount = wantedItemForSale.getProductStock() < wantedProductAmount &&
-                            wantedItemForSale.getProductStock() - wantedProductAmount >= 0;
+                    boolean isValidAmount = wantedItemForSale.getProductStock() >= wantedProductAmount &&
+                            wantedItemForSale.getProductStock() - wantedProductAmount >= 0 &&
+                            wantedItemForSale.getProductStock() > 0;
 
                     if (!isValidAmount) {
                         throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "not enough stock to perform sale");
