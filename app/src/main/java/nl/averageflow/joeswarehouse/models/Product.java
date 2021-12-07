@@ -73,7 +73,7 @@ public final class Product {
     public long getProductStock() {
         ArrayList<Long> amountOfProductsPossibleList = new ArrayList<>();
 
-        articleProductRelation.forEach(articleAmountInProduct -> {
+        this.articleProductRelation.forEach(articleAmountInProduct -> {
             long articleAmountNeeded = articleAmountInProduct.getAmountOf();
             long articleStockPresent = articleAmountInProduct.getArticle().getStock();
 
@@ -82,9 +82,10 @@ public final class Product {
             }
         });
 
-        if (amountOfProductsPossibleList.size() == 0) {
+        if (amountOfProductsPossibleList.size() != this.articleProductRelation.size()) {
             return 0L;
         }
+
 
         return amountOfProductsPossibleList.stream()
                 .min(Comparator.naturalOrder())
