@@ -22,7 +22,7 @@ public final class Article {
     @Column(name = "item_name", nullable = false)
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true, mappedBy = "article")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "article")
     private ArticleStock stock;
 
     @Column(name = "created_at", nullable = false)

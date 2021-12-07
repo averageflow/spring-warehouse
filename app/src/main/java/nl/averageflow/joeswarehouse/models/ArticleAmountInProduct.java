@@ -20,7 +20,7 @@ public final class ArticleAmountInProduct implements Serializable {
     @JoinColumn(name = "article_uid", nullable = false)
     private Article article;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_uid", nullable = false)
     private Product product;
 

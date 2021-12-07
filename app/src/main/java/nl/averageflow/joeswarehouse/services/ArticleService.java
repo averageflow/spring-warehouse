@@ -4,6 +4,7 @@ import nl.averageflow.joeswarehouse.models.Article;
 import nl.averageflow.joeswarehouse.models.ArticleStock;
 import nl.averageflow.joeswarehouse.repositories.ArticleRepository;
 import nl.averageflow.joeswarehouse.repositories.ArticleStocksRepository;
+import nl.averageflow.joeswarehouse.repositories.ProductArticleRepository;
 import nl.averageflow.joeswarehouse.requests.AddArticlesRequestItem;
 import nl.averageflow.joeswarehouse.responses.ArticleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public final class ArticleService {
 
     @Autowired
     private ArticleStocksRepository articleStocksRepository;
+
+    @Autowired
+    private ProductArticleRepository productArticleRepository;
 
     public static List<Article> convertAddArticleRequestToMappedList(List<AddArticlesRequestItem> rawItems) {
         return rawItems.stream().map(ArticleService::articleRequestItemConverter).collect(Collectors.toList());
@@ -56,6 +60,8 @@ public final class ArticleService {
     }
 
     public void deleteArticleByUid(UUID uid) {
+        this.productArticleRepository.deleteByArticleUid(uid);
+        this.articleStocksRepository.deleteByArticleUid(uid);
         this.articleRepository.deleteByUid(uid);
     }
 }
