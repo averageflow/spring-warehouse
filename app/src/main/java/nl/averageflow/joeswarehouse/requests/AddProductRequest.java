@@ -1,16 +1,14 @@
 package nl.averageflow.joeswarehouse.requests;
 
-import java.util.List;
-
 public final class AddProductRequest {
 
-    private List<AddProductsRequestItem> products;
+    private Iterable<AddProductsRequestItem> products;
 
     protected AddProductRequest() {
     }
 
-    public List<AddProductsRequestItem> getProducts() {
+    public Iterable<AddProductsRequestItem> getProducts() {
         return this.products;
     }
-    
+
 }

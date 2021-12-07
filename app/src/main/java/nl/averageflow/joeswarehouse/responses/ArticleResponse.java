@@ -2,16 +2,19 @@ package nl.averageflow.joeswarehouse.responses;
 
 import nl.averageflow.joeswarehouse.models.Article;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.UUID;
 
 public final class ArticleResponse {
     private final HashMap<UUID, Article> data;
 
-    private final List<UUID> sort;
+    private final Iterable<UUID> sort;
 
     public ArticleResponse(Set<Article> data) {
         HashMap<UUID, Article> dataMap = new HashMap<>();
-        List<UUID> dataSort = new ArrayList<>();
+        ArrayList<UUID> dataSort = new ArrayList<>();
 
         for (Article article : data) {
             dataMap.put(article.getUid(), article);
@@ -26,7 +29,7 @@ public final class ArticleResponse {
         return this.data;
     }
 
-    public List<UUID> getSort() {
+    public Iterable<UUID> getSort() {
         return this.sort;
     }
 }

@@ -1,14 +1,12 @@
 package nl.averageflow.joeswarehouse.requests;
 
-import java.util.List;
-
 public final class AddArticlesRequest {
-    private List<AddArticlesRequestItem> inventory;
+    private Iterable<AddArticlesRequestItem> inventory;
 
     protected AddArticlesRequest() {
     }
 
-    public List<AddArticlesRequestItem> getInventory() {
+    public Iterable<AddArticlesRequestItem> getInventory() {
         return this.inventory;
     }
 

@@ -10,10 +10,10 @@ import nl.averageflow.joeswarehouse.responses.ArticleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public final class ArticleService {
@@ -27,16 +27,18 @@ public final class ArticleService {
     @Autowired
     private ProductArticleRepository productArticleRepository;
 
-    public static List<Article> convertAddArticleRequestToMappedList(List<AddArticlesRequestItem> rawItems) {
-        return rawItems.stream().map(ArticleService::articleRequestItemConverter).collect(Collectors.toList());
+    public static Iterable<Article> convertAddArticleRequestToMappedList(Iterable<AddArticlesRequestItem> rawItems) {
+        return StreamSupport.stream(rawItems.spliterator(), false).map(ArticleService::articleRequestItemConverter).collect(Collectors.toList());
     }
 
     private static Article articleRequestItemConverter(AddArticlesRequestItem rawItem) {
         return new Article(rawItem);
     }
 
-    public List<ArticleStock> convertAddArticleStockRequestToMappedList(List<AddArticlesRequestItem> rawItems) {
-        return rawItems.stream().map(this::articleRequestItemStockConverter).collect(Collectors.toList());
+    public Iterable<ArticleStock> convertAddArticleStockRequestToMappedList(Iterable<AddArticlesRequestItem> rawItems) {
+        return StreamSupport.stream(rawItems.spliterator(), false)
+                .map(this::articleRequestItemStockConverter)
+                .collect(Collectors.toList());
     }
 
     private ArticleStock articleRequestItemStockConverter(AddArticlesRequestItem rawItem) {
@@ -51,11 +53,11 @@ public final class ArticleService {
         return this.articleRepository.findByUid(uid);
     }
 
-    public void addArticles(List<AddArticlesRequestItem> rawItems) {
-        List<Article> convertedArticles = convertAddArticleRequestToMappedList(rawItems);
+    public void addArticles(Iterable<AddArticlesRequestItem> rawItems) {
+        Iterable<Article> convertedArticles = convertAddArticleRequestToMappedList(rawItems);
         this.articleRepository.saveAll(convertedArticles);
 
-        List<ArticleStock> convertedArticleStock = convertAddArticleStockRequestToMappedList(rawItems);
+        Iterable<ArticleStock> convertedArticleStock = convertAddArticleStockRequestToMappedList(rawItems);
         this.articleStocksRepository.saveAll(convertedArticleStock);
     }
 

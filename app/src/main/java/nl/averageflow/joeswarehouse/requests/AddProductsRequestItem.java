@@ -1,12 +1,10 @@
 package nl.averageflow.joeswarehouse.requests;
 
-import java.util.List;
-
 public final class AddProductsRequestItem {
     private Long itemId;
     private String name;
     private Double price;
-    private List<AddProductsRequestArticleItem> containArticles;
+    private Iterable<AddProductsRequestArticleItem> containArticles;
 
 
     protected AddProductsRequestItem() {
@@ -25,7 +23,7 @@ public final class AddProductsRequestItem {
         return this.name;
     }
 
-    public List<AddProductsRequestArticleItem> getContainArticles() {
+    public Iterable<AddProductsRequestArticleItem> getContainArticles() {
         return containArticles;
     }
 }

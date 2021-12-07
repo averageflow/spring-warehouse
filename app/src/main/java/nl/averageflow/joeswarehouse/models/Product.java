@@ -6,7 +6,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.UUID;
 
 @Table(name = "products")
 @Entity
@@ -67,7 +70,7 @@ public final class Product {
     }
 
     public Long getProductStock() {
-        List<Long> amountOfProductsPossibleList = new ArrayList<Long>();
+        ArrayList<Long> amountOfProductsPossibleList = new ArrayList<>();
 
         articleProductRelation.forEach(articleAmountInProduct -> {
             Long articleAmountNeeded = articleAmountInProduct.getAmountOf();
