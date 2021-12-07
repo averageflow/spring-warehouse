@@ -1,5 +1,6 @@
 package nl.averageflow.joeswarehouse.models;
 
+import nl.averageflow.joeswarehouse.requests.AddProductsRequestItem;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
@@ -44,6 +45,9 @@ public final class Product {
     private Set<ArticleAmountInProduct> articleProductRelation;
 
     protected Product() {
+    }
+
+    public Product(AddProductsRequestItem item) {
     }
 
     public UUID getUid() {

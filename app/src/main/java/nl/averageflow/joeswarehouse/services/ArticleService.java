@@ -22,6 +22,22 @@ public final class ArticleService {
     @Autowired
     private ArticleStocksRepository articleStocksRepository;
 
+    public static List<Article> convertAddArticleRequestToMappedList(List<AddArticlesRequestItem> rawItems) {
+        return rawItems.stream().map(ArticleService::articleRequestItemConverter).collect(Collectors.toList());
+    }
+
+    public static List<ArticleStock> convertAddArticleStockRequestToMappedList(List<AddArticlesRequestItem> rawItems) {
+        return rawItems.stream().map(ArticleService::articleRequestItemStockConverter).collect(Collectors.toList());
+    }
+
+    private static Article articleRequestItemConverter(AddArticlesRequestItem rawItem) {
+        return new Article(rawItem);
+    }
+
+    private static ArticleStock articleRequestItemStockConverter(AddArticlesRequestItem rawItem) {
+        return new ArticleStock(rawItem);
+    }
+
     public ArticleResponse getArticles() {
         return new ArticleResponse(this.articleRepository.findAll());
     }
@@ -30,29 +46,12 @@ public final class ArticleService {
         return this.articleRepository.findById(id);
     }
 
-    public List<Article> convertAddArticleRequestToMappedList(List<AddArticlesRequestItem> rawItems) {
-        return rawItems.stream().map(this::articleRequestItemConverter).collect(Collectors.toList());
-    }
-
-    public List<ArticleStock> convertAddArticleStockRequestToMappedList(List<AddArticlesRequestItem> rawItems) {
-        return rawItems.stream().map(this::articleRequestItemStockConverter).collect(Collectors.toList());
-    }
-
-    private Article articleRequestItemConverter(AddArticlesRequestItem rawItem) {
-        return new Article(rawItem);
-    }
-
-    private ArticleStock articleRequestItemStockConverter(AddArticlesRequestItem rawItem) {
-        return new ArticleStock(rawItem);
-    }
-
     public void addArticles(List<AddArticlesRequestItem> rawItems) {
-        List<Article> convertedArticles = this.convertAddArticleRequestToMappedList(rawItems);
+        List<Article> convertedArticles = convertAddArticleRequestToMappedList(rawItems);
         this.articleRepository.saveAll(convertedArticles);
 
-        List<ArticleStock> convertedArticleStock = this.convertAddArticleStockRequestToMappedList(rawItems);
+        List<ArticleStock> convertedArticleStock = convertAddArticleStockRequestToMappedList(rawItems);
         this.articleStocksRepository.saveAll(convertedArticleStock);
-
     }
 
     public void deleteArticleByID(Long id) {

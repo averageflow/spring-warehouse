@@ -8,26 +8,19 @@ public final class AddProductsRequestItem {
     private List<AddProductsRequestArticleItem> containArticles;
 
 
-    /*
-    *
-    *
-    *
-    * "item_id": "1",
-            "name": "Dining Chair",
-						"price": 99.99,
-            "contain_articles": [
-                {
-                    "art_id": "1",
-                    "amount_of": "4"
-                },
-                {
-                    "art_id": "2",
-                    "amount_of": "8"
-                },
-                {
-                    "art_id": "3",
-                    "amount_of": "1"
-                }
-            ]
-    * */
+    protected AddProductsRequestItem() {
+
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<AddProductsRequestArticleItem> getContainArticles() {
+        return containArticles;
+    }
 }
