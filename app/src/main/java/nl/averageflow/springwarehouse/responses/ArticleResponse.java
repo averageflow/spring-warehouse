@@ -12,7 +12,7 @@ public final class ArticleResponse {
 
     private final Iterable<UUID> sort;
 
-    public ArticleResponse(Set<Article> data) {
+    public ArticleResponse(Iterable<Article> data) {
         HashMap<UUID, Article> dataMap = new HashMap<>();
         ArrayList<UUID> dataSort = new ArrayList<>();
 

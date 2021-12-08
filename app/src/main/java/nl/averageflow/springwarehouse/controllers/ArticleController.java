@@ -5,6 +5,8 @@ import nl.averageflow.springwarehouse.requests.AddArticlesRequest;
 import nl.averageflow.springwarehouse.responses.ArticleResponse;
 import nl.averageflow.springwarehouse.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -18,8 +20,8 @@ public final class ArticleController {
     private ArticleService articleService;
 
     @GetMapping("/api/articles")
-    public ArticleResponse getArticles() {
-        return this.articleService.getArticles();
+    public Page<Article> getArticles(Pageable pageable) {
+        return this.articleService.getArticles(pageable);
     }
 
     @GetMapping("/api/articles/{uid}")

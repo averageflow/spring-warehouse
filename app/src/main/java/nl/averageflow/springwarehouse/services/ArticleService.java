@@ -8,6 +8,8 @@ import nl.averageflow.springwarehouse.repositories.ProductArticleRepository;
 import nl.averageflow.springwarehouse.requests.AddArticlesRequestItem;
 import nl.averageflow.springwarehouse.responses.ArticleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -45,8 +47,8 @@ public final class ArticleService {
         return new ArticleStock(this.articleRepository.findByItemId(rawItem.getItemId()).get(), rawItem.getStock());
     }
 
-    public ArticleResponse getArticles() {
-        return new ArticleResponse(this.articleRepository.findAll());
+    public Page<Article> getArticles(Pageable pageable) {
+        return this.articleRepository.findAll(pageable);
     }
 
     public Optional<Article> getArticleByUid(UUID uid) {

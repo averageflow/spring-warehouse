@@ -6,6 +6,8 @@ import nl.averageflow.springwarehouse.requests.SellProductsRequest;
 import nl.averageflow.springwarehouse.responses.ProductResponse;
 import nl.averageflow.springwarehouse.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -19,8 +21,8 @@ public final class ProductController {
     private ProductService productService;
 
     @GetMapping("/api/products")
-    public ProductResponse getProducts() {
-        return this.productService.getProducts();
+    public Page<Product> getProducts(Pageable pageable) {
+        return this.productService.getProducts(pageable);
     }
 
     @GetMapping("/api/products/{uid}")

@@ -1,5 +1,6 @@
 package nl.averageflow.springwarehouse.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import nl.averageflow.springwarehouse.requests.AddProductsRequestItem;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -37,7 +38,7 @@ public final class Product {
     private Timestamp updatedAt;
 
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ArticleAmountInProduct> articleProductRelation;
 
 

@@ -2,6 +2,7 @@ package nl.averageflow.springwarehouse.repositories;
 
 import nl.averageflow.springwarehouse.models.Product;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Repository
-public interface ProductRepository extends CrudRepository<Product, UUID> {
+public interface ProductRepository extends PagingAndSortingRepository<Product, UUID> {
     @NonNull
     Optional<Product> findByItemId(@NonNull long itemId);
 

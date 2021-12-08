@@ -9,8 +9,9 @@ import nl.averageflow.springwarehouse.requests.AddProductRequest;
 import nl.averageflow.springwarehouse.requests.AddProductsRequestItem;
 import nl.averageflow.springwarehouse.requests.SellProductsRequest;
 import nl.averageflow.springwarehouse.requests.SellProductsRequestItem;
-import nl.averageflow.springwarehouse.responses.ProductResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -49,8 +50,8 @@ public final class ProductService {
                 ).collect(Collectors.toList());
     }
 
-    public ProductResponse getProducts() {
-        return new ProductResponse(this.productRepository.findAll());
+    public Page<Product> getProducts(Pageable pageable) {
+        return this.productRepository.findAll(pageable);
     }
 
     public Optional<Product> getProductByUid(UUID uid) {
