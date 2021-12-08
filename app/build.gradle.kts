@@ -46,3 +46,9 @@ application {
     // Define the main class for the application.
     mainClass.set("nl.averageflow.springwarehouse.SpringWarehouseApplication")
 }
+
+val jar by tasks.getting(Jar::class) {
+    manifest {
+        attributes["Main-Class"] = "nl.averageflow.springwarehouse.SpringWarehouseApplication"
+    }
+}
