@@ -25,6 +25,7 @@ services:
     ports:
       - 8080:8080
     command: sh -c '/wait-for.sh db:5432 -- /home/gradle/buildWorkspace/app/build/distributions/app/bin/app'
+    # command: /home/gradle/buildWorkspace/app/build/distributions/app/bin/app
     environment:
       "spring.main.banner-mode": "off"
       "logging.level.org.springframework": "ERROR"
