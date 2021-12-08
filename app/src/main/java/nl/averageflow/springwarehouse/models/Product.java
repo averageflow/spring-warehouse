@@ -1,5 +1,6 @@
 package nl.averageflow.springwarehouse.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import nl.averageflow.springwarehouse.requests.AddProductsRequestItem;
@@ -75,7 +76,7 @@ public final class Product {
 
     public long getProductStock() {
         ArrayList<Long> amountOfProductsPossibleList = new ArrayList<>();
-        if(this.articleProductRelation == null){
+        if(this.articleProductRelation == null || articleProductRelation.isEmpty()){
             return 0L;
         }
 
@@ -93,9 +94,10 @@ public final class Product {
         }
 
 
-        return amountOfProductsPossibleList.stream()
+        Long smallestAmountPossible = amountOfProductsPossibleList.stream()
                 .min(Comparator.naturalOrder())
                 .get();
+        return smallestAmountPossible;
     }
 
 
