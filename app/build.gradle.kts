@@ -44,5 +44,5 @@ testing {
 
 application {
     // Define the main class for the application.
-    mainClass.set("nl.averageflow.joeswarehouse.JoeswarehouseApplication")
+    mainClass.set("nl.averageflow.springwarehouse.SpringWarehouseApplication")
 }

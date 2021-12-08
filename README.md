@@ -1,6 +1,6 @@
-# Joe's Warehouse Software
+# Spring Warehouse
 
-Joe's Warehouse Software is a Java Spring Boot application that has the purpose of managing products and articles in
+Spring Warehouse is a Java Spring Boot application that has the purpose of managing products and articles in
 your warehouse.
 
 ## Table of contents
@@ -42,7 +42,7 @@ This project was built using:
 
 To kickstart the application and all dependencies required for its operation, you should be running on a machine with
 Docker installed. Clone the project, or download the zip file with the source code
-from [the releases page](https://github.com/averageflow/joes-warehouse-java/releases) page.
+from [the releases page](https://github.com/averageflow/spring-warehouse/releases) page.
 
 ### Running for development
 
