@@ -3,13 +3,43 @@ version: '3.9'
 services:
   db:
     container_name: "PostgresWarehouseDB"
-    image: postgres:14.0-alpine
+    image: "postgres:14.0-alpine"
     restart: always
     environment:
       POSTGRES_USER: warehouse_user
       POSTGRES_PASSWORD: warehouse_user_password
       POSTGRES_DB: warehouse_db
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
-      - ./storage/migrations:/docker-entrypoint-initdb.d/
+      - "./storage/migrations:/docker-entrypoint-initdb.d/"
+  app:
+    container_name: "SpringWarehouse"
+    build:
+      dockerfile: Dockerfile
+      context: .
+    links:
+      - "db:database"
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+    command: /home/gradle/buildWorkspace/app/build/distributions/app/bin/app
+    environment:
+      "spring.main.banner-mode": "off"
+      "logging.level.org.springframework": "ERROR"
+      "spring.jpa.hibernate.ddl-auto": "none"
+      "spring.jpa.database-platform": "org.hibernate.dialect.PostgreSQLDialect"
+      "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.PostgreSQLDialect"
+      "spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation": "true"
+      "spring.datasource.initialization-mode": "always"
+      "spring.datasource.platform": "postgres"
+      "spring.datasource.url": "jdbc:postgresql://localhost:5432/warehouse_db"
+      "spring.datasource.username": "warehouse_user"
+      "spring.datasource.password": "warehouse_user_password"
+      # Log JPA queries
+      # Comment this in production
+      # "spring.jpa.show-sql": "true"
+
+
+
