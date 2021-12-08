@@ -1,9 +1,11 @@
 package nl.averageflow.springwarehouse.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import nl.averageflow.springwarehouse.requests.AddProductsRequestItem;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -73,6 +75,9 @@ public final class Product {
 
     public long getProductStock() {
         ArrayList<Long> amountOfProductsPossibleList = new ArrayList<>();
+        if(this.articleProductRelation == null){
+            return 0L;
+        }
 
         this.articleProductRelation.forEach(articleAmountInProduct -> {
             long articleAmountNeeded = articleAmountInProduct.getAmountOf();
@@ -92,6 +97,7 @@ public final class Product {
                 .min(Comparator.naturalOrder())
                 .get();
     }
+
 
 
     public Set<ArticleAmountInProduct> getArticles() {
