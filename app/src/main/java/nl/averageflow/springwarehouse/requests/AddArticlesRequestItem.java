@@ -8,6 +8,12 @@ public final class AddArticlesRequestItem {
     protected AddArticlesRequestItem() {
     }
 
+    public AddArticlesRequestItem(long itemId, String name, long stock) {
+        this.itemId = itemId;
+        this.name = name;
+        this.stock = stock;
+    }
+
     public long getItemId() {
         return this.itemId;
     }
