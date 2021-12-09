@@ -1,4 +1,4 @@
-name: Run Gradle Build on Push & PR
+name: Run Unit Tests on Push & PR
 
 on:
   push:
@@ -20,5 +20,5 @@ jobs:
       - uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 7.3
-          arguments: build
+          arguments: test
 
