@@ -28,6 +28,10 @@ In summary the application can:
 * Delete products from the warehouse
 * Delete articles from the warehouse
 
+You can view the API specification by using Postman, [see the collection here](https://www.postman.com/research-technologist-33289382/workspace/joe-s-development/collection/18682350-5647921b-838a-4471-a960-1a557b01ce39)
+and learn how to use the application endpoints.
+
+
 ### Technologies used
 
 This project was built using:
@@ -43,10 +47,11 @@ This project was built using:
 To kickstart the application and all dependencies required for its operation, you should be running on a machine with
 Docker installed. Clone the project, or download the zip file with the source code
 from [the releases page](https://github.com/averageflow/spring-warehouse/releases) page.
+Then all you need is to run `docker-compose up`, optionally `docker-compose up -d` for daemon behaviour.
 
 ### Running for development
 
-IntelliJ IDEA is recommended for this project. Gradle will need to be installed.
+IntelliJ IDEA is recommended for this project. Gradle will need to be installed. You can start it with `./gradlew run`.
 
 ### Additional information
 
@@ -58,10 +63,6 @@ stock. Products that are not composed of any article can always be sold. This is
 product is of "infinite stock".
 
 A list of transactions performed (sales) that have occurred can be obtained via the API and with the frontend.
-
-You can view the API specification by using
-Postman, [see the collection here](https://www.postman.com/research-technologist-33289382/workspace/joe-s-development/collection/18682350-5647921b-838a-4471-a960-1a557b01ce39)
-and learn how to use the application endpoints.
 
 Bear in mind if you want to add new products (products.json files), the articles which compose the product should
 obviously already be present in the database (using inventory.json files).
