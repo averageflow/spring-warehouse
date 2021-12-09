@@ -6,6 +6,7 @@ COPY . /home/gradle/buildWorkspace
 WORKDIR /home/gradle/buildWorkspace
 RUN rm /home/gradle/buildWorkspace/app/src/main/resources/application.properties
 RUN mv /home/gradle/buildWorkspace/app/src/main/resources/application-docker.properties /home/gradle/buildWorkspace/app/src/main/resources/application.properties
+RUN cat /home/gradle/buildWorkspace/app/src/main/resources/application.properties
 RUN gradle build --no-daemon
 RUN tar -xvf /home/gradle/buildWorkspace/app/build/distributions/app.tar
 EXPOSE 8080
