@@ -1,6 +1,7 @@
 package nl.averageflow.springwarehouse.controllers;
 
 import nl.averageflow.springwarehouse.models.Product;
+import nl.averageflow.springwarehouse.models.Transaction;
 import nl.averageflow.springwarehouse.requests.AddProductRequest;
 import nl.averageflow.springwarehouse.requests.EditProductRequest;
 import nl.averageflow.springwarehouse.requests.SellProductsRequest;
@@ -50,9 +51,9 @@ public final class ProductController {
     }
 
     @PatchMapping("/api/products/sell")
-    public void sellProducts(@RequestBody SellProductsRequest request) {
+    public Transaction sellProducts(@RequestBody SellProductsRequest request) {
         this.productService.sellProducts(request);
-        //this.transactionService.createTransaction(request);
+        return this.transactionService.createTransaction(request);
     }
 
 

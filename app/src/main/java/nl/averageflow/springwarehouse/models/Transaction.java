@@ -26,12 +26,13 @@ public final class Transaction {
     @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<TransactionProduct> transactionProducts;
 
-    protected Transaction() {
+    public Transaction(){
+
     }
 
-//    public Transaction(SellProductsRequest request){
-//        request.getWantedItemsForSale()
-//    }
+    public Transaction(SellProductsRequest request){
+
+    }
 
     public UUID getUid() {
         return this.uid;
@@ -43,5 +44,9 @@ public final class Transaction {
 
     public Set<TransactionProduct> getTransactionProducts() {
         return transactionProducts;
+    }
+
+    public void setTransactionProducts(Set<TransactionProduct> transactionProducts) {
+        this.transactionProducts = transactionProducts;
     }
 }

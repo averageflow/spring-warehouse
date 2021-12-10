@@ -35,6 +35,11 @@ public final class TransactionProduct {
 
     protected TransactionProduct(){}
 
+    public TransactionProduct(Transaction transaction, Product product, long amountOf){
+        this.transaction = transaction;
+        this.product = product;
+        this.amountOf = amountOf;
+    }
 
     @NonNull
     public UUID getUid() {
