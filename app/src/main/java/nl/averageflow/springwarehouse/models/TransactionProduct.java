@@ -8,16 +8,16 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
-@Table(name="transaction_products")
+@Table(name = "transaction_products")
 public final class TransactionProduct {
     @Id
     @NonNull
     @GeneratedValue
-    @Column(name="uid")
+    @Column(name = "uid")
     private UUID uid;
 
     @ManyToOne
-    @JoinColumn(name="product_uid", nullable = false)
+    @JoinColumn(name = "product_uid", nullable = false)
     private Product product;
 
     @ManyToOne
@@ -25,7 +25,7 @@ public final class TransactionProduct {
     private Transaction transaction;
 
     @NonNull
-    @Column(name="amount_of")
+    @Column(name = "amount_of")
     private Long amountOf;
 
     @NonNull
@@ -33,9 +33,10 @@ public final class TransactionProduct {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    protected TransactionProduct(){}
+    protected TransactionProduct() {
+    }
 
-    public TransactionProduct(Transaction transaction, Product product, long amountOf){
+    public TransactionProduct(Transaction transaction, Product product, long amountOf) {
         this.transaction = transaction;
         this.product = product;
         this.amountOf = amountOf;

@@ -12,12 +12,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -39,7 +37,7 @@ public final class TransactionService {
         return this.transactionRepository.findByUid(uid);
     }
 
-    public Transaction createTransaction(SellProductsRequest request){
+    public Transaction createTransaction(SellProductsRequest request) {
         Transaction transaction = new Transaction();
 
         HashMap<UUID, Long> wantedProductAmounts = new HashMap<>();
@@ -52,12 +50,12 @@ public final class TransactionService {
 
         Iterable<Product> wantedProducts = this.productRepository.findAllById(wantedProductUUIDs);
 
-        if(StreamSupport.stream(wantedProducts.spliterator(), false).count() != wantedProductUUIDs.size()){
+        if (StreamSupport.stream(wantedProducts.spliterator(), false).count() != wantedProductUUIDs.size()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted item to perform sale operation on");
         }
 
         Set<TransactionProduct> transactionProducts = StreamSupport.stream(wantedProducts.spliterator(), false)
-                        .map(item -> new TransactionProduct(transaction, item, wantedProductAmounts.get(item.getUid())))
+                .map(item -> new TransactionProduct(transaction, item, wantedProductAmounts.get(item.getUid())))
                 .collect(Collectors.toSet());
 
         transaction.setTransactionProducts(transactionProducts);

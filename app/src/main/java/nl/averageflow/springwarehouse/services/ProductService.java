@@ -82,12 +82,12 @@ public final class ProductService {
         Iterable<Product> wantedProducts = this.productRepository.findAllById(wantedUUIDs);
 
         StreamSupport.stream(wantedProducts.spliterator(), false).forEach(wantedItemForSale -> {
-                this.reserveItemStock( wantedAmountsPerProduct.get(wantedItemForSale.getUid()), wantedItemForSale);
-            }
+                    this.reserveItemStock(wantedAmountsPerProduct.get(wantedItemForSale.getUid()), wantedItemForSale);
+                }
         );
     }
 
-    private void reserveItemStock(long wantedProductAmount, Product product){
+    private void reserveItemStock(long wantedProductAmount, Product product) {
         long productStock = product.getProductStock();
         boolean isValidAmount = productStock >= wantedProductAmount &&
                 productStock - wantedProductAmount >= 0 &&

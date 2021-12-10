@@ -26,11 +26,11 @@ public final class Transaction {
     @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<TransactionProduct> transactionProducts;
 
-    public Transaction(){
+    public Transaction() {
 
     }
 
-    public Transaction(SellProductsRequest request){
+    public Transaction(SellProductsRequest request) {
 
     }
 

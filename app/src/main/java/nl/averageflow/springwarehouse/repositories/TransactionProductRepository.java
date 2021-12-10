@@ -1,6 +1,5 @@
 package nl.averageflow.springwarehouse.repositories;
 
-import nl.averageflow.springwarehouse.models.ArticleStock;
 import nl.averageflow.springwarehouse.models.TransactionProduct;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.lang.NonNull;
@@ -10,7 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Repository
-public interface TransactionProductRepository extends CrudRepository<TransactionProduct, UUID>  {
+public interface TransactionProductRepository extends CrudRepository<TransactionProduct, UUID> {
     @NonNull
     Set<TransactionProduct> findAll();
 }
