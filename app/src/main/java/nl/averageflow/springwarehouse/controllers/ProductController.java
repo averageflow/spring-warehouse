@@ -32,8 +32,8 @@ public final class ProductController {
     }
 
     @PostMapping("/api/products")
-    public void addProducts(@RequestBody AddProductRequest request) {
-        this.productService.addProducts(request);
+    public Iterable<Product> addProducts(@RequestBody AddProductRequest request) {
+        return this.productService.addProducts(request);
     }
 
     @DeleteMapping("/api/products/{uid}")
@@ -42,8 +42,8 @@ public final class ProductController {
     }
 
     @PatchMapping("/api/products/{uid}")
-    public void editProduct(@PathVariable UUID uid, @RequestBody EditProductRequest request) {
-        this.productService.editProduct(uid, request);
+    public Product editProduct(@PathVariable UUID uid, @RequestBody EditProductRequest request) {
+        return this.productService.editProduct(uid, request);
     }
 
     @PatchMapping("/api/products/sell")

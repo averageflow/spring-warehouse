@@ -1,7 +1,10 @@
 package nl.averageflow.springwarehouse.controllers;
 
 import nl.averageflow.springwarehouse.models.Article;
+import nl.averageflow.springwarehouse.models.ArticleStock;
 import nl.averageflow.springwarehouse.requests.AddArticlesRequest;
+import nl.averageflow.springwarehouse.requests.EditArticleRequest;
+import nl.averageflow.springwarehouse.requests.EditProductRequest;
 import nl.averageflow.springwarehouse.responses.ArticleResponse;
 import nl.averageflow.springwarehouse.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +33,13 @@ public final class ArticleController {
     }
 
     @PostMapping("/api/articles")
-    public void addArticles(@RequestBody AddArticlesRequest request) {
-        this.articleService.addArticles(request.getInventory());
+    public Iterable<Article> addArticles(@RequestBody AddArticlesRequest request) {
+        return this.articleService.addArticles(request.getInventory());
+    }
+
+    @PatchMapping("/api/articles/{uid}")
+    public Article editProduct(@PathVariable UUID uid, @RequestBody EditArticleRequest request) {
+        return this.articleService.editArticle(uid, request);
     }
 
     @DeleteMapping("/api/articles/{uid}")
