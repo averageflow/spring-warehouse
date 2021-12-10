@@ -2,6 +2,7 @@ package nl.averageflow.springwarehouse.services;
 
 import nl.averageflow.springwarehouse.models.Transaction;
 import nl.averageflow.springwarehouse.repositories.TransactionRepository;
+import nl.averageflow.springwarehouse.requests.SellProductsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,4 +23,10 @@ public final class TransactionService {
     public Optional<Transaction> getTransactionByUid(UUID uid) {
         return this.transactionRepository.findByUid(uid);
     }
+
+//    public Transaction createTransaction(SellProductsRequest request){
+//        Transaction transaction = new Transaction();
+//
+//        this.transactionRepository.save(transaction);
+//    }
 }

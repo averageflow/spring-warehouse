@@ -73,6 +73,7 @@ public final class ProductService {
         Iterable<UUID> wantedUUIDs = StreamSupport.stream(request.getWantedItemsForSale().spliterator(), false)
                 .map(SellProductsRequestItem::getItemUid)
                 .collect(Collectors.toList());
+
         HashMap<UUID, Long> wantedAmountsPerProduct = new HashMap<>();
         StreamSupport.stream(request.getWantedItemsForSale().spliterator(), false).forEach(item -> {
             wantedAmountsPerProduct.put(item.getItemUid(), item.getAmountOf());
@@ -81,25 +82,28 @@ public final class ProductService {
         Iterable<Product> wantedProducts = this.productRepository.findAllById(wantedUUIDs);
 
         StreamSupport.stream(wantedProducts.spliterator(), false).forEach(wantedItemForSale -> {
-                    long wantedProductAmount = wantedAmountsPerProduct.get(wantedItemForSale.getUid());
-                    long productStock = wantedItemForSale.getProductStock();
-                    boolean isValidAmount = productStock >= wantedProductAmount &&
-                            productStock - wantedProductAmount >= 0 &&
-                            productStock > 0;
-
-                    if (!isValidAmount) {
-                        throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "not enough stock to perform sale");
-                    }
-
-
-                    wantedItemForSale.getArticles().forEach(articleAmountInProduct -> {
-                        long wantedArticleAmount = articleAmountInProduct.getAmountOf() * wantedProductAmount;
-                        articleAmountInProduct.getArticle().performStockBooking(wantedArticleAmount);
-                    });
-
-                    this.productRepository.save(wantedItemForSale);
-                }
+                this.reserveItemStock( wantedAmountsPerProduct.get(wantedItemForSale.getUid()), wantedItemForSale);
+            }
         );
+    }
+
+    private void reserveItemStock(long wantedProductAmount, Product product){
+        long productStock = product.getProductStock();
+        boolean isValidAmount = productStock >= wantedProductAmount &&
+                productStock - wantedProductAmount >= 0 &&
+                productStock > 0;
+
+        if (!isValidAmount) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "not enough stock to perform sale");
+        }
+
+
+        product.getArticles().forEach(articleAmountInProduct -> {
+            long wantedArticleAmount = articleAmountInProduct.getAmountOf() * wantedProductAmount;
+            articleAmountInProduct.getArticle().performStockBooking(wantedArticleAmount);
+        });
+
+        this.productRepository.save(product);
     }
 
     public Product editProduct(UUID uid, EditProductRequest request) {

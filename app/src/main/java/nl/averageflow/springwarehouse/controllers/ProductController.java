@@ -5,6 +5,7 @@ import nl.averageflow.springwarehouse.requests.AddProductRequest;
 import nl.averageflow.springwarehouse.requests.EditProductRequest;
 import nl.averageflow.springwarehouse.requests.SellProductsRequest;
 import nl.averageflow.springwarehouse.services.ProductService;
+import nl.averageflow.springwarehouse.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,9 @@ public final class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @GetMapping("/api/products")
     public Page<Product> getProducts(Pageable pageable) {
@@ -48,6 +52,7 @@ public final class ProductController {
     @PatchMapping("/api/products/sell")
     public void sellProducts(@RequestBody SellProductsRequest request) {
         this.productService.sellProducts(request);
+        //this.transactionService.createTransaction(request);
     }
 
 
