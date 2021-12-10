@@ -2,6 +2,7 @@ package nl.averageflow.springwarehouse.controllers;
 
 import nl.averageflow.springwarehouse.models.Product;
 import nl.averageflow.springwarehouse.requests.AddProductRequest;
+import nl.averageflow.springwarehouse.requests.EditProductRequest;
 import nl.averageflow.springwarehouse.requests.SellProductsRequest;
 import nl.averageflow.springwarehouse.responses.ProductResponse;
 import nl.averageflow.springwarehouse.services.ProductService;
@@ -31,8 +32,8 @@ public final class ProductController {
     }
 
     @PostMapping("/api/products")
-    public void addProducts(@RequestBody AddProductRequest request) {
-        this.productService.addProducts(request);
+    public Iterable<Product> addProducts(@RequestBody AddProductRequest request) {
+        return this.productService.addProducts(request);
     }
 
     @DeleteMapping("/api/products/{uid}")
@@ -40,8 +41,15 @@ public final class ProductController {
         this.productService.deleteProductByUid(uid);
     }
 
-    @PatchMapping("/api/products")
+    @PatchMapping("/api/products/{uid}")
+    public Product editProduct(@PathVariable UUID uid, @RequestBody EditProductRequest request) {
+        return this.productService.editProduct(uid, request);
+    }
+
+    @PatchMapping("/api/products/sell")
     public void sellProducts(@RequestBody SellProductsRequest request) {
         this.productService.sellProducts(request);
     }
+
+
 }

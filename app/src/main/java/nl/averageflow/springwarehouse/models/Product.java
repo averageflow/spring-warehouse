@@ -54,10 +54,19 @@ public final class Product {
         this.price = item.getPrice();
     }
 
+    public Product(Long itemId, String name, Double price) {
+        this.itemId = itemId;
+        this.name =  name;
+        this.price = price;
+    }
+
     public UUID getUid() {
         return this.uid;
     }
 
+    public Long getItemId(){
+        return this.itemId;
+    }
     public String getName() {
         return this.name;
     }
@@ -104,6 +113,14 @@ public final class Product {
 
     public Set<ArticleAmountInProduct> getArticles() {
         return this.articleProductRelation;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setPrice(Double price){
+        this.price = price;
     }
 
 }

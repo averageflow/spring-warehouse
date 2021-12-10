@@ -5,10 +5,7 @@ import nl.averageflow.springwarehouse.models.Product;
 import nl.averageflow.springwarehouse.repositories.ArticleRepository;
 import nl.averageflow.springwarehouse.repositories.ProductArticleRepository;
 import nl.averageflow.springwarehouse.repositories.ProductRepository;
-import nl.averageflow.springwarehouse.requests.AddProductRequest;
-import nl.averageflow.springwarehouse.requests.AddProductsRequestItem;
-import nl.averageflow.springwarehouse.requests.SellProductsRequest;
-import nl.averageflow.springwarehouse.requests.SellProductsRequestItem;
+import nl.averageflow.springwarehouse.requests.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,12 +59,14 @@ public final class ProductService {
         this.productRepository.deleteByUid(uid);
     }
 
-    public void addProducts(AddProductRequest request) {
+    public Iterable<Product> addProducts(AddProductRequest request) {
         Iterable<Product> convertedProducts = convertAddProductRequestToProductList(request.getProducts());
         this.productRepository.saveAll(convertedProducts);
 
         Iterable<Iterable<ArticleAmountInProduct>> convertedArticleProductRelations = convertAddProductArticleRequestToList(request.getProducts());
         convertedArticleProductRelations.forEach(item -> this.productArticleRepository.saveAll(item));
+
+        return convertedProducts;
     }
 
     public void sellProducts(SellProductsRequest request) {
@@ -101,5 +100,20 @@ public final class ProductService {
                     this.productRepository.save(wantedItemForSale);
                 }
         );
+    }
+
+    public Product editProduct(UUID uid, EditProductRequest request){
+        Optional<Product> wantedProductSearchResult = this.productRepository.findByUid(uid);
+
+        if (wantedProductSearchResult.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID");
+        }
+
+        Product itemToUpdate = wantedProductSearchResult.get();
+
+        itemToUpdate.setName(request.getName());
+        itemToUpdate.setPrice(request.getPrice());
+
+        return this.productRepository.save(itemToUpdate);
     }
 }
