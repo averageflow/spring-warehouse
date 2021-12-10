@@ -1,11 +1,8 @@
 package nl.averageflow.springwarehouse.controllers;
 
 import nl.averageflow.springwarehouse.models.Article;
-import nl.averageflow.springwarehouse.models.ArticleStock;
 import nl.averageflow.springwarehouse.requests.AddArticlesRequest;
 import nl.averageflow.springwarehouse.requests.EditArticleRequest;
-import nl.averageflow.springwarehouse.requests.EditProductRequest;
-import nl.averageflow.springwarehouse.responses.ArticleResponse;
 import nl.averageflow.springwarehouse.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

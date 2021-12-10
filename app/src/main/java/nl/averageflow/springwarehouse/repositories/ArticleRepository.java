@@ -1,7 +1,6 @@
 package nl.averageflow.springwarehouse.repositories;
 
 import nl.averageflow.springwarehouse.models.Article;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;

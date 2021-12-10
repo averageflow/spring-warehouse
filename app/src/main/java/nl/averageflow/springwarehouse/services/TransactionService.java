@@ -2,7 +2,6 @@ package nl.averageflow.springwarehouse.services;
 
 import nl.averageflow.springwarehouse.models.Transaction;
 import nl.averageflow.springwarehouse.repositories.TransactionRepository;
-import nl.averageflow.springwarehouse.responses.TransactionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

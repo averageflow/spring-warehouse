@@ -4,7 +4,6 @@ import nl.averageflow.springwarehouse.models.Product;
 import nl.averageflow.springwarehouse.requests.AddProductRequest;
 import nl.averageflow.springwarehouse.requests.EditProductRequest;
 import nl.averageflow.springwarehouse.requests.SellProductsRequest;
-import nl.averageflow.springwarehouse.responses.ProductResponse;
 import nl.averageflow.springwarehouse.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

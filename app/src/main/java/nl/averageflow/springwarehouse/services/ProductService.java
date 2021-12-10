@@ -102,10 +102,10 @@ public final class ProductService {
         );
     }
 
-    public Product editProduct(UUID uid, EditProductRequest request){
+    public Product editProduct(UUID uid, EditProductRequest request) {
         Optional<Product> wantedProductSearchResult = this.productRepository.findByUid(uid);
 
-        if (wantedProductSearchResult.isEmpty()){
+        if (wantedProductSearchResult.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID");
         }
 

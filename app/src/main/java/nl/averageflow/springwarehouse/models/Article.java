@@ -49,6 +49,10 @@ public final class Article {
         return this.name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Timestamp getCreatedAt() {
         return this.createdAt;
     }
@@ -59,10 +63,6 @@ public final class Article {
 
     public long getStock() {
         return this.stock.getStock();
-    }
-
-    public void setName(String name){
-        this.name = name;
     }
 
     public void performStockBooking(long amountOf) {

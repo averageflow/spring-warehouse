@@ -67,11 +67,11 @@ public final class ArticleService {
         return convertedArticles;
     }
 
-    public Article editArticle(UUID uid, EditArticleRequest request){
+    public Article editArticle(UUID uid, EditArticleRequest request) {
         Optional<Article> wantedArticleSearchResult = this.articleRepository.findByUid(uid);
 
-        if(wantedArticleSearchResult.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,  "could not find item with wanted UUID");
+        if (wantedArticleSearchResult.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID");
         }
 
         Article itemToUpdate = wantedArticleSearchResult.get();

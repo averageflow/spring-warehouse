@@ -1,7 +1,6 @@
 package nl.averageflow.springwarehouse.controllers;
 
 import nl.averageflow.springwarehouse.models.Transaction;
-import nl.averageflow.springwarehouse.responses.TransactionResponse;
 import nl.averageflow.springwarehouse.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

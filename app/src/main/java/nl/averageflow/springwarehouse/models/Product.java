@@ -1,12 +1,8 @@
 package nl.averageflow.springwarehouse.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import nl.averageflow.springwarehouse.requests.AddProductsRequestItem;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -56,7 +52,7 @@ public final class Product {
 
     public Product(Long itemId, String name, Double price) {
         this.itemId = itemId;
-        this.name =  name;
+        this.name = name;
         this.price = price;
     }
 
@@ -64,15 +60,24 @@ public final class Product {
         return this.uid;
     }
 
-    public Long getItemId(){
+    public Long getItemId() {
         return this.itemId;
     }
+
     public String getName() {
         return this.name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Double getPrice() {
         return this.price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Timestamp getCreatedAt() {
@@ -85,7 +90,7 @@ public final class Product {
 
     public long getProductStock() {
         ArrayList<Long> amountOfProductsPossibleList = new ArrayList<>();
-        if(this.articleProductRelation == null || articleProductRelation.isEmpty()){
+        if (this.articleProductRelation == null || articleProductRelation.isEmpty()) {
             return 0L;
         }
 
@@ -109,18 +114,8 @@ public final class Product {
         return smallestAmountPossible;
     }
 
-
-
     public Set<ArticleAmountInProduct> getArticles() {
         return this.articleProductRelation;
-    }
-
-    public void setName(String name){
-        this.name = name;
-    }
-
-    public void setPrice(Double price){
-        this.price = price;
     }
 
 }
