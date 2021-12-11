@@ -6,6 +6,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -20,6 +21,9 @@ public interface ArticleRepository extends PagingAndSortingRepository<Article, U
 
     @NonNull
     Set<Article> findAll();
+
+    @NonNull
+    Set<Article> findAllByItemIdIn(Iterable<Long> itemIDs);
 
     @Transactional
     void deleteByUid(@NonNull UUID uid);

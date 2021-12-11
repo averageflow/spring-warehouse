@@ -36,8 +36,8 @@ public final class ProductController {
     }
 
     @PostMapping("/api/products")
-    public Iterable<Product> addProducts(@RequestBody AddProductRequest request) {
-        return this.productService.addProducts(request);
+    public void addProducts(@RequestBody AddProductRequest request) {
+        this.productService.addProducts(request);
     }
 
     @DeleteMapping("/api/products/{uid}")

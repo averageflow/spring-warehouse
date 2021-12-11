@@ -30,8 +30,8 @@ public final class ArticleController {
     }
 
     @PostMapping("/api/articles")
-    public Iterable<Article> addArticles(@RequestBody AddArticlesRequest request) {
-        return this.articleService.addArticles(request.getInventory());
+    public void addArticles(@RequestBody AddArticlesRequest request) {
+        this.articleService.addArticles(request.getInventory());
     }
 
     @PatchMapping("/api/articles/{uid}")

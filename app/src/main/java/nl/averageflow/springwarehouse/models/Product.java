@@ -1,15 +1,15 @@
 package nl.averageflow.springwarehouse.models;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.averageflow.springwarehouse.requests.AddProductsRequestItem;
+import nl.averageflow.springwarehouse.requests.ProductImagesData;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Table(name = "products")
 @Entity
@@ -24,6 +24,9 @@ public final class Product {
 
     @Column(name = "item_name", nullable = false)
     private String name;
+
+    @Column(name="image_urls")
+    private String imageURLs;
 
     @Column(name = "price", nullable = false)
     private Double price;
@@ -48,12 +51,14 @@ public final class Product {
         this.itemId = item.getItemId();
         this.name = item.getName();
         this.price = item.getPrice();
+        this.setImageURLs(item.getImageURLs());
     }
 
-    public Product(Long itemId, String name, Double price) {
+    public Product(Long itemId, String name, Double price, Iterable<String> imageURLs) {
         this.itemId = itemId;
         this.name = name;
         this.price = price;
+        this.setImageURLs(imageURLs);
     }
 
     public UUID getUid() {
@@ -78,6 +83,16 @@ public final class Product {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public void setImageURLs(Iterable<String> imageURLs){
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try{
+            this.imageURLs = objectMapper.writeValueAsString(new ProductImagesData(imageURLs));
+        }catch (Exception e){
+            this.imageURLs = null;
+        }
     }
 
     public Timestamp getCreatedAt() {
@@ -118,4 +133,15 @@ public final class Product {
         return this.articleProductRelation;
     }
 
+    public Iterable<String> getImageURLs() {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            ProductImagesData images  = objectMapper.readValue(this.imageURLs, ProductImagesData.class);
+            return images.getUrls();
+        }catch (Exception e){
+            System.out.println(e);
+            return List.of(new String[]{});
+        }
+    }
 }

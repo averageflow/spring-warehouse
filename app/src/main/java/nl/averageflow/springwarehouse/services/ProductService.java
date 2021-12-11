@@ -59,14 +59,12 @@ public final class ProductService {
         this.productRepository.deleteByUid(uid);
     }
 
-    public Iterable<Product> addProducts(AddProductRequest request) {
+    public void addProducts(AddProductRequest request) {
         Iterable<Product> convertedProducts = convertAddProductRequestToProductList(request.getProducts());
         this.productRepository.saveAll(convertedProducts);
 
         Iterable<Iterable<ArticleAmountInProduct>> convertedArticleProductRelations = convertAddProductArticleRequestToList(request.getProducts());
         convertedArticleProductRelations.forEach(item -> this.productArticleRepository.saveAll(item));
-
-        return convertedProducts;
     }
 
     public void sellProducts(SellProductsRequest request) {
@@ -117,6 +115,7 @@ public final class ProductService {
 
         itemToUpdate.setName(request.getName());
         itemToUpdate.setPrice(request.getPrice());
+        itemToUpdate.setImageURLs(request.getImageURLs());
 
         return this.productRepository.save(itemToUpdate);
     }

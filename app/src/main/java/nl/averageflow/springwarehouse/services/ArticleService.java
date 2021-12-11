@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -57,14 +58,12 @@ public final class ArticleService {
         return this.articleRepository.findByUid(uid);
     }
 
-    public Iterable<Article> addArticles(Iterable<AddArticlesRequestItem> rawItems) {
+    public void addArticles(Iterable<AddArticlesRequestItem> rawItems) {
         Iterable<Article> convertedArticles = convertAddArticleRequestToMappedList(rawItems);
         this.articleRepository.saveAll(convertedArticles);
 
         Iterable<ArticleStock> convertedArticleStock = convertAddArticleStockRequestToMappedList(rawItems);
         this.articleStocksRepository.saveAll(convertedArticleStock);
-
-        return convertedArticles;
     }
 
     public Article editArticle(UUID uid, EditArticleRequest request) {
