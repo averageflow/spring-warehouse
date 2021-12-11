@@ -3,7 +3,10 @@ package nl.averageflow.springwarehouse.requests;
 public class ProductImagesData {
     private Iterable<String> urls;
 
-    public void setUrls(Iterable<String> urls) {
+    public ProductImagesData() {
+    }
+
+    public ProductImagesData(final Iterable<String> urls) {
         this.urls = urls;
     }
 
@@ -11,9 +14,7 @@ public class ProductImagesData {
         return urls;
     }
 
-    public ProductImagesData(){}
-
-    public ProductImagesData(Iterable<String> urls){
+    public void setUrls(final Iterable<String> urls) {
         this.urls = urls;
     }
 }

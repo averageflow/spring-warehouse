@@ -8,7 +8,7 @@ your warehouse.
 * [Functionalities](#functionalities)
 * [Running the application](#running-the-application)
 * [Running for development](#running-for-development)
-* [Additional information](#additional-information)
+* [Domain information](#domain-information)
 * [Technologies used](#technologies-used)
 * [Unit tests](#unit-tests)
 * [Possible Improvements](#possible-improvements)

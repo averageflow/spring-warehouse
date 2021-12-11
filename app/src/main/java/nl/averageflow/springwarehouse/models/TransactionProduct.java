@@ -36,7 +36,7 @@ public final class TransactionProduct {
     protected TransactionProduct() {
     }
 
-    public TransactionProduct(Transaction transaction, Product product, long amountOf) {
+    public TransactionProduct(final Transaction transaction, final Product product, final long amountOf) {
         this.transaction = transaction;
         this.product = product;
         this.amountOf = amountOf;
@@ -51,9 +51,6 @@ public final class TransactionProduct {
         return product;
     }
 
-//    public Transaction getTransaction() {
-//        return transaction;
-//    }
 
     public Long getAmountOf() {
         return amountOf;

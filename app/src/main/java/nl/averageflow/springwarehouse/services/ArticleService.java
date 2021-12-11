@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -32,55 +31,55 @@ public final class ArticleService {
     @Autowired
     private ProductArticleRepository productArticleRepository;
 
-    public static Iterable<Article> convertAddArticleRequestToMappedList(Iterable<AddArticlesRequestItem> rawItems) {
+    public static Iterable<Article> convertAddArticleRequestToMappedList(final Iterable<AddArticlesRequestItem> rawItems) {
         return StreamSupport.stream(rawItems.spliterator(), false).map(ArticleService::articleRequestItemConverter).collect(Collectors.toList());
     }
 
-    private static Article articleRequestItemConverter(AddArticlesRequestItem rawItem) {
+    private static Article articleRequestItemConverter(final AddArticlesRequestItem rawItem) {
         return new Article(rawItem);
     }
 
-    public Iterable<ArticleStock> convertAddArticleStockRequestToMappedList(Iterable<AddArticlesRequestItem> rawItems) {
+    public Iterable<ArticleStock> convertAddArticleStockRequestToMappedList(final Iterable<AddArticlesRequestItem> rawItems) {
         return StreamSupport.stream(rawItems.spliterator(), false)
                 .map(this::articleRequestItemStockConverter)
                 .collect(Collectors.toList());
     }
 
-    private ArticleStock articleRequestItemStockConverter(AddArticlesRequestItem rawItem) {
+    private ArticleStock articleRequestItemStockConverter(final AddArticlesRequestItem rawItem) {
         return new ArticleStock(this.articleRepository.findByItemId(rawItem.getItemId()).get(), rawItem.getStock());
     }
 
-    public Page<Article> getArticles(Pageable pageable) {
+    public Page<Article> getArticles(final Pageable pageable) {
         return this.articleRepository.findAll(pageable);
     }
 
-    public Optional<Article> getArticleByUid(UUID uid) {
+    public Optional<Article> getArticleByUid(final UUID uid) {
         return this.articleRepository.findByUid(uid);
     }
 
-    public void addArticles(Iterable<AddArticlesRequestItem> rawItems) {
-        Iterable<Article> convertedArticles = convertAddArticleRequestToMappedList(rawItems);
+    public void addArticles(final Iterable<AddArticlesRequestItem> rawItems) {
+        final Iterable<Article> convertedArticles = convertAddArticleRequestToMappedList(rawItems);
         this.articleRepository.saveAll(convertedArticles);
 
-        Iterable<ArticleStock> convertedArticleStock = convertAddArticleStockRequestToMappedList(rawItems);
+        final Iterable<ArticleStock> convertedArticleStock = convertAddArticleStockRequestToMappedList(rawItems);
         this.articleStocksRepository.saveAll(convertedArticleStock);
     }
 
-    public Article editArticle(UUID uid, EditArticleRequest request) {
-        Optional<Article> wantedArticleSearchResult = this.articleRepository.findByUid(uid);
+    public Article editArticle(final UUID uid, final EditArticleRequest request) {
+        final Optional<Article> wantedArticleSearchResult = this.articleRepository.findByUid(uid);
 
         if (wantedArticleSearchResult.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID");
         }
 
-        Article itemToUpdate = wantedArticleSearchResult.get();
+        final Article itemToUpdate = wantedArticleSearchResult.get();
 
         itemToUpdate.setName(request.getName());
 
         return this.articleRepository.save(itemToUpdate);
     }
 
-    public void deleteArticleByUid(UUID uid) {
+    public void deleteArticleByUid(final UUID uid) {
         this.productArticleRepository.deleteByArticleUid(uid);
         this.articleStocksRepository.deleteByArticleUid(uid);
         this.articleRepository.deleteByUid(uid);

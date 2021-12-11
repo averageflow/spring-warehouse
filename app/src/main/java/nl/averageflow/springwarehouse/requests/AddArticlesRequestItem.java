@@ -8,7 +8,7 @@ public final class AddArticlesRequestItem {
     protected AddArticlesRequestItem() {
     }
 
-    public AddArticlesRequestItem(long itemId, String name, long stock) {
+    public AddArticlesRequestItem(final long itemId, final String name, final long stock) {
         this.itemId = itemId;
         this.name = name;
         this.stock = stock;

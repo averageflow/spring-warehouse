@@ -1,6 +1,5 @@
 package nl.averageflow.springwarehouse.models;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.averageflow.springwarehouse.requests.AddProductsRequestItem;
 import nl.averageflow.springwarehouse.requests.ProductImagesData;
@@ -14,6 +13,8 @@ import java.util.*;
 @Table(name = "products")
 @Entity
 public final class Product {
+    public static final String[] ELEMENTS = new String[]{};
+
     @Id
     @GeneratedValue
     @Column(name = "uid", nullable = false)
@@ -25,7 +26,7 @@ public final class Product {
     @Column(name = "item_name", nullable = false)
     private String name;
 
-    @Column(name="image_urls")
+    @Column(name = "image_urls")
     private String imageURLs;
 
     @Column(name = "price", nullable = false)
@@ -47,14 +48,14 @@ public final class Product {
     protected Product() {
     }
 
-    public Product(AddProductsRequestItem item) {
+    public Product(final AddProductsRequestItem item) {
         this.itemId = item.getItemId();
         this.name = item.getName();
         this.price = item.getPrice();
         this.setImageURLs(item.getImageURLs());
     }
 
-    public Product(Long itemId, String name, Double price, Iterable<String> imageURLs) {
+    public Product(final Long itemId, final String name, final Double price, final Iterable<String> imageURLs) {
         this.itemId = itemId;
         this.name = name;
         this.price = price;
@@ -73,7 +74,7 @@ public final class Product {
         return this.name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -81,18 +82,8 @@ public final class Product {
         return this.price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(final Double price) {
         this.price = price;
-    }
-
-    public void setImageURLs(Iterable<String> imageURLs){
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        try{
-            this.imageURLs = objectMapper.writeValueAsString(new ProductImagesData(imageURLs));
-        }catch (Exception e){
-            this.imageURLs = null;
-        }
     }
 
     public Timestamp getCreatedAt() {
@@ -104,14 +95,14 @@ public final class Product {
     }
 
     public long getProductStock() {
-        ArrayList<Long> amountOfProductsPossibleList = new ArrayList<>();
+        final ArrayList<Long> amountOfProductsPossibleList = new ArrayList<>();
         if (this.articleProductRelation == null || articleProductRelation.isEmpty()) {
             return 0L;
         }
 
         this.articleProductRelation.forEach(articleAmountInProduct -> {
-            long articleAmountNeeded = articleAmountInProduct.getAmountOf();
-            long articleStockPresent = articleAmountInProduct.getArticle().getStock();
+            final long articleAmountNeeded = articleAmountInProduct.getAmountOf();
+            final long articleStockPresent = articleAmountInProduct.getArticle().getStock();
 
             if (articleStockPresent >= articleAmountNeeded) {
                 amountOfProductsPossibleList.add(articleStockPresent / articleAmountNeeded);
@@ -123,7 +114,7 @@ public final class Product {
         }
 
 
-        Long smallestAmountPossible = amountOfProductsPossibleList.stream()
+        final Long smallestAmountPossible = amountOfProductsPossibleList.stream()
                 .min(Comparator.naturalOrder())
                 .get();
         return smallestAmountPossible;
@@ -134,14 +125,23 @@ public final class Product {
     }
 
     public Iterable<String> getImageURLs() {
-        ObjectMapper objectMapper = new ObjectMapper();
+        final ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            ProductImagesData images  = objectMapper.readValue(this.imageURLs, ProductImagesData.class);
+            final ProductImagesData images = objectMapper.readValue(this.imageURLs, ProductImagesData.class);
             return images.getUrls();
-        }catch (Exception e){
-            System.out.println(e);
-            return List.of(new String[]{});
+        } catch (final Exception e) {
+            return List.of(ELEMENTS);
+        }
+    }
+
+    public void setImageURLs(final Iterable<String> imageURLs) {
+        final ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            this.imageURLs = objectMapper.writeValueAsString(new ProductImagesData(imageURLs));
+        } catch (final Exception e) {
+            this.imageURLs = null;
         }
     }
 }

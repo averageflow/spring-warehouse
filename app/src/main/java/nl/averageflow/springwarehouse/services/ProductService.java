@@ -31,11 +31,11 @@ public final class ProductService {
     @Autowired
     private ProductArticleRepository productArticleRepository;
 
-    private static Iterable<Product> convertAddProductRequestToProductList(Iterable<AddProductsRequestItem> rawItems) {
+    private static Iterable<Product> convertAddProductRequestToProductList(final Iterable<AddProductsRequestItem> rawItems) {
         return StreamSupport.stream(rawItems.spliterator(), false).map(Product::new).collect(Collectors.toList());
     }
 
-    private Iterable<Iterable<ArticleAmountInProduct>> convertAddProductArticleRequestToList(Iterable<AddProductsRequestItem> rawItems) {
+    private Iterable<Iterable<ArticleAmountInProduct>> convertAddProductArticleRequestToList(final Iterable<AddProductsRequestItem> rawItems) {
         return StreamSupport.stream(rawItems.spliterator(), false)
                 .map(item -> StreamSupport.stream(item.getContainArticles().spliterator(), false)
                         .map(articleItem -> new ArticleAmountInProduct(
@@ -47,47 +47,45 @@ public final class ProductService {
                 ).collect(Collectors.toList());
     }
 
-    public Page<Product> getProducts(Pageable pageable) {
+    public Page<Product> getProducts(final Pageable pageable) {
         return this.productRepository.findAll(pageable);
     }
 
-    public Optional<Product> getProductByUid(UUID uid) {
+    public Optional<Product> getProductByUid(final UUID uid) {
         return this.productRepository.findByUid(uid);
     }
 
-    public void deleteProductByUid(UUID uid) {
+    public void deleteProductByUid(final UUID uid) {
         this.productRepository.deleteByUid(uid);
     }
 
-    public void addProducts(AddProductRequest request) {
-        Iterable<Product> convertedProducts = convertAddProductRequestToProductList(request.getProducts());
+    public void addProducts(final AddProductRequest request) {
+        final Iterable<Product> convertedProducts = convertAddProductRequestToProductList(request.getProducts());
         this.productRepository.saveAll(convertedProducts);
 
-        Iterable<Iterable<ArticleAmountInProduct>> convertedArticleProductRelations = convertAddProductArticleRequestToList(request.getProducts());
+        final Iterable<Iterable<ArticleAmountInProduct>> convertedArticleProductRelations = convertAddProductArticleRequestToList(request.getProducts());
         convertedArticleProductRelations.forEach(item -> this.productArticleRepository.saveAll(item));
     }
 
-    public void sellProducts(SellProductsRequest request) {
-        Iterable<UUID> wantedUUIDs = StreamSupport.stream(request.getWantedItemsForSale().spliterator(), false)
+    public void sellProducts(final SellProductsRequest request) {
+        final Iterable<UUID> wantedUUIDs = StreamSupport.stream(request.getWantedItemsForSale().spliterator(), false)
                 .map(SellProductsRequestItem::getItemUid)
                 .collect(Collectors.toList());
 
-        HashMap<UUID, Long> wantedAmountsPerProduct = new HashMap<>();
-        StreamSupport.stream(request.getWantedItemsForSale().spliterator(), false).forEach(item -> {
-            wantedAmountsPerProduct.put(item.getItemUid(), item.getAmountOf());
-        });
+        final HashMap<UUID, Long> wantedAmountsPerProduct = new HashMap<>();
+        StreamSupport.stream(request.getWantedItemsForSale().spliterator(), false)
+                .forEach(item -> wantedAmountsPerProduct.put(item.getItemUid(), item.getAmountOf()));
 
-        Iterable<Product> wantedProducts = this.productRepository.findAllById(wantedUUIDs);
+        final Iterable<Product> wantedProducts = this.productRepository.findAllById(wantedUUIDs);
 
-        StreamSupport.stream(wantedProducts.spliterator(), false).forEach(wantedItemForSale -> {
-                    this.reserveItemStock(wantedAmountsPerProduct.get(wantedItemForSale.getUid()), wantedItemForSale);
-                }
+        StreamSupport.stream(wantedProducts.spliterator(), false)
+                .forEach(wantedItemForSale -> this.reserveItemStock(wantedAmountsPerProduct.get(wantedItemForSale.getUid()), wantedItemForSale)
         );
     }
 
-    private void reserveItemStock(long wantedProductAmount, Product product) {
-        long productStock = product.getProductStock();
-        boolean isValidAmount = productStock >= wantedProductAmount &&
+    private void reserveItemStock(final long wantedProductAmount, final Product product) {
+        final long productStock = product.getProductStock();
+        final boolean isValidAmount = productStock >= wantedProductAmount &&
                 productStock - wantedProductAmount >= 0 &&
                 productStock > 0;
 
@@ -97,21 +95,21 @@ public final class ProductService {
 
 
         product.getArticles().forEach(articleAmountInProduct -> {
-            long wantedArticleAmount = articleAmountInProduct.getAmountOf() * wantedProductAmount;
+            final long wantedArticleAmount = articleAmountInProduct.getAmountOf() * wantedProductAmount;
             articleAmountInProduct.getArticle().performStockBooking(wantedArticleAmount);
         });
 
         this.productRepository.save(product);
     }
 
-    public Product editProduct(UUID uid, EditProductRequest request) {
-        Optional<Product> wantedProductSearchResult = this.productRepository.findByUid(uid);
+    public Product editProduct(final UUID uid, final EditProductRequest request) {
+        final Optional<Product> wantedProductSearchResult = this.productRepository.findByUid(uid);
 
         if (wantedProductSearchResult.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID");
         }
 
-        Product itemToUpdate = wantedProductSearchResult.get();
+        final Product itemToUpdate = wantedProductSearchResult.get();
 
         itemToUpdate.setName(request.getName());
         itemToUpdate.setPrice(request.getPrice());

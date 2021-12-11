@@ -33,7 +33,7 @@ public final class ArticleStock {
     protected ArticleStock() {
     }
 
-    public ArticleStock(Article article, long stock) {
+    public ArticleStock(final Article article, final long stock) {
         this.article = article;
         this.stock = stock;
     }
@@ -42,7 +42,7 @@ public final class ArticleStock {
         return this.stock;
     }
 
-    public void setStock(long stock) {
+    public void setStock(final long stock) {
         this.stock = stock;
     }
 

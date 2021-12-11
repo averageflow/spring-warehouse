@@ -20,12 +20,12 @@ public final class TransactionController {
     private TransactionService transactionService;
 
     @GetMapping("/api/transactions")
-    public Page<Transaction> getTransactions(Pageable pageable) {
+    public Page<Transaction> getTransactions(final Pageable pageable) {
         return this.transactionService.getTransactions(pageable);
     }
 
     @GetMapping("/api/transactions/{uid}")
-    public Optional<Transaction> getTransaction(@PathVariable UUID uid) {
+    public Optional<Transaction> getTransaction(@PathVariable final UUID uid) {
         return this.transactionService.getTransactionByUid(uid);
     }
 }

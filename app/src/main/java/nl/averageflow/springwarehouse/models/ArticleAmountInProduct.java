@@ -38,7 +38,7 @@ public final class ArticleAmountInProduct implements Serializable {
     protected ArticleAmountInProduct() {
     }
 
-    public ArticleAmountInProduct(Product product, Article article, long amountOf) {
+    public ArticleAmountInProduct(final Product product, final Article article, final long amountOf) {
         this.product = product;
         this.article = article;
         this.amountOf = amountOf;

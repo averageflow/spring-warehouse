@@ -30,7 +30,7 @@ public final class Transaction {
 
     }
 
-    public Transaction(SellProductsRequest request) {
+    public Transaction(final SellProductsRequest request) {
 
     }
 
@@ -46,7 +46,7 @@ public final class Transaction {
         return transactionProducts;
     }
 
-    public void setTransactionProducts(Set<TransactionProduct> transactionProducts) {
+    public void setTransactionProducts(final Set<TransactionProduct> transactionProducts) {
         this.transactionProducts = transactionProducts;
     }
 }

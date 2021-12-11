@@ -36,7 +36,7 @@ public final class Article {
     protected Article() {
     }
 
-    public Article(AddArticlesRequestItem rawItem) {
+    public Article(final AddArticlesRequestItem rawItem) {
         this.itemId = rawItem.getItemId();
         this.name = rawItem.getName();
     }
@@ -49,7 +49,7 @@ public final class Article {
         return this.name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -65,7 +65,7 @@ public final class Article {
         return this.stock.getStock();
     }
 
-    public void performStockBooking(long amountOf) {
+    public void performStockBooking(final long amountOf) {
         this.stock.setStock(this.getStock() - amountOf);
     }
 

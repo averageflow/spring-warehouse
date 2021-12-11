@@ -20,27 +20,27 @@ public final class ArticleController {
     private ArticleService articleService;
 
     @GetMapping("/api/articles")
-    public Page<Article> getArticles(Pageable pageable) {
+    public Page<Article> getArticles(final Pageable pageable) {
         return this.articleService.getArticles(pageable);
     }
 
     @GetMapping("/api/articles/{uid}")
-    public Optional<Article> getArticle(@PathVariable UUID uid) {
+    public Optional<Article> getArticle(@PathVariable final UUID uid) {
         return this.articleService.getArticleByUid(uid);
     }
 
     @PostMapping("/api/articles")
-    public void addArticles(@RequestBody AddArticlesRequest request) {
+    public void addArticles(@RequestBody final AddArticlesRequest request) {
         this.articleService.addArticles(request.getInventory());
     }
 
     @PatchMapping("/api/articles/{uid}")
-    public Article editProduct(@PathVariable UUID uid, @RequestBody EditArticleRequest request) {
+    public Article editProduct(@PathVariable final UUID uid, @RequestBody final EditArticleRequest request) {
         return this.articleService.editArticle(uid, request);
     }
 
     @DeleteMapping("/api/articles/{uid}")
-    public void deleteArticle(@PathVariable UUID uid) {
+    public void deleteArticle(@PathVariable final UUID uid) {
         this.articleService.deleteArticleByUid(uid);
     }
 }
