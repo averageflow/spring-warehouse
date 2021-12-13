@@ -1,8 +1,12 @@
+import org.springframework.boot.gradle.tasks.run.BootRun
+
 plugins {
     application
     java
+    war
     id("org.springframework.boot") version("2.6.1")
 }
+
 java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
@@ -10,6 +14,7 @@ java {
 
 version = "1.0.0"
 group = "nl.averageflow.springwarehouse"
+var applicationMainClass = "nl.averageflow.springwarehouse.SpringWarehouseApplication"
 
 repositories {
     mavenCentral()
@@ -26,18 +31,15 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 }
 
-
 tasks.named<Test>("test") {
     useJUnitPlatform()
 }
 
-application {
-    // Define the main class for the application.
-    mainClass.set("nl.averageflow.springwarehouse.SpringWarehouseApplication")
+tasks.getByName<BootRun>("bootRun") {
+    main = applicationMainClass
+    sourceResources(sourceSets["main"])
 }
 
-val jar by tasks.getting(Jar::class) {
-    manifest {
-        attributes["Main-Class"] = "nl.averageflow.springwarehouse.SpringWarehouseApplication"
-    }
+application {
+    mainClass.set(applicationMainClass)
 }

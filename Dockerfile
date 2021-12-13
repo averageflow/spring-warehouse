@@ -8,10 +8,9 @@ RUN rm /home/gradle/buildWorkspace/app/src/main/resources/application.properties
 RUN mv /home/gradle/buildWorkspace/app/src/main/resources/application-docker.properties /home/gradle/buildWorkspace/app/src/main/resources/application.properties
 
 # Perform Gradle build
-RUN gradle build --no-daemon
+RUN gradle bootJar --no-daemon
 
-# Extract packaged application
-RUN tar -xvf /home/gradle/buildWorkspace/app/build/distributions/app.tar -C /home/gradle/buildWorkspace/app/build/distributions
+WORKDIR /home/gradle/buildWorkspace/app/build/libs
 
 EXPOSE 8080
-ENTRYPOINT ["/home/gradle/buildWorkspace/app/build/distributions/app/bin/app"]
+ENTRYPOINT ["java", "-jar", "app-1.0.0.jar"]
