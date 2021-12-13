@@ -52,7 +52,7 @@ Then all you need is to run `docker-compose up`, optionally `docker-compose up -
 
 ### Running for development
 
-IntelliJ IDEA is recommended for this project. Launch configurations for this project are available in the `.run` folder. Gradle will need to be installed. You can start it with `./gradlew run`.
+IntelliJ IDEA is recommended for this project. Launch configurations for this project are available in the `.run` folder. Gradle will need to be installed. You can start it with `./gradlew bootRun`.
 
 ### Domain information
 
