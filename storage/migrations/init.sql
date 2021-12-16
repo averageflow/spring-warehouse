@@ -1,6 +1,5 @@
 CREATE TABLE IF NOT EXISTS articles (
     uid UUID PRIMARY KEY,
-    item_id INT NOT NULL UNIQUE,
     item_name VARCHAR NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL
@@ -17,7 +16,6 @@ CREATE TABLE IF NOT EXISTS article_stocks (
 
 CREATE TABLE IF NOT EXISTS products (
     uid UUID PRIMARY KEY,
-    item_id INT NOT NULL UNIQUE,
     item_name VARCHAR NOT NULL,
     image_urls TEXT,
     price FLOAT8 NOT NULL,

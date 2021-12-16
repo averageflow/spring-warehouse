@@ -2,7 +2,6 @@ version: '3.9'
 
 services:
   db:
-    container_name: "PostgresWarehouseDB"
     image: "postgres:14.0-alpine"
     restart: always
     environment:
@@ -14,7 +13,6 @@ services:
     volumes:
       - "./storage/migrations:/docker-entrypoint-initdb.d/"
   app:
-    container_name: "SpringWarehouse"
     build:
       dockerfile: Dockerfile
       context: .

@@ -12,17 +12,13 @@ import java.util.UUID;
 
 @Repository
 public interface ArticleRepository extends PagingAndSortingRepository<Article, UUID> {
-    @NonNull
-    Optional<Article> findByItemId(@NonNull long itemId);
+
 
     @NonNull
     Optional<Article> findByUid(@NonNull UUID uid);
 
     @NonNull
     Set<Article> findAll();
-
-    @NonNull
-    Set<Article> findAllByItemIdIn(Iterable<Long> itemIDs);
 
     @Transactional
     void deleteByUid(@NonNull UUID uid);

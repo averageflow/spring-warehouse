@@ -1,14 +1,16 @@
 package nl.averageflow.springwarehouse.requests;
 
+import java.util.UUID;
+
 public final class AddProductsRequestArticleItem {
-    private long itemId;
+    private UUID uid;
     private long amountOf;
 
     protected AddProductsRequestArticleItem() {
     }
 
-    public long getItemId() {
-        return itemId;
+    public UUID getUid() {
+        return uid;
     }
 
     public long getAmountOf() {

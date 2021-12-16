@@ -20,9 +20,6 @@ public final class Product {
     @Column(name = "uid", nullable = false)
     private UUID uid;
 
-    @Column(name = "item_id", nullable = false)
-    private long itemId;
-
     @Column(name = "item_name", nullable = false)
     private String name;
 
@@ -49,14 +46,12 @@ public final class Product {
     }
 
     public Product(final AddProductsRequestItem item) {
-        this.itemId = item.getItemId();
         this.name = item.getName();
         this.price = item.getPrice();
         this.setImageURLs(item.getImageURLs());
     }
 
-    public Product(final Long itemId, final String name, final Double price, final Iterable<String> imageURLs) {
-        this.itemId = itemId;
+    public Product(final String name, final Double price, final Iterable<String> imageURLs) {
         this.name = name;
         this.price = price;
         this.setImageURLs(imageURLs);
@@ -64,10 +59,6 @@ public final class Product {
 
     public UUID getUid() {
         return this.uid;
-    }
-
-    public Long getItemId() {
-        return this.itemId;
     }
 
     public String getName() {

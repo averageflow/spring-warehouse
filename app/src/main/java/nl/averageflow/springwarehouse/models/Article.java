@@ -16,9 +16,6 @@ public final class Article {
     @Column(name = "uid", nullable = false)
     private UUID uid;
 
-    @Column(name = "item_id", nullable = false)
-    private long itemId;
-
     @Column(name = "item_name", nullable = false)
     private String name;
 
@@ -37,7 +34,6 @@ public final class Article {
     }
 
     public Article(final AddArticlesRequestItem rawItem) {
-        this.itemId = rawItem.getItemId();
         this.name = rawItem.getName();
     }
 

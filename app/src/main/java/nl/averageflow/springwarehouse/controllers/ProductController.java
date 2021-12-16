@@ -37,7 +37,7 @@ public final class ProductController {
 
     @PostMapping("/api/products")
     public void addProducts(@RequestBody final AddProductRequest request) {
-        this.productService.addProducts(request);
+        this.productService.addProducts(request.getProducts());
     }
 
     @DeleteMapping("/api/products/{uid}")
@@ -55,6 +55,4 @@ public final class ProductController {
         this.productService.sellProducts(request);
         return this.transactionService.createTransaction(request);
     }
-
-
 }

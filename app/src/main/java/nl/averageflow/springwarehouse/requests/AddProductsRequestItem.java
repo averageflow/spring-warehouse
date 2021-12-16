@@ -1,7 +1,6 @@
 package nl.averageflow.springwarehouse.requests;
 
 public final class AddProductsRequestItem {
-    private long itemId;
     private String name;
     private Double price;
     private Iterable<AddProductsRequestArticleItem> containArticles;
@@ -12,9 +11,6 @@ public final class AddProductsRequestItem {
 
     }
 
-    public long getItemId() {
-        return this.itemId;
-    }
 
     public Double getPrice() {
         return this.price;

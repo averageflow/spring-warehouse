@@ -12,8 +12,6 @@ import java.util.UUID;
 
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, UUID> {
-    @NonNull
-    Optional<Product> findByItemId(@NonNull long itemId);
 
     @NonNull
     Optional<Product> findByUid(@NonNull UUID uid);

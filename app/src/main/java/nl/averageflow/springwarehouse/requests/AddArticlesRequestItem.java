@@ -1,21 +1,15 @@
 package nl.averageflow.springwarehouse.requests;
 
 public final class AddArticlesRequestItem {
-    private long itemId;
     private String name;
     private long stock;
 
     protected AddArticlesRequestItem() {
     }
 
-    public AddArticlesRequestItem(final long itemId, final String name, final long stock) {
-        this.itemId = itemId;
+    public AddArticlesRequestItem(final String name, final long stock) {
         this.name = name;
         this.stock = stock;
-    }
-
-    public long getItemId() {
-        return this.itemId;
     }
 
 

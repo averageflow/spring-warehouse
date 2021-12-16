@@ -16,8 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public final class ArticleService {
@@ -31,24 +29,6 @@ public final class ArticleService {
     @Autowired
     private ProductArticleRepository productArticleRepository;
 
-    public static Iterable<Article> convertAddArticleRequestToMappedList(final Iterable<AddArticlesRequestItem> rawItems) {
-        return StreamSupport.stream(rawItems.spliterator(), false).map(ArticleService::articleRequestItemConverter).collect(Collectors.toList());
-    }
-
-    private static Article articleRequestItemConverter(final AddArticlesRequestItem rawItem) {
-        return new Article(rawItem);
-    }
-
-    public Iterable<ArticleStock> convertAddArticleStockRequestToMappedList(final Iterable<AddArticlesRequestItem> rawItems) {
-        return StreamSupport.stream(rawItems.spliterator(), false)
-                .map(this::articleRequestItemStockConverter)
-                .collect(Collectors.toList());
-    }
-
-    private ArticleStock articleRequestItemStockConverter(final AddArticlesRequestItem rawItem) {
-        return new ArticleStock(this.articleRepository.findByItemId(rawItem.getItemId()).get(), rawItem.getStock());
-    }
-
     public Page<Article> getArticles(final Pageable pageable) {
         return this.articleRepository.findAll(pageable);
     }
@@ -58,11 +38,13 @@ public final class ArticleService {
     }
 
     public void addArticles(final Iterable<AddArticlesRequestItem> rawItems) {
-        final Iterable<Article> convertedArticles = convertAddArticleRequestToMappedList(rawItems);
-        this.articleRepository.saveAll(convertedArticles);
+        rawItems.forEach(rawItem -> {
+            final Article article = new Article(rawItem);
+            final ArticleStock articleStock = new ArticleStock(article, rawItem.getStock());
 
-        final Iterable<ArticleStock> convertedArticleStock = convertAddArticleStockRequestToMappedList(rawItems);
-        this.articleStocksRepository.saveAll(convertedArticleStock);
+            this.articleRepository.save(article);
+            this.articleStocksRepository.save(articleStock);
+        });
     }
 
     public Article editArticle(final UUID uid, final EditArticleRequest request) {
