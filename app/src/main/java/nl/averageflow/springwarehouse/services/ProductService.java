@@ -51,13 +51,11 @@ public final class ProductService {
         rawItems.forEach(rawItem -> {
             final Product product = new Product(rawItem);
             final Iterable<ArticleAmountInProduct> productArticles = StreamSupport.stream(rawItem.getContainArticles().spliterator(), false)
-                    .map(articleItem -> {
-                        return new ArticleAmountInProduct(
-                                product,
-                                this.articleRepository.findByUid(articleItem.getUid()).get(),
-                                articleItem.getAmountOf()
-                        );
-                    }).toList();
+                    .map(articleItem -> new ArticleAmountInProduct(
+                            product,
+                            this.articleRepository.findByUid(articleItem.getUid()).get(),
+                            articleItem.getAmountOf()
+                    )).toList();
 
             this.productRepository.save(product);
             this.productArticleRepository.saveAll(productArticles);
