@@ -30,6 +30,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql:42.3.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.6.1")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("com.h2database:h2:1.3.148")
 }
 
 tasks.named<Test>("test") {
