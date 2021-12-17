@@ -29,6 +29,11 @@ public final class Product {
     @Column(name = "price", nullable = false)
     private Double price;
 
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "category_uid", nullable = true)
+    private Category category;
+
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;

@@ -35,7 +35,7 @@ public final class ArticleController {
     }
 
     @PatchMapping("/api/articles/{uid}")
-    public Article editProduct(@PathVariable final UUID uid, @RequestBody final EditArticleRequest request) {
+    public Article editArticle(@PathVariable final UUID uid, @RequestBody final EditArticleRequest request) {
         return this.articleService.editArticle(uid, request);
     }
 
