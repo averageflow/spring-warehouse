@@ -25,6 +25,7 @@ dependencies {
     implementation("org.glassfish.jaxb:jaxb-runtime:2.3.2")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.6.1")
     implementation("org.springframework.boot:spring-boot-starter-web:2.6.1")
+    implementation( "org.liquibase:liquibase-core:4.6.2")
     runtimeOnly("org.springframework.boot:spring-boot-devtools:2.6.1")
     runtimeOnly("org.postgresql:postgresql:42.3.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.6.1")
