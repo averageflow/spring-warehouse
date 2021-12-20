@@ -1,6 +1,8 @@
 package nl.averageflow.springwarehouse.services;
 
+import nl.averageflow.springwarehouse.models.Article;
 import nl.averageflow.springwarehouse.models.ArticleAmountInProduct;
+import nl.averageflow.springwarehouse.models.Category;
 import nl.averageflow.springwarehouse.models.Product;
 import nl.averageflow.springwarehouse.repositories.ArticleRepository;
 import nl.averageflow.springwarehouse.repositories.CategoryRepository;
@@ -53,13 +55,26 @@ public class ProductService {
 
     public void addProducts(final Iterable<AddProductsRequestItem> rawItems) {
         rawItems.forEach(rawItem -> {
-            final Product product = new Product(rawItem, this.categoryRepository.findByUid(rawItem.getCategoryUid()).get());
+            final Optional<Category> category = this.categoryRepository.findByUid(rawItem.getCategoryUid());
+            if(category.isEmpty()){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted category");
+            }
+
+            final Product product = new Product(rawItem,category.get());
+
             final Iterable<ArticleAmountInProduct> productArticles = StreamSupport.stream(rawItem.getContainArticles().spliterator(), false)
-                    .map(articleItem -> new ArticleAmountInProduct(
-                            product,
-                            this.articleRepository.findByUid(articleItem.getUid()).get(),
-                            articleItem.getAmountOf()
-                    )).toList();
+                    .map(articleItem -> {
+                        final Optional<Article> article = this.articleRepository.findByUid(articleItem.getUid());
+                        if(article.isEmpty()){
+                            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted article");
+                        }
+
+                        return new ArticleAmountInProduct(
+                                product,
+                                article.get(),
+                                articleItem.getAmountOf()
+                        );
+                    }).toList();
 
             this.productRepository.save(product);
             this.productArticleRepository.saveAll(productArticles);

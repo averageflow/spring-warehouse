@@ -134,4 +134,8 @@ public final class Product {
             this.imageURLs = null;
         }
     }
+
+    public Category getCategory() {
+        return category;
+    }
 }
