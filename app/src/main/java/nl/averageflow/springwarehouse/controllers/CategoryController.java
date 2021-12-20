@@ -1,9 +1,9 @@
 package nl.averageflow.springwarehouse.controllers;
 
-import nl.averageflow.springwarehouse.models.Article;
+import nl.averageflow.springwarehouse.models.Category;
 import nl.averageflow.springwarehouse.requests.AddCategoriesRequest;
-import nl.averageflow.springwarehouse.requests.EditArticleRequest;
-import nl.averageflow.springwarehouse.services.ArticleService;
+import nl.averageflow.springwarehouse.requests.EditCategoryRequest;
+import nl.averageflow.springwarehouse.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,18 +14,18 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin
-public final class CategoryController {
+public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
 
     @GetMapping("/api/categories")
-    public Page<Article> getCategories(final Pageable pageable) {
+    public Page<Category> getCategories(final Pageable pageable) {
         return this.categoryService.getCategories(pageable);
     }
 
     @GetMapping("/api/categories/{uid}")
-    public Optional<Article> getCategory(@PathVariable final UUID uid) {
+    public Optional<Category> getCategory(@PathVariable final UUID uid) {
         return this.categoryService.getCategoryByUid(uid);
     }
 
@@ -35,12 +35,12 @@ public final class CategoryController {
     }
 
     @PatchMapping("/api/categories/{uid}")
-    public Article editCategory(@PathVariable final UUID uid, @RequestBody final EditArticleRequest request) {
+    public Category editCategory(@PathVariable final UUID uid, @RequestBody final EditCategoryRequest request) {
         return this.categoryService.editCategory(uid, request);
     }
 
     @DeleteMapping("/api/categories/{uid}")
     public void deleteCategory(@PathVariable final UUID uid) {
-        this.categoryService.deleteArticleByUid(uid);
+        this.categoryService.deleteCategoryByUid(uid);
     }
 }
