@@ -1,6 +1,6 @@
 package nl.averageflow.springwarehouse.models;
 
-import nl.averageflow.springwarehouse.requests.AddArticlesRequestItem;
+import nl.averageflow.springwarehouse.requests.AddCategoriesRequestItem;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -8,9 +8,9 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-@Table(name = "articles", schema = "public")
+@Table(name = "categories", schema = "public")
 @Entity
-public final class Article {
+public final class Category {
     @Id
     @GeneratedValue
     @Column(name = "uid", nullable = false)
@@ -19,8 +19,8 @@ public final class Article {
     @Column(name = "item_name", nullable = false)
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "article")
-    private ArticleStock stock;
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
@@ -30,11 +30,12 @@ public final class Article {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    protected Article() {
+    protected Category() {
     }
 
-    public Article(final AddArticlesRequestItem rawItem) {
+    public Category(final AddCategoriesRequestItem rawItem) {
         this.name = rawItem.getName();
+        this.description = rawItem.getDescription();
     }
 
     public UUID getUid() {
@@ -57,12 +58,12 @@ public final class Article {
         return this.updatedAt;
     }
 
-    public long getStock() {
-        return this.stock.getStock();
+
+    public String getDescription() {
+        return description;
     }
 
-    public void performStockBooking(final long amountOf) {
-        this.stock.setStock(this.getStock() - amountOf);
+    public void setDescription(final String description) {
+        this.description = description;
     }
-
 }

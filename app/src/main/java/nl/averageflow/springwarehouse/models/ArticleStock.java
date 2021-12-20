@@ -18,7 +18,7 @@ public final class ArticleStock {
     @Column(name = "stock", nullable = false)
     private long stock;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "article_uid", nullable = false)
     private Article article;
 

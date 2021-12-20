@@ -1,8 +1,11 @@
 package nl.averageflow.springwarehouse.services;
 
+import nl.averageflow.springwarehouse.models.Article;
 import nl.averageflow.springwarehouse.models.ArticleAmountInProduct;
+import nl.averageflow.springwarehouse.models.Category;
 import nl.averageflow.springwarehouse.models.Product;
 import nl.averageflow.springwarehouse.repositories.ArticleRepository;
+import nl.averageflow.springwarehouse.repositories.CategoryRepository;
 import nl.averageflow.springwarehouse.repositories.ProductArticleRepository;
 import nl.averageflow.springwarehouse.repositories.ProductRepository;
 import nl.averageflow.springwarehouse.requests.AddProductsRequestItem;
@@ -32,6 +35,9 @@ public class ProductService {
     private ArticleRepository articleRepository;
 
     @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
     private ProductArticleRepository productArticleRepository;
 
 
@@ -49,13 +55,26 @@ public class ProductService {
 
     public void addProducts(final Iterable<AddProductsRequestItem> rawItems) {
         rawItems.forEach(rawItem -> {
-            final Product product = new Product(rawItem);
+            final Optional<Category> category = this.categoryRepository.findByUid(rawItem.getCategoryUid());
+            if (category.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted category");
+            }
+
+            final Product product = new Product(rawItem, category.get());
+
             final Iterable<ArticleAmountInProduct> productArticles = StreamSupport.stream(rawItem.getContainArticles().spliterator(), false)
-                    .map(articleItem -> new ArticleAmountInProduct(
-                            product,
-                            this.articleRepository.findByUid(articleItem.getUid()).get(),
-                            articleItem.getAmountOf()
-                    )).toList();
+                    .map(articleItem -> {
+                        final Optional<Article> article = this.articleRepository.findByUid(articleItem.getUid());
+                        if (article.isEmpty()) {
+                            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted article");
+                        }
+
+                        return new ArticleAmountInProduct(
+                                product,
+                                article.get(),
+                                articleItem.getAmountOf()
+                        );
+                    }).toList();
 
             this.productRepository.save(product);
             this.productArticleRepository.saveAll(productArticles);
@@ -99,16 +118,23 @@ public class ProductService {
 
     public Product editProduct(final UUID uid, final EditProductRequest request) {
         final Optional<Product> wantedProductSearchResult = this.productRepository.findByUid(uid);
+        final Optional<Category> category = this.categoryRepository.findByUid(request.getCategoryUid());
 
         if (wantedProductSearchResult.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find product with wanted UUID");
+        }
+
+        if (category.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find category with wanted UUID");
         }
 
         final Product itemToUpdate = wantedProductSearchResult.get();
 
+
         itemToUpdate.setName(request.getName());
         itemToUpdate.setPrice(request.getPrice());
         itemToUpdate.setImageURLs(request.getImageURLs());
+        itemToUpdate.setCategory(category.get());
 
         return this.productRepository.save(itemToUpdate);
     }

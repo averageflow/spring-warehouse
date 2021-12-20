@@ -29,6 +29,11 @@ public final class Product {
     @Column(name = "price", nullable = false)
     private Double price;
 
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_uid")
+    private Category category;
+
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
@@ -38,23 +43,18 @@ public final class Product {
     private Timestamp updatedAt;
 
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ArticleAmountInProduct> articleProductRelation;
 
 
     protected Product() {
     }
 
-    public Product(final AddProductsRequestItem item) {
+    public Product(final AddProductsRequestItem item, final Category category) {
         this.name = item.getName();
         this.price = item.getPrice();
         this.setImageURLs(item.getImageURLs());
-    }
-
-    public Product(final String name, final Double price, final Iterable<String> imageURLs) {
-        this.name = name;
-        this.price = price;
-        this.setImageURLs(imageURLs);
+        this.category = category;
     }
 
     public UUID getUid() {
@@ -105,10 +105,9 @@ public final class Product {
         }
 
 
-        final Long smallestAmountPossible = amountOfProductsPossibleList.stream()
+        return amountOfProductsPossibleList.stream()
                 .min(Comparator.naturalOrder())
                 .get();
-        return smallestAmountPossible;
     }
 
     public Set<ArticleAmountInProduct> getArticles() {
@@ -134,5 +133,13 @@ public final class Product {
         } catch (final Exception e) {
             this.imageURLs = null;
         }
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(final Category category) {
+        this.category = category;
     }
 }

@@ -1,8 +1,11 @@
 package nl.averageflow.springwarehouse.requests;
 
+import java.util.UUID;
+
 public final class AddProductsRequestItem {
     private String name;
     private Double price;
+    private UUID categoryUid;
     private Iterable<AddProductsRequestArticleItem> containArticles;
     private Iterable<String> imageURLs;
 
@@ -26,5 +29,9 @@ public final class AddProductsRequestItem {
 
     public Iterable<String> getImageURLs() {
         return imageURLs;
+    }
+
+    public UUID getCategoryUid() {
+        return categoryUid;
     }
 }

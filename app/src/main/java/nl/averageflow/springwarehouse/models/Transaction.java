@@ -23,7 +23,7 @@ public final class Transaction {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<TransactionProduct> transactionProducts;
 
     public Transaction() {
