@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet author="averageflow" id="1639763669-1">
+        <addColumn catalogName="cat"
+                   schemaName="public"
+                   tableName="products">
+            <column afterColumn="price"
+                    name="category_uid"
+                    type="UUID">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="averageflow" id="1639763669-12">
+        <addForeignKeyConstraint baseColumnNames="category_uid" baseTableName="products"
+                                 constraintName="fk_category_products" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="uid" referencedTableName="categories" validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,145 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="averageflow" id="1639735226942-1">
+        <createTable tableName="article_stocks">
+            <column name="uid" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="article_stocks_pkey"/>
+            </column>
+            <column name="article_uid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stock" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="averageflow" id="1639735226942-2">
+        <createTable tableName="articles">
+            <column name="uid" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="articles_pkey"/>
+            </column>
+            <column name="item_name" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="averageflow" id="1639735226942-3">
+        <createTable tableName="product_articles">
+            <column name="uid" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="product_articles_pkey"/>
+            </column>
+            <column name="product_uid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="article_uid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount_of" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="averageflow" id="1639735226942-4">
+        <createTable tableName="products">
+            <column name="uid" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="products_pkey"/>
+            </column>
+            <column name="item_name" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_urls" type="TEXT"/>
+            <column name="price" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="averageflow" id="1639735226942-5">
+        <createTable tableName="transaction_products">
+            <column name="uid" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="transaction_products_pkey"/>
+            </column>
+            <column name="transaction_uid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_uid" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount_of" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="averageflow" id="1639735226942-6">
+        <createTable tableName="transactions">
+            <column name="uid" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="transactions_pkey"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="averageflow" id="1639735226942-7">
+        <addForeignKeyConstraint baseColumnNames="article_uid" baseTableName="article_stocks"
+                                 constraintName="fk_article_stocks_article" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="uid"
+                                 referencedTableName="articles" validate="true"/>
+    </changeSet>
+    <changeSet author="averageflow" id="1639735226942-8">
+        <addUniqueConstraint columnNames="article_uid" constraintName="article_stocks_article_uid_key"
+                             tableName="article_stocks"/>
+    </changeSet>
+    <changeSet author="averageflow" id="1639735226942-9">
+        <addForeignKeyConstraint baseColumnNames="article_uid" baseTableName="product_articles"
+                                 constraintName="fk_product_articles_article" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="uid" referencedTableName="articles" validate="true"/>
+    </changeSet>
+    <changeSet author="averageflow" id="1639735226942-10">
+        <addForeignKeyConstraint baseColumnNames="product_uid" baseTableName="product_articles"
+                                 constraintName="fk_product_articles_product" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="uid" referencedTableName="products" validate="true"/>
+    </changeSet>
+    <changeSet author="averageflow" id="1639735226942-11">
+        <addForeignKeyConstraint baseColumnNames="product_uid" baseTableName="transaction_products"
+                                 constraintName="fk_transaction_products_product" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="uid" referencedTableName="products" validate="true"/>
+    </changeSet>
+    <changeSet author="averageflow" id="1639735226942-12">
+        <addForeignKeyConstraint baseColumnNames="transaction_uid" baseTableName="transaction_products"
+                                 constraintName="fk_transaction_products_transaction" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="uid" referencedTableName="transactions" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
