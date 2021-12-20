@@ -30,7 +30,7 @@ public final class Product {
     private Double price;
 
 
-    @OneToOne(fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_uid")
     private Category category;
 
@@ -137,5 +137,9 @@ public final class Product {
 
     public Category getCategory() {
         return category;
+    }
+
+    public void setCategory(final Category category) {
+        this.category = category;
     }
 }

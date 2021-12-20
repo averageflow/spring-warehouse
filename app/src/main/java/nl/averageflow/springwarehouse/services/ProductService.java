@@ -56,16 +56,16 @@ public class ProductService {
     public void addProducts(final Iterable<AddProductsRequestItem> rawItems) {
         rawItems.forEach(rawItem -> {
             final Optional<Category> category = this.categoryRepository.findByUid(rawItem.getCategoryUid());
-            if(category.isEmpty()){
+            if (category.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted category");
             }
 
-            final Product product = new Product(rawItem,category.get());
+            final Product product = new Product(rawItem, category.get());
 
             final Iterable<ArticleAmountInProduct> productArticles = StreamSupport.stream(rawItem.getContainArticles().spliterator(), false)
                     .map(articleItem -> {
                         final Optional<Article> article = this.articleRepository.findByUid(articleItem.getUid());
-                        if(article.isEmpty()){
+                        if (article.isEmpty()) {
                             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted article");
                         }
 
@@ -118,16 +118,23 @@ public class ProductService {
 
     public Product editProduct(final UUID uid, final EditProductRequest request) {
         final Optional<Product> wantedProductSearchResult = this.productRepository.findByUid(uid);
+        final Optional<Category> category = this.categoryRepository.findByUid(request.getCategoryUid());
 
         if (wantedProductSearchResult.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find product with wanted UUID");
+        }
+
+        if (category.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find category with wanted UUID");
         }
 
         final Product itemToUpdate = wantedProductSearchResult.get();
 
+
         itemToUpdate.setName(request.getName());
         itemToUpdate.setPrice(request.getPrice());
         itemToUpdate.setImageURLs(request.getImageURLs());
+        itemToUpdate.setCategory(category.get());
 
         return this.productRepository.save(itemToUpdate);
     }

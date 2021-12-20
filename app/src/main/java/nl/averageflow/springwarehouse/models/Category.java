@@ -1,6 +1,5 @@
 package nl.averageflow.springwarehouse.models;
 
-import nl.averageflow.springwarehouse.requests.AddArticlesRequestItem;
 import nl.averageflow.springwarehouse.requests.AddCategoriesRequestItem;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -36,7 +35,7 @@ public final class Category {
 
     public Category(final AddCategoriesRequestItem rawItem) {
         this.name = rawItem.getName();
-        this.description= rawItem.getDescription();
+        this.description = rawItem.getDescription();
     }
 
     public UUID getUid() {
@@ -64,7 +63,7 @@ public final class Category {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 }
