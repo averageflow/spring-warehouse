@@ -1,6 +1,5 @@
 package nl.averageflow.springwarehouse.repositories;
 
-import nl.averageflow.springwarehouse.models.Article;
 import nl.averageflow.springwarehouse.models.Category;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.lang.NonNull;

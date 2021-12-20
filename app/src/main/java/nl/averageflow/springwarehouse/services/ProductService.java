@@ -3,6 +3,7 @@ package nl.averageflow.springwarehouse.services;
 import nl.averageflow.springwarehouse.models.ArticleAmountInProduct;
 import nl.averageflow.springwarehouse.models.Product;
 import nl.averageflow.springwarehouse.repositories.ArticleRepository;
+import nl.averageflow.springwarehouse.repositories.CategoryRepository;
 import nl.averageflow.springwarehouse.repositories.ProductArticleRepository;
 import nl.averageflow.springwarehouse.repositories.ProductRepository;
 import nl.averageflow.springwarehouse.requests.AddProductsRequestItem;
@@ -32,6 +33,9 @@ public class ProductService {
     private ArticleRepository articleRepository;
 
     @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
     private ProductArticleRepository productArticleRepository;
 
 
@@ -49,7 +53,7 @@ public class ProductService {
 
     public void addProducts(final Iterable<AddProductsRequestItem> rawItems) {
         rawItems.forEach(rawItem -> {
-            final Product product = new Product(rawItem);
+            final Product product = new Product(rawItem, this.categoryRepository.findByUid(rawItem.getCategoryUid()).get());
             final Iterable<ArticleAmountInProduct> productArticles = StreamSupport.stream(rawItem.getContainArticles().spliterator(), false)
                     .map(articleItem -> new ArticleAmountInProduct(
                             product,

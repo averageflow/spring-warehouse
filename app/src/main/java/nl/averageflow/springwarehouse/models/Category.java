@@ -36,6 +36,7 @@ public final class Category {
 
     public Category(final AddCategoriesRequestItem rawItem) {
         this.name = rawItem.getName();
+        this.description= rawItem.getDescription();
     }
 
     public UUID getUid() {
