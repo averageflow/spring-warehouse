@@ -30,8 +30,8 @@ public final class Product {
     private Double price;
 
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "category_uid", nullable = true)
+    @OneToOne(fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_uid")
     private Category category;
 
     @Column(name = "created_at", nullable = false)

@@ -44,7 +44,8 @@ public class CategoryService {
 
         final Category itemToUpdate = wantedArticleSearchResult.get();
 
-        //itemToUpdate.setName(request.getName());
+        itemToUpdate.setName(request.getName());
+        itemToUpdate.setDescription(request.getDescription());
 
         return this.categoryRepository.save(itemToUpdate);
     }
