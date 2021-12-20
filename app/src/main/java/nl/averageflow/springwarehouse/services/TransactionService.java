@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public final class TransactionService {
+public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 

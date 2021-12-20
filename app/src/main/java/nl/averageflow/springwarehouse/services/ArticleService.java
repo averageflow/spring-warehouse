@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public final class ArticleService {
+public class ArticleService {
 
     @Autowired
     private ArticleRepository articleRepository;
