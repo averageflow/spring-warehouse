@@ -1,8 +1,11 @@
 package nl.averageflow.springwarehouse.controllers;
 
+import nl.averageflow.springwarehouse.services.TransactionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -11,6 +14,9 @@ public class TransactionControllerTest {
 
     @Autowired
     private TransactionController controller;
+
+    @MockBean
+    private TransactionService transactionService;
 
     @Test
     public void contextLoads() {

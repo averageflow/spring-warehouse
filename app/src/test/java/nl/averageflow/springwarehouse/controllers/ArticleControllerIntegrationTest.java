@@ -32,8 +32,8 @@ public class ArticleControllerIntegrationTest {
     private Article mockArticle;
 
     @BeforeEach
-    void setUp(){
-        this.mockArticle = new Article(new AddArticlesRequestItem("article", 9 ));
+    void setUp() {
+        this.mockArticle = new Article(new AddArticlesRequestItem("article", 9));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ArticleControllerIntegrationTest {
         final UUID randomUid = UUID.randomUUID();
         when(articleService.getArticleByUid(randomUid)).thenReturn(Optional.of(this.mockArticle));
 
-        this.mockMvc.perform(get("/api/articles/"+ randomUid))
+        this.mockMvc.perform(get("/api/articles/" + randomUid))
                 .andDo(print())
                 .andExpect(status().is5xxServerError());
     }

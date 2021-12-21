@@ -18,6 +18,7 @@ import java.util.UUID;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -43,6 +44,8 @@ public class CategoryControllerIntegrationTest {
 
         this.mockMvc.perform(get("/api/categories/" + randomUid))
                 .andDo(print())
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.name").value(this.mockCategory.getName()))
+                .andExpect(jsonPath("$.description").value(this.mockCategory.getDescription()));
     }
 }
