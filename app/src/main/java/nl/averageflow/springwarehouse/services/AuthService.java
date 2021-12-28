@@ -30,13 +30,13 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<String> authenticateUser(String email, String password) {
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, password);
+    public ResponseEntity<String> authenticateUser(final String email, final String password) {
+        final UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, password);
         try {
-            Authentication authentication = authenticationManager.authenticate(authToken);
+            final Authentication authentication = authenticationManager.authenticate(authToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             return new ResponseEntity<>("User authenticated successfully!.", HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             System.out.println(e);
             return new ResponseEntity<>("User could not be authenticated!.", HttpStatus.FORBIDDEN);
         }
@@ -44,19 +44,19 @@ public class AuthService {
 
     }
 
-    public ResponseEntity<String> registerUser(RegisterRequest registerRequest) {
+    public ResponseEntity<String> registerUser(final RegisterRequest registerRequest) {
         // add check for email exists in DB
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
             return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
         }
 
         // create user object
-        User user = new User();
+        final User user = new User();
         user.setItemName(registerRequest.getName());
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
-        Role role = this.roleRepository.findByItemName("READ_ONLY").get();
+        final Role role = this.roleRepository.findByItemName("READ_ONLY").get();
         user.setRole(role);
 
         userRepository.save(user);

@@ -53,7 +53,7 @@ public class User implements UserDetails {
         return itemName;
     }
 
-    public void setItemName(String itemName) {
+    public void setItemName(final String itemName) {
         this.itemName = itemName;
     }
 
@@ -61,7 +61,7 @@ public class User implements UserDetails {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email;
     }
 
@@ -83,7 +83,7 @@ public class User implements UserDetails {
         return this.password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -116,7 +116,7 @@ public class User implements UserDetails {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(final Role role) {
         this.role = role;
     }
 }

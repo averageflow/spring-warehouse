@@ -19,12 +19,12 @@ public class AuthController {
 
 
     @PostMapping("/api/auth/authenticate")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<String> authenticateUser(@RequestBody final LoginRequest loginRequest) {
         return this.authService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
     }
 
     @PostMapping("/api/auth/register")
-    public ResponseEntity<String> registerUser(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<String> registerUser(@RequestBody final RegisterRequest registerRequest) {
         return this.authService.registerUser(registerRequest);
     }
 }
