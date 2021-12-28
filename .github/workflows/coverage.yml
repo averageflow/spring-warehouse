@@ -1,4 +1,4 @@
-name: Run Unit Tests on Push & PR
+name: Run Code Coverage
 
 on:
   push:
