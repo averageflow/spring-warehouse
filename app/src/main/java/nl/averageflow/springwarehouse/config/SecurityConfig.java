@@ -1,5 +1,6 @@
 package nl.averageflow.springwarehouse.config;
 
+import nl.averageflow.springwarehouse.enums.UserRole;
 import nl.averageflow.springwarehouse.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,8 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/**").hasRole(UserRole.ADMIN)
+                .antMatchers(HttpMethod.PUT, "/api/**").hasRole(UserRole.ADMIN)
+                .antMatchers(HttpMethod.PATCH, "/api/**").hasRole(UserRole.ADMIN)
+                .antMatchers(HttpMethod.DELETE, "/api/**").hasRole(UserRole.ADMIN)
+
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -51,14 +57,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-    //    @Override
-//    @Bean
-//    protected UserDetailsService userDetailsService() {
-//        UserDetails ramesh = User.builder().username("ramesh").password(passwordEncoder()
-//                .encode("password")).roles("USER").build();
-//        UserDetails admin = User.builder().username("admin").password(passwordEncoder()
-//                .encode("admin")).roles("ADMIN").build();
-//        return new InMemoryUserDetailsManager(ramesh, admin);
-//    }
 }

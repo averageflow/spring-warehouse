@@ -31,10 +31,17 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
 
     public ResponseEntity<String> authenticateUser(String email, String password) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, password);
+        try {
+            Authentication authentication = authenticationManager.authenticate(authToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return new ResponseEntity<>("User authenticated successfully!.", HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>("User could not be authenticated!.", HttpStatus.FORBIDDEN);
+        }
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
+
     }
 
     public ResponseEntity<String> registerUser(RegisterRequest registerRequest) {
