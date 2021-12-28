@@ -3,12 +3,16 @@ package nl.averageflow.springwarehouse.controllers;
 import nl.averageflow.springwarehouse.models.Category;
 import nl.averageflow.springwarehouse.requests.AddCategoriesRequestItem;
 import nl.averageflow.springwarehouse.services.CategoryService;
+import nl.averageflow.springwarehouse.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -23,12 +27,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(CategoryController.class)
+@AutoConfigureMockMvc
+@AutoConfigureWebMvc
 public class CategoryControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private CategoryService categoryService;
+
+    @MockBean
+    private UserService userService;
 
     private Category mockCategory;
 
@@ -37,6 +46,7 @@ public class CategoryControllerIntegrationTest {
         this.mockCategory = new Category(new AddCategoriesRequestItem("name", "description"));
     }
 
+    @WithMockUser
     @Test
     public void getCategoryByUidShouldReturnCorrectServiceResponse() throws Exception {
         final UUID randomUid = UUID.randomUUID();
