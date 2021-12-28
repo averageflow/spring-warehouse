@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet id="1640693469-1" author="averageflow">
+        <loadData catalogName="cat"
+                  commentLineStartsWith="//"
+                  encoding="UTF-8"
+                  file="data/RolesSeeder.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="public"
+                  separator=";"
+                  tableName="roles"
+                  usePreparedStatements="true">
+            <column
+                    index="0"
+                    name="uid"
+                    type="UUID"/>
+            <column
+                    index="1"
+                    name="item_name"
+                    type="VARCHAR"/>
+        </loadData>
+    </changeSet>
+
+
+</databaseChangeLog>
