@@ -46,6 +46,7 @@ This project was built using:
 * Gradle
 * [PostgreSQL database](https://www.postgresql.org/)
 * [Docker](https://www.docker.com/)
+* Liquibase
 
 ## Running the application
 
