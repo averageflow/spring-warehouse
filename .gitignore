@@ -34,7 +34,6 @@ build/
 .DS_Store
 .gradle/
 .idea/
-target/
 # Ignore Gradle project-specific cache directory
 .gradle
 

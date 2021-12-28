@@ -30,7 +30,7 @@ public final class Article {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    protected Article() {
+    public Article() {
     }
 
     public Article(final AddArticlesRequestItem rawItem) {

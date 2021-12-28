@@ -11,11 +11,6 @@ import java.util.UUID;
 @Table(name = "product_articles")
 @Entity
 public final class ArticleAmountInProduct implements Serializable {
-    @Id
-    @GeneratedValue
-    @Column(name = "uid", nullable = false)
-    private UUID uid;
-
     @ManyToOne
     @JoinColumn(name = "article_uid", nullable = false)
     private Article article;
@@ -24,6 +19,10 @@ public final class ArticleAmountInProduct implements Serializable {
     @JoinColumn(name = "product_uid", nullable = false)
     private Product product;
 
+    @Id
+    @GeneratedValue
+    @Column(name = "uid", nullable = false)
+    private UUID uid;
     @Column(name = "amount_of", nullable = false)
     private long amountOf;
 
@@ -35,7 +34,7 @@ public final class ArticleAmountInProduct implements Serializable {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    protected ArticleAmountInProduct() {
+    public ArticleAmountInProduct() {
     }
 
     public ArticleAmountInProduct(final Product product, final Article article, final long amountOf) {

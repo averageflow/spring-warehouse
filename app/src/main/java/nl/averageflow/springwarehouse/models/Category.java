@@ -30,7 +30,7 @@ public final class Category {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    protected Category() {
+    public Category() {
     }
 
     public Category(final AddCategoriesRequestItem rawItem) {

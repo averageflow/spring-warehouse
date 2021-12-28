@@ -6,8 +6,6 @@ public final class AddProductsRequestArticleItem {
     private UUID uid;
     private long amountOf;
 
-    protected AddProductsRequestArticleItem() {
-    }
 
     public UUID getUid() {
         return uid;

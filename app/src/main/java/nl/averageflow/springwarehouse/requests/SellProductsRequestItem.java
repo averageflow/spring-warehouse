@@ -6,9 +6,6 @@ public final class SellProductsRequestItem {
     private UUID itemUid;
     private long amountOf;
 
-    protected SellProductsRequestItem() {
-    }
-
 
     public UUID getItemUid() {
         return itemUid;

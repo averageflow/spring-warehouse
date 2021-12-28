@@ -41,7 +41,7 @@ public class TransactionService {
         final Transaction transaction = new Transaction();
 
         final HashMap<UUID, Long> wantedProductAmounts = new HashMap<>();
-        final List<UUID> wantedProductUUIDs = new ArrayList<>();
+        final Collection<UUID> wantedProductUUIDs = new ArrayList<>();
 
         StreamSupport.stream(request.getWantedItemsForSale().spliterator(), false)
                 .forEach(item -> {

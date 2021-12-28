@@ -47,7 +47,7 @@ public final class Product {
     private Set<ArticleAmountInProduct> articleProductRelation;
 
 
-    protected Product() {
+    public Product() {
     }
 
     public Product(final AddProductsRequestItem item, final Category category) {
@@ -86,7 +86,7 @@ public final class Product {
     }
 
     public long getProductStock() {
-        final ArrayList<Long> amountOfProductsPossibleList = new ArrayList<>();
+        final List<Long> amountOfProductsPossibleList = new ArrayList<>();
         if (this.articleProductRelation == null || articleProductRelation.isEmpty()) {
             return 0L;
         }
@@ -104,10 +104,14 @@ public final class Product {
             return 0L;
         }
 
+        final Optional<Long> minimumAmountPossible = amountOfProductsPossibleList.stream()
+                .min(Comparator.naturalOrder());
 
-        return amountOfProductsPossibleList.stream()
-                .min(Comparator.naturalOrder())
-                .get();
+        if (minimumAmountPossible.isEmpty()) {
+            return 0L;
+        }
+
+        return minimumAmountPossible.get();
     }
 
     public Set<ArticleAmountInProduct> getArticles() {

@@ -10,12 +10,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "transaction_products")
 public final class TransactionProduct {
-    @Id
-    @NonNull
-    @GeneratedValue
-    @Column(name = "uid")
-    private UUID uid;
-
     @ManyToOne
     @JoinColumn(name = "product_uid", nullable = false)
     private Product product;
@@ -24,16 +18,19 @@ public final class TransactionProduct {
     @JoinColumn(name = "transaction_uid", nullable = false)
     private Transaction transaction;
 
-    @NonNull
-    @Column(name = "amount_of")
+    @Column(name = "amount_of", nullable = false)
     private Long amountOf;
 
-    @NonNull
-    @Column(name = "created_at")
+    @Id
+    @GeneratedValue
+    @Column(name = "uid", nullable = false)
+    private UUID uid;
+
+    @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
-
-    protected TransactionProduct() {
+    
+    public TransactionProduct() {
     }
 
     public TransactionProduct(final Transaction transaction, final Product product, final long amountOf) {
@@ -50,7 +47,6 @@ public final class TransactionProduct {
     public Product getProduct() {
         return product;
     }
-
 
     public Long getAmountOf() {
         return amountOf;

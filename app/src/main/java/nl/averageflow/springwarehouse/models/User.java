@@ -40,7 +40,6 @@ public class User {
 
 
     public User() {
-
     }
 
     public UUID getUid() {

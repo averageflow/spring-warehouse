@@ -1,12 +1,8 @@
 package nl.averageflow.springwarehouse.requests;
 
 public final class AddCategoriesRequestItem {
-    private String name;
-    private String description;
-
-
-    protected AddCategoriesRequestItem() {
-    }
+    private final String name;
+    private final String description;
 
     public AddCategoriesRequestItem(final String name, final String description) {
         this.name = name;

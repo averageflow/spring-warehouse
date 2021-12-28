@@ -10,6 +10,10 @@ import java.util.UUID;
 @Table(name = "article_stocks")
 @Entity
 public final class ArticleStock {
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "article_uid", nullable = false)
+    private Article article;
+
     @Id
     @GeneratedValue
     @Column(name = "uid", nullable = false)
@@ -17,10 +21,6 @@ public final class ArticleStock {
 
     @Column(name = "stock", nullable = false)
     private long stock;
-
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "article_uid", nullable = false)
-    private Article article;
 
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
@@ -30,7 +30,7 @@ public final class ArticleStock {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    protected ArticleStock() {
+    public ArticleStock() {
     }
 
     public ArticleStock(final Article article, final long stock) {

@@ -9,12 +9,6 @@ public final class AddProductsRequestItem {
     private Iterable<AddProductsRequestArticleItem> containArticles;
     private Iterable<String> imageURLs;
 
-
-    protected AddProductsRequestItem() {
-
-    }
-
-
     public Double getPrice() {
         return this.price;
     }

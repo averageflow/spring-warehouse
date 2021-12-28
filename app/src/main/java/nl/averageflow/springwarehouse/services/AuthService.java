@@ -1,5 +1,6 @@
 package nl.averageflow.springwarehouse.services;
 
+import nl.averageflow.springwarehouse.enums.UserRole;
 import nl.averageflow.springwarehouse.models.Role;
 import nl.averageflow.springwarehouse.models.User;
 import nl.averageflow.springwarehouse.repositories.RoleRepository;
@@ -14,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -31,33 +34,35 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
 
     public ResponseEntity<String> authenticateUser(final String email, final String password) {
-        final UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, password);
+        final Authentication authToken = new UsernamePasswordAuthenticationToken(email, password);
+
         try {
             final Authentication authentication = authenticationManager.authenticate(authToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return new ResponseEntity<>("User authenticated successfully!.", HttpStatus.OK);
+            return new ResponseEntity<>("User authenticated successfully!", HttpStatus.OK);
         } catch (final Exception e) {
-            System.out.println(e);
-            return new ResponseEntity<>("User could not be authenticated!.", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("User could not be authenticated!", HttpStatus.FORBIDDEN);
         }
-
-
     }
 
     public ResponseEntity<String> registerUser(final RegisterRequest registerRequest) {
-        // add check for email exists in DB
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
             return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
         }
 
-        // create user object
         final User user = new User();
+
         user.setItemName(registerRequest.getName());
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
-        final Role role = this.roleRepository.findByItemName("READ_ONLY").get();
-        user.setRole(role);
+        final Optional<Role> role = this.roleRepository.findByItemName(UserRole.READ_ONLY);
+
+        if (role.isEmpty()) {
+            return new ResponseEntity<>("No suitable roles found for user! Check your database for roles!", HttpStatus.BAD_REQUEST);
+        }
+
+        user.setRole(role.get());
 
         userRepository.save(user);
 
