@@ -1,6 +1,6 @@
 # Spring Warehouse
 
-[![GPL licensed](https://img.shields.io/badge/license-GPL-blue.svg)
+![GPL licensed](https://img.shields.io/badge/license-GPL-blue.svg)
 
 Spring Warehouse is a Java Spring Boot application that has the purpose of managing products and articles in your
 warehouse.
