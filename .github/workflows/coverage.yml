@@ -1,0 +1,15 @@
+name: Run Unit Tests on Push & PR
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: coverallsapp/github-action@1.1.3
+        with:
+          github-token: ${{ secrets.COVERALL_SECRET }}
