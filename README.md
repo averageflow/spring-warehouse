@@ -18,17 +18,20 @@ warehouse.
 
 In summary the application can:
 
-* Create new products (from JSON request or from file upload)
-* Create new articles (from JSON request or from file upload)
+* Create new products
+* Create new articles
 * Retrieve list of products present in warehouse (with related articles)
 * Retrieve list of articles present in warehouse
-* Sell products if stock is enough, or product is unlimited stock like software (from JSON request or from form)
+* Sell products if stock is enough, or product is unlimited stock like software
 * Log every sale of products (transactions)
 * Retrieve list of transactions
 * Delete products from the warehouse
 * Delete articles from the warehouse
 * Edit products from the warehouse
 * Edit articles from the warehouse
+* Register users
+* Login users
+* Get list of users
 
 You can view the API specification by using
 Postman, [see the collection here](https://www.postman.com/research-technologist-33289382/workspace/joe-s-development/collection/18682350-5647921b-838a-4471-a960-1a557b01ce39)
