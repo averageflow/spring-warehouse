@@ -3,12 +3,16 @@ package nl.averageflow.springwarehouse.controllers;
 import nl.averageflow.springwarehouse.models.Article;
 import nl.averageflow.springwarehouse.requests.AddArticlesRequestItem;
 import nl.averageflow.springwarehouse.services.ArticleService;
+import nl.averageflow.springwarehouse.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -22,9 +26,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ArticleController.class)
+@AutoConfigureMockMvc
+@AutoConfigureWebMvc
 public class ArticleControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private UserService userService;
 
     @MockBean
     private ArticleService articleService;
@@ -36,6 +45,7 @@ public class ArticleControllerIntegrationTest {
         this.mockArticle = new Article(new AddArticlesRequestItem("article", 9));
     }
 
+    @WithMockUser
     @Test
     public void getArticleByUidShouldReturnCorrectServiceResponse() throws Exception {
         final UUID randomUid = UUID.randomUUID();

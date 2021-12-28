@@ -4,7 +4,7 @@ plugins {
     application
     java
     war
-    id("org.springframework.boot") version("2.6.2")
+    id("org.springframework.boot") version ("2.6.2")
 }
 
 java {
@@ -27,12 +27,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:2.6.2")
     implementation("org.springframework.boot:spring-boot-starter-validation:2.6.2")
     implementation("org.springframework.boot:spring-boot-starter-security:2.6.2")
-    implementation( "org.liquibase:liquibase-core:4.6.2")
+    implementation("org.liquibase:liquibase-core:4.6.2")
     runtimeOnly("org.springframework.boot:spring-boot-devtools:2.6.2")
     runtimeOnly("org.postgresql:postgresql:42.3.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.6.2")
     testImplementation("junit:junit:4.13.2")
     testImplementation("com.h2database:h2:1.4.200")
+    testImplementation("org.springframework.security:spring-security-test:5.6.1")
+
 }
 
 tasks.named<Test>("test") {
