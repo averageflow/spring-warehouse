@@ -39,6 +39,8 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("could not find email: " + email);
         }
 
-        return user.get();
+        return new nl.averageflow.springwarehouse.models.UserDetails(user.get());
     }
+
+
 }

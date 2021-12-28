@@ -1,5 +1,6 @@
 package nl.averageflow.springwarehouse.config;
 
+import nl.averageflow.springwarehouse.enums.UserRole;
 import nl.averageflow.springwarehouse.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -34,10 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/api/**").authenticated()//.hasRole(UserRole.ADMIN)
-                .antMatchers(HttpMethod.PUT, "/api/**").authenticated()//.hasRole(UserRole.ADMIN)
-                .antMatchers(HttpMethod.PATCH, "/api/**").authenticated()//.hasRole(UserRole.ADMIN)
-                .antMatchers(HttpMethod.DELETE, "/api/**").authenticated()//.hasRole(UserRole.ADMIN)
+                .antMatchers(HttpMethod.POST, "/api/**").hasAuthority(UserRole.ADMIN)
+                .antMatchers(HttpMethod.PUT, "/api/**").hasAuthority(UserRole.ADMIN)
+                .antMatchers(HttpMethod.PATCH, "/api/**").hasAuthority(UserRole.ADMIN)
+                .antMatchers(HttpMethod.DELETE, "/api/**").hasAuthority(UserRole.ADMIN)
                 .anyRequest()
                 .authenticated()
                 .and()
