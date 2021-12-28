@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-public class AuthController {
+public final class AuthController {
 
     @Autowired
     private AuthService authService;
