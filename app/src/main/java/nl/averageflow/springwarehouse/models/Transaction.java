@@ -2,7 +2,6 @@ package nl.averageflow.springwarehouse.models;
 
 import nl.averageflow.springwarehouse.requests.SellProductsRequest;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -13,13 +12,11 @@ import java.util.UUID;
 @Table(name = "transactions")
 public final class Transaction {
     @Id
-    @NonNull
     @GeneratedValue
-    @Column(name = "uid")
+    @Column(name = "uid", nullable = false)
     private UUID uid;
 
-    @NonNull
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
 
