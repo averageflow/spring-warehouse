@@ -6,7 +6,9 @@ import nl.averageflow.springwarehouse.requests.AddProductRequest;
 import nl.averageflow.springwarehouse.requests.EditProductRequest;
 import nl.averageflow.springwarehouse.requests.SellProductsRequest;
 import nl.averageflow.springwarehouse.services.ProductService;
+import nl.averageflow.springwarehouse.services.ProductServiceContract;
 import nl.averageflow.springwarehouse.services.TransactionService;
+import nl.averageflow.springwarehouse.services.TransactionServiceContract;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ import java.util.UUID;
 @CrossOrigin
 public final class ProductController {
 
-    private final ProductService productService;
-    private final TransactionService transactionService;
+    private final ProductServiceContract productService;
+    private final TransactionServiceContract transactionService;
 
     public ProductController(final ProductService productService, final TransactionService transactionService) {
         this.productService = productService;

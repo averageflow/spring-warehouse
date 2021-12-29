@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class CategoryService {
+public class CategoryService implements CategoryServiceContract {
 
     @Autowired
     private CategoryRepository categoryRepository;

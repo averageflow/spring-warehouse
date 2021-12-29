@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class ArticleService {
+public class ArticleService implements ArticleServiceContract {
 
     @Autowired
     private ArticleRepository articleRepository;
@@ -33,9 +33,11 @@ public class ArticleService {
         return this.articleRepository.findAll(pageable);
     }
 
+
     public Optional<Article> getArticleByUid(final UUID uid) {
         return this.articleRepository.findByUid(uid);
     }
+
 
     public void addArticles(final Iterable<AddArticlesRequestItem> rawItems) {
         rawItems.forEach(rawItem -> {
@@ -46,6 +48,7 @@ public class ArticleService {
             this.articleStocksRepository.save(articleStock);
         });
     }
+
 
     public Article editArticle(final UUID uid, final EditArticleRequest request) {
         final Optional<Article> wantedArticleSearchResult = this.articleRepository.findByUid(uid);
@@ -60,6 +63,7 @@ public class ArticleService {
 
         return this.articleRepository.save(itemToUpdate);
     }
+
 
     public void deleteArticleByUid(final UUID uid) {
         this.productArticleRepository.deleteByArticleUid(uid);

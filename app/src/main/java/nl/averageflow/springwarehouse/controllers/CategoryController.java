@@ -4,6 +4,7 @@ import nl.averageflow.springwarehouse.models.Category;
 import nl.averageflow.springwarehouse.requests.AddCategoriesRequest;
 import nl.averageflow.springwarehouse.requests.EditCategoryRequest;
 import nl.averageflow.springwarehouse.services.CategoryService;
+import nl.averageflow.springwarehouse.services.CategoryServiceContract;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.util.UUID;
 @CrossOrigin
 public class CategoryController {
 
-    private final CategoryService categoryService;
+    private final CategoryServiceContract categoryService;
 
     public CategoryController(final CategoryService categoryService) {
         this.categoryService = categoryService;

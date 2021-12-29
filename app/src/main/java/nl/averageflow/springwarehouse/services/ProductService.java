@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class ProductService {
+public class ProductService implements ProductServiceContract {
 
     @Autowired
     private ProductRepository productRepository;
@@ -97,7 +97,7 @@ public class ProductService {
                 );
     }
 
-    private void reserveItemStock(final long wantedProductAmount, final Product product) {
+    public void reserveItemStock(final long wantedProductAmount, final Product product) {
         final long productStock = product.getProductStock();
         final boolean isValidAmount = productStock >= wantedProductAmount &&
                 productStock - wantedProductAmount >= 0 &&

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AuthService {
+public class AuthService implements AuthServiceContract {
 
     @Autowired
     private AuthenticationManager authenticationManager;

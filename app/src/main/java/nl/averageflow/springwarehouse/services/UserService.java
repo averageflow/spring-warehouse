@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService, UserServiceContract {
 
     @Autowired
     private UserRepository userRepository;
@@ -41,6 +41,4 @@ public class UserService implements UserDetailsService {
 
         return new nl.averageflow.springwarehouse.models.UserDetails(user.get());
     }
-
-
 }

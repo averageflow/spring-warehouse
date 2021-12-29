@@ -4,6 +4,7 @@ import nl.averageflow.springwarehouse.models.Article;
 import nl.averageflow.springwarehouse.requests.AddArticlesRequest;
 import nl.averageflow.springwarehouse.requests.EditArticleRequest;
 import nl.averageflow.springwarehouse.services.ArticleService;
+import nl.averageflow.springwarehouse.services.ArticleServiceContract;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +15,7 @@ import java.util.UUID;
 @RestController
 @CrossOrigin
 public final class ArticleController {
-
-    private final ArticleService articleService;
+    private final ArticleServiceContract articleService;
 
     public ArticleController(final ArticleService articleService) {
         this.articleService = articleService;

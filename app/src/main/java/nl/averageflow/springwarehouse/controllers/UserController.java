@@ -2,6 +2,7 @@ package nl.averageflow.springwarehouse.controllers;
 
 import nl.averageflow.springwarehouse.models.User;
 import nl.averageflow.springwarehouse.services.UserService;
+import nl.averageflow.springwarehouse.services.UserServiceContract;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @CrossOrigin
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceContract userService;
 
     public UserController(final UserService userService) {
         this.userService = userService;
