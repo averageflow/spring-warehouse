@@ -2,7 +2,6 @@ package nl.averageflow.springwarehouse.controllers;
 
 import nl.averageflow.springwarehouse.models.Transaction;
 import nl.averageflow.springwarehouse.services.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,9 +16,9 @@ import java.util.UUID;
 @CrossOrigin
 public final class TransactionController {
 
-    private TransactionService transactionService;
+    private final TransactionService transactionService;
 
-    public TransactionController(TransactionService transactionService) {
+    public TransactionController(final TransactionService transactionService) {
         this.transactionService = transactionService;
     }
 

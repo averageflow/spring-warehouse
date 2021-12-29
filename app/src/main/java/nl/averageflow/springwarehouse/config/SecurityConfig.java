@@ -2,7 +2,6 @@ package nl.averageflow.springwarehouse.config;
 
 import nl.averageflow.springwarehouse.enums.UserRole;
 import nl.averageflow.springwarehouse.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,8 +19,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public SecurityConfig(final UserService userService) {
+        this.userService = userService;
+    }
 
     @Bean
     PasswordEncoder passwordEncoder() {

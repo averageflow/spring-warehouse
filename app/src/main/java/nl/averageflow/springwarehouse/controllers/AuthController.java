@@ -3,7 +3,6 @@ package nl.averageflow.springwarehouse.controllers;
 import nl.averageflow.springwarehouse.requests.LoginRequest;
 import nl.averageflow.springwarehouse.requests.RegisterRequest;
 import nl.averageflow.springwarehouse.services.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public final class AuthController {
 
-    private AuthService authService;
+    private final AuthService authService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(final AuthService authService) {
         this.authService = authService;
     }
 
