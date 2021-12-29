@@ -17,9 +17,11 @@ import java.util.UUID;
 @CrossOrigin
 public class UserController {
 
-    @Autowired
     private UserService userService;
 
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/api/users")
     public Page<User> getUsers(final Pageable pageable) {

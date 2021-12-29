@@ -19,11 +19,13 @@ import java.util.UUID;
 @CrossOrigin
 public final class ProductController {
 
-    @Autowired
     private ProductService productService;
-
-    @Autowired
     private TransactionService transactionService;
+
+    public ProductController(ProductService productService, TransactionService transactionService) {
+        this.productService = productService;
+        this.transactionService = transactionService;
+    }
 
     @GetMapping("/api/products")
     public Page<Product> getProducts(final Pageable pageable) {

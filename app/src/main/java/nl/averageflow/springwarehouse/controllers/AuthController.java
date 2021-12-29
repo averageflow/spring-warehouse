@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public final class AuthController {
 
-    @Autowired
     private AuthService authService;
 
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/api/auth/authenticate")
     public ResponseEntity<String> authenticateUser(@RequestBody final LoginRequest loginRequest) {
