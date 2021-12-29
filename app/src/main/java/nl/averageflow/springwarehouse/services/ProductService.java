@@ -55,16 +55,16 @@ public class ProductService {
 
     public void addProducts(final Iterable<AddProductsRequestItem> rawItems) {
         rawItems.forEach(rawItem -> {
-            final Optional<Category> category = this.categoryRepository.findByUid(rawItem.getCategoryUid());
+            final Optional<Category> category = this.categoryRepository.findByUid(rawItem.categoryUid());
             if (category.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted category");
             }
 
             final Product product = new Product(rawItem, category.get());
 
-            final Iterable<ArticleAmountInProduct> productArticles = StreamSupport.stream(rawItem.getContainArticles().spliterator(), false)
+            final Iterable<ArticleAmountInProduct> productArticles = StreamSupport.stream(rawItem.containArticles().spliterator(), false)
                     .map(articleItem -> {
-                        final Optional<Article> article = this.articleRepository.findByUid(articleItem.getUid());
+                        final Optional<Article> article = this.articleRepository.findByUid(articleItem.uid());
                         if (article.isEmpty()) {
                             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted article");
                         }
@@ -72,7 +72,7 @@ public class ProductService {
                         return new ArticleAmountInProduct(
                                 product,
                                 article.get(),
-                                articleItem.getAmountOf()
+                                articleItem.amountOf()
                         );
                     }).toList();
 

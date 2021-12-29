@@ -46,15 +46,15 @@ public class AuthService {
     }
 
     public ResponseEntity<String> registerUser(final RegisterRequest registerRequest) {
-        if (userRepository.existsByEmail(registerRequest.getEmail())) {
+        if (userRepository.existsByEmail(registerRequest.email())) {
             return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
         }
 
         final User user = new User();
 
-        user.setItemName(registerRequest.getName());
-        user.setEmail(registerRequest.getEmail());
-        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        user.setItemName(registerRequest.name());
+        user.setEmail(registerRequest.email());
+        user.setPassword(passwordEncoder.encode(registerRequest.password()));
 
         final Optional<Role> role = this.roleRepository.findByItemName(UserRole.READ_ONLY);
 
