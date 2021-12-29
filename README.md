@@ -3,19 +3,45 @@
 ![GPL licensed](https://img.shields.io/badge/license-GPL-blue.svg)[![Codacy
 Badge](https://app.codacy.com/project/badge/Grade/0696080f9fa14ab3b7334cb1fc40b76e)](https://www.codacy.com/gh/averageflow/spring-warehouse/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=averageflow/spring-warehouse&amp;utm_campaign=Badge_Grade)
 
-Spring Warehouse is a Java Spring Boot application that has the purpose of managing products and articles in your
+Spring Warehouse is a Java Spring Boot REST API that has the purpose of managing products and articles in your
 warehouse.
+
+This project has been created in an effort to provide an up-to-date example of using the best practices of Java 17 and
+Spring Boot with Data JPA and Liquibase and being a reference project, similar to Spring Pet Clinic.
 
 ## Table of contents
 
+* [Technologies used](#technologies-used)
+* [Documentation](#documentation)
 * [Functionalities](#functionalities)
 * [Running the application](#running-the-application)
 * [Running for development](#running-for-development)
 * [Domain information](#domain-information)
-* [Technologies used](#technologies-used)
 * [Unit tests](#unit-tests)
 * [Authentication and Authorization](#authentication-and-authorization)
 * [Possible Improvements](#possible-improvements)
+
+### Technologies used
+
+This project was built using:
+
+* [Java 17](https://docs.oracle.com/en/java/javase/17/index.html)
+* [Spring Boot Framework](https://spring.io/projects/spring-boot)
+* [Gradle](https://gradle.org/)
+* [PostgreSQL database](https://www.postgresql.org/)
+* [Docker](https://www.docker.com/)
+* [Liquibase](https://www.liquibase.org/)
+
+## Documentation
+
+To view the API Swagger documentation, start the application and see:
+
+* [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+* [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+
+You can view the API specification by using
+Postman, [see the collection here](https://www.postman.com/research-technologist-33289382/workspace/joe-s-development/collection/18682350-5647921b-838a-4471-a960-1a557b01ce39)
+and learn how to use the application endpoints.
 
 ## Functionalities
 
@@ -55,26 +81,6 @@ In summary the application can:
 * Delete product by UUID
 * Delete article by UUID
 * Delete category by UUID
-
-To view the API Swagger documentation, start the application and see:
-
-* [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
-* [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
-
-You can view the API specification by using
-Postman, [see the collection here](https://www.postman.com/research-technologist-33289382/workspace/joe-s-development/collection/18682350-5647921b-838a-4471-a960-1a557b01ce39)
-and learn how to use the application endpoints.
-
-### Technologies used
-
-This project was built using:
-
-* Java 17
-* Spring Boot Framework
-* Gradle
-* [PostgreSQL database](https://www.postgresql.org/)
-* [Docker](https://www.docker.com/)
-* Liquibase
 
 ## Running the application
 
