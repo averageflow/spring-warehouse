@@ -36,15 +36,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-ui/index.html").permitAll()
+                .antMatchers("/v3/api-docs").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/api/**").hasAuthority(UserRole.ADMIN)
                 .antMatchers(HttpMethod.PUT, "/api/**").hasAuthority(UserRole.ADMIN)
                 .antMatchers(HttpMethod.PATCH, "/api/**").hasAuthority(UserRole.ADMIN)
-                .antMatchers(HttpMethod.DELETE, "/api/**").hasAuthority(UserRole.ADMIN)
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
+                .antMatchers(HttpMethod.DELETE, "/api/**").hasAuthority(UserRole.ADMIN);
     }
 
     @Override

@@ -56,6 +56,11 @@ In summary the application can:
 * Delete article by UUID
 * Delete category by UUID
 
+To view the API Swagger documentation, start the application and see:
+
+* [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+* [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+
 You can view the API specification by using
 Postman, [see the collection here](https://www.postman.com/research-technologist-33289382/workspace/joe-s-development/collection/18682350-5647921b-838a-4471-a960-1a557b01ce39)
 and learn how to use the application endpoints.

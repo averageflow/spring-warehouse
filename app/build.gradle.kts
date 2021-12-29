@@ -28,6 +28,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation:2.6.2")
     implementation("org.springframework.boot:spring-boot-starter-security:2.6.2")
     implementation("org.liquibase:liquibase-core:4.6.2")
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.3")
     runtimeOnly("org.springframework.boot:spring-boot-devtools:2.6.2")
     runtimeOnly("org.postgresql:postgresql:42.3.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.6.2")
