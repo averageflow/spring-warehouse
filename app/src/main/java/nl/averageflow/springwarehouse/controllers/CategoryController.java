@@ -34,7 +34,7 @@ public class CategoryController {
 
     @PostMapping("/api/categories")
     public void addCategories(@RequestBody final AddCategoriesRequest request) {
-        this.categoryService.addCategories(request.getItems());
+        this.categoryService.addCategories(request.items());
     }
 
     @PatchMapping("/api/categories/{uid}")

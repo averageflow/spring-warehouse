@@ -43,10 +43,10 @@ public class TransactionService {
         final HashMap<UUID, Long> wantedProductAmounts = new HashMap<>();
         final Collection<UUID> wantedProductUUIDs = new ArrayList<>();
 
-        StreamSupport.stream(request.getWantedItemsForSale().spliterator(), false)
+        StreamSupport.stream(request.wantedItemsForSale().spliterator(), false)
                 .forEach(item -> {
-                    wantedProductAmounts.put(item.getItemUid(), item.getAmountOf());
-                    wantedProductUUIDs.add(item.getItemUid());
+                    wantedProductAmounts.put(item.itemUid(), item.amountOf());
+                    wantedProductUUIDs.add(item.itemUid());
                 });
 
         final Iterable<Product> wantedProducts = this.productRepository.findAllById(wantedProductUUIDs);

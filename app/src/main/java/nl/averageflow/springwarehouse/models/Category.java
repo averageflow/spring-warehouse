@@ -34,8 +34,8 @@ public final class Category {
     }
 
     public Category(final AddCategoriesRequestItem rawItem) {
-        this.name = rawItem.getName();
-        this.description = rawItem.getDescription();
+        this.name = rawItem.name();
+        this.description = rawItem.description();
     }
 
     public UUID getUid() {

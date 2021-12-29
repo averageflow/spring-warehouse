@@ -40,7 +40,7 @@ public class ArticleService {
     public void addArticles(final Iterable<AddArticlesRequestItem> rawItems) {
         rawItems.forEach(rawItem -> {
             final Article article = new Article(rawItem);
-            final ArticleStock articleStock = new ArticleStock(article, rawItem.getStock());
+            final ArticleStock articleStock = new ArticleStock(article, rawItem.stock());
 
             this.articleRepository.save(article);
             this.articleStocksRepository.save(articleStock);
@@ -56,7 +56,7 @@ public class ArticleService {
 
         final Article itemToUpdate = wantedArticleSearchResult.get();
 
-        itemToUpdate.setName(request.getName());
+        itemToUpdate.setName(request.name());
 
         return this.articleRepository.save(itemToUpdate);
     }

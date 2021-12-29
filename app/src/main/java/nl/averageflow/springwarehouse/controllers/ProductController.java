@@ -39,7 +39,7 @@ public final class ProductController {
 
     @PostMapping("/api/products")
     public void addProducts(@RequestBody final AddProductRequest request) {
-        this.productService.addProducts(request.getProducts());
+        this.productService.addProducts(request.products());
     }
 
     @DeleteMapping("/api/products/{uid}")

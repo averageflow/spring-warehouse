@@ -1,10 +1,5 @@
 package nl.averageflow.springwarehouse.requests;
 
-public class EditArticleRequest {
-    private String name;
+public record EditArticleRequest(String name) {
 
-
-    public String getName() {
-        return name;
-    }
 }

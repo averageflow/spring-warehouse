@@ -34,7 +34,7 @@ public final class Article {
     }
 
     public Article(final AddArticlesRequestItem rawItem) {
-        this.name = rawItem.getName();
+        this.name = rawItem.name();
     }
 
     public UUID getUid() {
