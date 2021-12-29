@@ -82,13 +82,13 @@ public class ProductService {
     }
 
     public void sellProducts(final SellProductsRequest request) {
-        final Iterable<UUID> wantedUUIDs = StreamSupport.stream(request.getWantedItemsForSale().spliterator(), false)
-                .map(SellProductsRequestItem::getItemUid)
+        final Iterable<UUID> wantedUUIDs = StreamSupport.stream(request.wantedItemsForSale().spliterator(), false)
+                .map(SellProductsRequestItem::itemUid)
                 .collect(Collectors.toList());
 
         final HashMap<UUID, Long> wantedAmountsPerProduct = new HashMap<>();
-        StreamSupport.stream(request.getWantedItemsForSale().spliterator(), false)
-                .forEach(item -> wantedAmountsPerProduct.put(item.getItemUid(), item.getAmountOf()));
+        StreamSupport.stream(request.wantedItemsForSale().spliterator(), false)
+                .forEach(item -> wantedAmountsPerProduct.put(item.itemUid(), item.amountOf()));
 
         final Iterable<Product> wantedProducts = this.productRepository.findAllById(wantedUUIDs);
 
@@ -118,7 +118,7 @@ public class ProductService {
 
     public Product editProduct(final UUID uid, final EditProductRequest request) {
         final Optional<Product> wantedProductSearchResult = this.productRepository.findByUid(uid);
-        final Optional<Category> category = this.categoryRepository.findByUid(request.getCategoryUid());
+        final Optional<Category> category = this.categoryRepository.findByUid(request.categoryUid());
 
         if (wantedProductSearchResult.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find product with wanted UUID");
@@ -131,9 +131,9 @@ public class ProductService {
         final Product itemToUpdate = wantedProductSearchResult.get();
 
 
-        itemToUpdate.setName(request.getName());
-        itemToUpdate.setPrice(request.getPrice());
-        itemToUpdate.setImageURLs(request.getImageURLs());
+        itemToUpdate.setName(request.name());
+        itemToUpdate.setPrice(request.price());
+        itemToUpdate.setImageURLs(request.imageURLs());
         itemToUpdate.setCategory(category.get());
 
         return this.productRepository.save(itemToUpdate);

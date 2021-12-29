@@ -29,7 +29,7 @@ public final class TransactionProduct {
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
-    
+
     public TransactionProduct() {
     }
 
