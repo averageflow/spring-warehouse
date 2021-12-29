@@ -21,7 +21,7 @@ warehouse.
 
 In summary the application can:
 
-<p style="color: green;">GET</p>
+**GET**
 
 * Retrieve a paginated list of products
 * Retrieve a product by UUID
@@ -34,7 +34,7 @@ In summary the application can:
 * Retrieve a paginated list of users
 * Retrieve a user by UUID
 
-<p style="color: yellow;">POST</p>
+**POST**
 
 * Add articles
 * Add categories
@@ -42,7 +42,7 @@ In summary the application can:
 * Login and obtain session cookie
 * Register as READ_ONLY user (admins should be created by editing the DB manually)
 
-<p style="color: purple;">PATCH</p>
+**PATCH**
 
 * Edit product
 * Edit article
@@ -50,7 +50,7 @@ In summary the application can:
 * Sell products (reserve stock if enough stock is present) or product is unlimited stock like software, this will log
   every sale of products (transactions)
 
-<p style="color: red;">DELETE</p>
+**DELETE**
 
 * Delete product by UUID
 * Delete article by UUID
