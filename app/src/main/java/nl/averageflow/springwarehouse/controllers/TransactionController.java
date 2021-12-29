@@ -16,8 +16,12 @@ import java.util.UUID;
 @RestController
 @CrossOrigin
 public final class TransactionController {
-    @Autowired
+
     private TransactionService transactionService;
+
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
 
     @GetMapping("/api/transactions")
     public Page<Transaction> getTransactions(final Pageable pageable) {

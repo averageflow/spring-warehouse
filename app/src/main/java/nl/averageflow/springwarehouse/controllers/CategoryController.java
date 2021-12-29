@@ -16,8 +16,11 @@ import java.util.UUID;
 @CrossOrigin
 public class CategoryController {
 
-    @Autowired
     private CategoryService categoryService;
+
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("/api/categories")
     public Page<Category> getCategories(final Pageable pageable) {

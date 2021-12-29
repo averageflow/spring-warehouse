@@ -16,8 +16,11 @@ import java.util.UUID;
 @CrossOrigin
 public final class ArticleController {
 
-    @Autowired
     private ArticleService articleService;
+
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     @GetMapping("/api/articles")
     public Page<Article> getArticles(final Pageable pageable) {
