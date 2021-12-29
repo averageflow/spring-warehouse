@@ -22,7 +22,7 @@ Spring Boot with Data JPA and Liquibase and being a reference project, similar t
 * [Possible Improvements](#possible-improvements)
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dehs6irlh/image/upload/v1640818163/Github/Warehouse-PNG-Photos_jcaebq.png" alt="Spring Warehouse logo"/>
+  <img src="https://res.cloudinary.com/dehs6irlh/image/upload/c_scale,w_256/v1640818163/Github/Warehouse-PNG-Photos_jcaebq.png" alt="Spring Warehouse logo"/>
 </p>
 
 ### Technologies used
