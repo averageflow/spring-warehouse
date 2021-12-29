@@ -21,22 +21,35 @@ warehouse.
 
 In summary the application can:
 
-* Create new products
-* Create new articles
-* Retrieve list of products present in warehouse (with related articles)
-* Retrieve list of articles present in warehouse
-* Sell products if stock is enough, or product is unlimited stock like software
-* Log every sale of products (transactions)
-* Retrieve list of transactions
-* Delete products from the warehouse
-* Delete articles from the warehouse
-* Edit products from the warehouse
-* Edit articles from the warehouse
-* Register users
-* Login users
-* Get list of users
-* Create new product categories
-* Edit categories
+<p style="color: green;">GET</p>
+* Retrieve a paginated list of products
+* Retrieve a product by UUID
+* Retrieve a paginated list of articles
+* Retrieve an article by UUID
+* Retrieve a paginated list of transactions
+* Retrieve a transaction by UUID
+* Retrieve a paginated list of categories
+* Retrieve a category by UUID
+* Retrieve a paginated list of users
+* Retrieve a user by UUID
+
+<p style="color: yellow;">POST</p>
+* Add articles
+* Add categories
+* Add products
+* Login and obtain session cookie
+* Register as READ_ONLY user (admins should be created by editing the DB manually)
+
+<p style="color: purple;">PATCH</p>
+* Edit product
+* Edit article
+* Edit category
+* Sell products (reserve stock if enough stock is present) or product is unlimited stock like software, this will log every sale of products (transactions)
+
+<p style="color: red;">DELETE</p>
+* Delete product by UUID
+* Delete article by UUID
+* Delete category by UUID
 
 You can view the API specification by using
 Postman, [see the collection here](https://www.postman.com/research-technologist-33289382/workspace/joe-s-development/collection/18682350-5647921b-838a-4471-a960-1a557b01ce39)
