@@ -51,9 +51,9 @@ public final class Product {
     }
 
     public Product(final AddProductsRequestItem item, final Category category) {
-        this.name = item.getName();
-        this.price = item.getPrice();
-        this.setImageURLs(item.getImageURLs());
+        this.name = item.name();
+        this.price = item.price();
+        this.setImageURLs(item.imageURLs());
         this.category = category;
     }
 
@@ -86,7 +86,7 @@ public final class Product {
     }
 
     public long getProductStock() {
-        final List<Long> amountOfProductsPossibleList = new ArrayList<>();
+        final Collection<Long> amountOfProductsPossibleList = new ArrayList<>();
         if (this.articleProductRelation == null || articleProductRelation.isEmpty()) {
             return 0L;
         }

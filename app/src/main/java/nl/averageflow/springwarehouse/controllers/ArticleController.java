@@ -31,7 +31,7 @@ public final class ArticleController {
 
     @PostMapping("/api/articles")
     public void addArticles(@RequestBody final AddArticlesRequest request) {
-        this.articleService.addArticles(request.getInventory());
+        this.articleService.addArticles(request.inventory());
     }
 
     @PatchMapping("/api/articles/{uid}")
