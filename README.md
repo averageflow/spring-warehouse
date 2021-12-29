@@ -35,6 +35,8 @@ In summary the application can:
 * Register users
 * Login users
 * Get list of users
+* Create new product categories
+* Edit categories
 
 You can view the API specification by using
 Postman, [see the collection here](https://www.postman.com/research-technologist-33289382/workspace/joe-s-development/collection/18682350-5647921b-838a-4471-a960-1a557b01ce39)
