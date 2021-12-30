@@ -10,4 +10,5 @@ public record UserResponseItem(
         String role,
         Timestamp createdAt,
         Timestamp updatedAt) {
+
 }

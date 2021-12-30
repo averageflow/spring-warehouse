@@ -7,9 +7,13 @@ import nl.averageflow.springwarehouse.domain.transaction.model.Transaction;
 import nl.averageflow.springwarehouse.domain.transaction.model.TransactionProduct;
 import nl.averageflow.springwarehouse.domain.transaction.repository.TransactionProductRepository;
 import nl.averageflow.springwarehouse.domain.transaction.repository.TransactionRepository;
+import nl.averageflow.springwarehouse.domain.user.UserResponseItem;
+import nl.averageflow.springwarehouse.domain.user.model.User;
+import nl.averageflow.springwarehouse.domain.user.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,10 +29,18 @@ public class TransactionService implements TransactionServiceContract {
 
     private final ProductRepository productRepository;
 
-    public TransactionService(final TransactionRepository transactionRepository, final TransactionProductRepository transactionProductRepository, final ProductRepository productRepository) {
+    private final UserRepository userRepository;
+
+    public TransactionService(
+            final TransactionRepository transactionRepository,
+            final TransactionProductRepository transactionProductRepository,
+            final ProductRepository productRepository,
+            final UserRepository userRepository
+    ) {
         this.transactionRepository = transactionRepository;
         this.transactionProductRepository = transactionProductRepository;
         this.productRepository = productRepository;
+        this.userRepository = userRepository;
     }
 
     public Page<TransactionResponseItem> getTransactions(final Pageable pageable) {
@@ -36,6 +48,14 @@ public class TransactionService implements TransactionServiceContract {
 
         return page.map(transaction -> new TransactionResponseItem(
                 transaction.getUid(),
+                new UserResponseItem(
+                        transaction.getUser().getUid(),
+                        transaction.getUser().getItemName(),
+                        transaction.getUser().getEmail(),
+                        transaction.getUser().getRole().getItemName(),
+                        transaction.getUser().getCreatedAt(),
+                        transaction.getUser().getUpdatedAt()
+                ),
                 transaction.getCreatedAt()
         ));
     }
@@ -46,12 +66,26 @@ public class TransactionService implements TransactionServiceContract {
 
         return new TransactionResponseItem(
                 transaction.getUid(),
+                new UserResponseItem(
+                        transaction.getUser().getUid(),
+                        transaction.getUser().getItemName(),
+                        transaction.getUser().getEmail(),
+                        transaction.getUser().getRole().getItemName(),
+                        transaction.getUser().getCreatedAt(),
+                        transaction.getUser().getUpdatedAt()
+                ),
+
                 transaction.getCreatedAt()
         );
     }
 
-    public TransactionResponseItem createTransaction(final SellProductsRequest request) {
-        final Transaction transaction = new Transaction();
+    public TransactionResponseItem createTransaction(final SellProductsRequest request, final Authentication authentication) {
+
+        final User currentUser = this.userRepository.findByEmail(authentication.getName())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find valid user to perform transaction with"));
+
+
+        final Transaction transaction = new Transaction(currentUser);
 
         final HashMap<UUID, Long> wantedProductAmounts = new HashMap<>();
         final Collection<UUID> wantedProductUUIDs = new ArrayList<>();
@@ -77,13 +111,20 @@ public class TransactionService implements TransactionServiceContract {
 
         transaction.setTransactionProducts(transactionProducts);
 
-
         final Transaction updatedTransaction = this.transactionRepository.save(transaction);
 
         this.transactionProductRepository.saveAll(transactionProducts);
 
         return new TransactionResponseItem(
                 updatedTransaction.getUid(),
+                new UserResponseItem(
+                        transaction.getUser().getUid(),
+                        transaction.getUser().getItemName(),
+                        transaction.getUser().getEmail(),
+                        transaction.getUser().getRole().getItemName(),
+                        transaction.getUser().getCreatedAt(),
+                        transaction.getUser().getUpdatedAt()
+                ),
                 updatedTransaction.getCreatedAt()
         );
     }

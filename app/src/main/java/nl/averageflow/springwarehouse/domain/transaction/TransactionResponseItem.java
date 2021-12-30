@@ -1,7 +1,14 @@
 package nl.averageflow.springwarehouse.domain.transaction;
 
-import java.sql.Timestamp;
+import nl.averageflow.springwarehouse.domain.product.dto.ProductResponseItem;
+import nl.averageflow.springwarehouse.domain.user.UserResponseItem;
+
+import java.util.Set;
 import java.util.UUID;
 
-public record TransactionResponseItem(UUID uid, Timestamp createdAt) {
+public record TransactionResponseItem(
+        UUID uid,
+        Set<ProductResponseItem>,
+        UserResponseItem user
+) {
 }
