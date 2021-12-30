@@ -1,12 +1,12 @@
 package nl.averageflow.springwarehouse.domain.category;
 
 import nl.averageflow.springwarehouse.domain.category.dto.AddCategoriesRequest;
+import nl.averageflow.springwarehouse.domain.category.dto.CategoryResponseItem;
 import nl.averageflow.springwarehouse.domain.category.dto.EditCategoryRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -20,12 +20,12 @@ public class CategoryController {
     }
 
     @GetMapping("/api/categories")
-    public Page<Category> getCategories(final Pageable pageable) {
+    public Page<CategoryResponseItem> getCategories(final Pageable pageable) {
         return this.categoryService.getCategories(pageable);
     }
 
     @GetMapping("/api/categories/{uid}")
-    public Optional<Category> getCategory(@PathVariable final UUID uid) {
+    public CategoryResponseItem getCategory(@PathVariable final UUID uid) {
         return this.categoryService.getCategoryByUid(uid);
     }
 
@@ -35,7 +35,7 @@ public class CategoryController {
     }
 
     @PatchMapping("/api/categories/{uid}")
-    public Category editCategory(@PathVariable final UUID uid, @RequestBody final EditCategoryRequest request) {
+    public CategoryResponseItem editCategory(@PathVariable final UUID uid, @RequestBody final EditCategoryRequest request) {
         return this.categoryService.editCategory(uid, request);
     }
 

@@ -33,9 +33,9 @@ public class ArticleService implements ArticleServiceContract {
     }
 
     public Page<ArticleResponseItem> getArticles(final Pageable pageable) {
-        final Page<Article> articlePage = this.articleRepository.findAll(pageable);
+        final Page<Article> page = this.articleRepository.findAll(pageable);
 
-        return articlePage.map(article -> new ArticleResponseItem(
+        return page.map(article -> new ArticleResponseItem(
                 article.getUid(),
                 article.getName(),
                 article.getStock(),
@@ -45,12 +45,12 @@ public class ArticleService implements ArticleServiceContract {
     }
 
     public ArticleResponseItem getArticleByUid(final UUID uid) {
-        final Optional<Article> wantedArticleSearchResult = this.articleRepository.findByUid(uid);
-        if (wantedArticleSearchResult.isEmpty()) {
+        final Optional<Article> searchResult = this.articleRepository.findByUid(uid);
+        if (searchResult.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        final Article article = wantedArticleSearchResult.get();
+        final Article article = searchResult.get();
 
         return new ArticleResponseItem(
                 article.getUid(),
@@ -74,24 +74,24 @@ public class ArticleService implements ArticleServiceContract {
 
 
     public ArticleResponseItem editArticle(final UUID uid, final EditArticleRequest request) {
-        final Optional<Article> wantedArticleSearchResult = this.articleRepository.findByUid(uid);
+        final Optional<Article> searchResult = this.articleRepository.findByUid(uid);
 
-        if (wantedArticleSearchResult.isEmpty()) {
+        if (searchResult.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID");
         }
 
-        final Article itemToUpdate = wantedArticleSearchResult.get();
+        final Article itemToUpdate = searchResult.get();
 
         itemToUpdate.setName(request.name());
 
-        final Article updatedArticle = this.articleRepository.save(itemToUpdate);
+        final Article updatedItem = this.articleRepository.save(itemToUpdate);
 
         return new ArticleResponseItem(
-                updatedArticle.getUid(),
-                updatedArticle.getName(),
-                updatedArticle.getStock(),
-                updatedArticle.getCreatedAt(),
-                updatedArticle.getUpdatedAt()
+                updatedItem.getUid(),
+                updatedItem.getName(),
+                updatedItem.getStock(),
+                updatedItem.getCreatedAt(),
+                updatedItem.getUpdatedAt()
         );
     }
 

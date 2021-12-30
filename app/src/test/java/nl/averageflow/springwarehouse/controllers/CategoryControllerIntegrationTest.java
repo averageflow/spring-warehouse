@@ -1,9 +1,8 @@
 package nl.averageflow.springwarehouse.controllers;
 
 import nl.averageflow.springwarehouse.domain.category.CategoryController;
-import nl.averageflow.springwarehouse.domain.category.Category;
-import nl.averageflow.springwarehouse.domain.category.dto.AddCategoriesRequestItem;
 import nl.averageflow.springwarehouse.domain.category.CategoryService;
+import nl.averageflow.springwarehouse.domain.category.dto.CategoryResponseItem;
 import nl.averageflow.springwarehouse.domain.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.UUID;
 
 import static org.mockito.Mockito.when;
@@ -40,23 +40,29 @@ public class CategoryControllerIntegrationTest {
     @MockBean
     private UserService userService;
 
-    private Category mockCategory;
+    private CategoryResponseItem mockCategory;
 
     @BeforeEach
     void setUp() {
-        this.mockCategory = new Category(new AddCategoriesRequestItem("name", "description"));
+        this.mockCategory = new CategoryResponseItem(
+                UUID.randomUUID(),
+                "name",
+                "description",
+                Timestamp.from(Instant.now()),
+                Timestamp.from(Instant.now())
+        );
     }
 
     @WithMockUser
     @Test
     public void getCategoryByUidShouldReturnCorrectServiceResponse() throws Exception {
         final UUID randomUid = UUID.randomUUID();
-        when(categoryService.getCategoryByUid(randomUid)).thenReturn(Optional.of(this.mockCategory));
+        when(categoryService.getCategoryByUid(randomUid)).thenReturn(this.mockCategory);
 
         this.mockMvc.perform(get("/api/categories/" + randomUid))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$.name").value(this.mockCategory.getName()))
-                .andExpect(jsonPath("$.description").value(this.mockCategory.getDescription()));
+                .andExpect(jsonPath("$.name").value(this.mockCategory.name()))
+                .andExpect(jsonPath("$.description").value(this.mockCategory.description()));
     }
 }

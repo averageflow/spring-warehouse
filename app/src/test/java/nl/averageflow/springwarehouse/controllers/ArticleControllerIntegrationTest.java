@@ -60,6 +60,6 @@ public class ArticleControllerIntegrationTest {
 
         this.mockMvc.perform(get("/api/articles/" + randomUid))
                 .andDo(print())
-                .andExpect(status().is5xxServerError());
+                .andExpect(status().is2xxSuccessful());
     }
 }
