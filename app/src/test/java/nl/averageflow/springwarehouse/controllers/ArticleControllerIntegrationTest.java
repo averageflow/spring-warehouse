@@ -1,9 +1,8 @@
 package nl.averageflow.springwarehouse.controllers;
 
 import nl.averageflow.springwarehouse.domain.article.ArticleController;
-import nl.averageflow.springwarehouse.domain.article.model.Article;
-import nl.averageflow.springwarehouse.domain.article.dto.AddArticlesRequestItem;
 import nl.averageflow.springwarehouse.domain.article.ArticleService;
+import nl.averageflow.springwarehouse.domain.article.dto.ArticleResponseItem;
 import nl.averageflow.springwarehouse.domain.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.UUID;
 
 import static org.mockito.Mockito.when;
@@ -39,18 +39,24 @@ public class ArticleControllerIntegrationTest {
     @MockBean
     private ArticleService articleService;
 
-    private Article mockArticle;
+    private ArticleResponseItem mockArticle;
 
     @BeforeEach
     void setUp() {
-        this.mockArticle = new Article(new AddArticlesRequestItem("article", 9));
+        this.mockArticle = new ArticleResponseItem(
+                UUID.randomUUID(),
+                "name",
+                9,
+                Timestamp.from(Instant.now()),
+                Timestamp.from(Instant.now())
+        );
     }
 
     @WithMockUser
     @Test
     public void getArticleByUidShouldReturnCorrectServiceResponse() throws Exception {
         final UUID randomUid = UUID.randomUUID();
-        when(articleService.getArticleByUid(randomUid)).thenReturn(Optional.of(this.mockArticle));
+        when(articleService.getArticleByUid(randomUid)).thenReturn(this.mockArticle);
 
         this.mockMvc.perform(get("/api/articles/" + randomUid))
                 .andDo(print())

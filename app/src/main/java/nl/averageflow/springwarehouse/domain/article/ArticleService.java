@@ -1,13 +1,13 @@
 package nl.averageflow.springwarehouse.domain.article;
 
+import nl.averageflow.springwarehouse.domain.article.dto.AddArticlesRequestItem;
+import nl.averageflow.springwarehouse.domain.article.dto.ArticleResponseItem;
+import nl.averageflow.springwarehouse.domain.article.dto.EditArticleRequest;
 import nl.averageflow.springwarehouse.domain.article.model.Article;
 import nl.averageflow.springwarehouse.domain.article.model.ArticleStock;
 import nl.averageflow.springwarehouse.domain.article.repository.ArticleRepository;
 import nl.averageflow.springwarehouse.domain.article.repository.ArticleStocksRepository;
-import nl.averageflow.springwarehouse.domain.article.dto.AddArticlesRequestItem;
-import nl.averageflow.springwarehouse.domain.article.dto.EditArticleRequest;
 import nl.averageflow.springwarehouse.domain.product.repository.ProductArticleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,22 +20,45 @@ import java.util.UUID;
 @Service
 public class ArticleService implements ArticleServiceContract {
 
-    @Autowired
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
-    @Autowired
-    private ArticleStocksRepository articleStocksRepository;
+    private final ArticleStocksRepository articleStocksRepository;
 
-    @Autowired
-    private ProductArticleRepository productArticleRepository;
+    private final ProductArticleRepository productArticleRepository;
 
-    public Page<Article> getArticles(final Pageable pageable) {
-        return this.articleRepository.findAll(pageable);
+    public ArticleService(final ArticleRepository articleRepository, final ArticleStocksRepository articleStocksRepository, final ProductArticleRepository productArticleRepository) {
+        this.articleRepository = articleRepository;
+        this.articleStocksRepository = articleStocksRepository;
+        this.productArticleRepository = productArticleRepository;
     }
 
+    public Page<ArticleResponseItem> getArticles(final Pageable pageable) {
+        final Page<Article> articlePage = this.articleRepository.findAll(pageable);
 
-    public Optional<Article> getArticleByUid(final UUID uid) {
-        return this.articleRepository.findByUid(uid);
+        return articlePage.map(article -> new ArticleResponseItem(
+                article.getUid(),
+                article.getName(),
+                article.getStock(),
+                article.getCreatedAt(),
+                article.getUpdatedAt()
+        ));
+    }
+
+    public ArticleResponseItem getArticleByUid(final UUID uid) {
+        final Optional<Article> wantedArticleSearchResult = this.articleRepository.findByUid(uid);
+        if (wantedArticleSearchResult.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        final Article article = wantedArticleSearchResult.get();
+
+        return new ArticleResponseItem(
+                article.getUid(),
+                article.getName(),
+                article.getStock(),
+                article.getCreatedAt(),
+                article.getUpdatedAt()
+        );
     }
 
 
@@ -50,7 +73,7 @@ public class ArticleService implements ArticleServiceContract {
     }
 
 
-    public Article editArticle(final UUID uid, final EditArticleRequest request) {
+    public ArticleResponseItem editArticle(final UUID uid, final EditArticleRequest request) {
         final Optional<Article> wantedArticleSearchResult = this.articleRepository.findByUid(uid);
 
         if (wantedArticleSearchResult.isEmpty()) {
@@ -61,7 +84,15 @@ public class ArticleService implements ArticleServiceContract {
 
         itemToUpdate.setName(request.name());
 
-        return this.articleRepository.save(itemToUpdate);
+        final Article updatedArticle = this.articleRepository.save(itemToUpdate);
+
+        return new ArticleResponseItem(
+                updatedArticle.getUid(),
+                updatedArticle.getName(),
+                updatedArticle.getStock(),
+                updatedArticle.getCreatedAt(),
+                updatedArticle.getUpdatedAt()
+        );
     }
 
 
