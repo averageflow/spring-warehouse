@@ -1,9 +1,10 @@
 package nl.averageflow.springwarehouse.controllers;
 
-import nl.averageflow.springwarehouse.models.Article;
-import nl.averageflow.springwarehouse.requests.AddArticlesRequestItem;
-import nl.averageflow.springwarehouse.services.ArticleService;
-import nl.averageflow.springwarehouse.services.UserService;
+import nl.averageflow.springwarehouse.article.ArticleController;
+import nl.averageflow.springwarehouse.article.model.Article;
+import nl.averageflow.springwarehouse.article.dto.AddArticlesRequestItem;
+import nl.averageflow.springwarehouse.article.ArticleService;
+import nl.averageflow.springwarehouse.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
