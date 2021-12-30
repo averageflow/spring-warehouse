@@ -1,14 +1,15 @@
 package nl.averageflow.springwarehouse.domain.user;
 
-import nl.averageflow.springwarehouse.domain.user.repository.UserRepository;
 import nl.averageflow.springwarehouse.domain.user.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import nl.averageflow.springwarehouse.domain.user.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -16,15 +17,41 @@ import java.util.UUID;
 @Service
 public class UserService implements UserDetailsService, UserServiceContract {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public Page<User> getUsers(final Pageable pageable) {
-        return this.userRepository.findAll(pageable);
+    public UserService(final UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public Optional<User> getUserByUid(final UUID uid) {
-        return this.userRepository.findByUid(uid);
+    public Page<UserResponseItem> getUsers(final Pageable pageable) {
+        final Page<User> page = this.userRepository.findAll(pageable);
+
+        return page.map(user -> new UserResponseItem(
+                user.getUid(),
+                user.getItemName(),
+                user.getEmail(),
+                user.getRole().getItemName(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
+        ));
+    }
+
+    public UserResponseItem getUserByUid(final UUID uid) {
+        final Optional<User> searchResult = this.userRepository.findByUid(uid);
+        if (searchResult.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        final User user = searchResult.get();
+
+        return new UserResponseItem(
+                user.getUid(),
+                user.getItemName(),
+                user.getEmail(),
+                user.getRole().getItemName(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
+        );
     }
 
     public void deleteUserByUid(final UUID uid) {

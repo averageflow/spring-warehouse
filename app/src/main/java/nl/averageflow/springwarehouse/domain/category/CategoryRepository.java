@@ -12,7 +12,6 @@ import java.util.UUID;
 @Repository
 public interface CategoryRepository extends PagingAndSortingRepository<Category, UUID> {
 
-
     @NonNull
     Optional<Category> findByUid(@NonNull UUID uid);
 

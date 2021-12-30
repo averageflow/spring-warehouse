@@ -58,7 +58,6 @@ public final class Category {
         return this.updatedAt;
     }
 
-
     public String getDescription() {
         return description;
     }

@@ -1,13 +1,12 @@
 package nl.averageflow.springwarehouse.domain.article;
 
-import nl.averageflow.springwarehouse.domain.article.model.Article;
 import nl.averageflow.springwarehouse.domain.article.dto.AddArticlesRequest;
+import nl.averageflow.springwarehouse.domain.article.dto.ArticleResponseItem;
 import nl.averageflow.springwarehouse.domain.article.dto.EditArticleRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -20,12 +19,12 @@ public final class ArticleController {
     }
 
     @GetMapping("/api/articles")
-    public Page<Article> getArticles(final Pageable pageable) {
+    public Page<ArticleResponseItem> getArticles(final Pageable pageable) {
         return this.articleService.getArticles(pageable);
     }
 
     @GetMapping("/api/articles/{uid}")
-    public Optional<Article> getArticle(@PathVariable final UUID uid) {
+    public ArticleResponseItem getArticle(@PathVariable final UUID uid) {
         return this.articleService.getArticleByUid(uid);
     }
 
@@ -35,7 +34,7 @@ public final class ArticleController {
     }
 
     @PatchMapping("/api/articles/{uid}")
-    public Article editArticle(@PathVariable final UUID uid, @RequestBody final EditArticleRequest request) {
+    public ArticleResponseItem editArticle(@PathVariable final UUID uid, @RequestBody final EditArticleRequest request) {
         return this.articleService.editArticle(uid, request);
     }
 

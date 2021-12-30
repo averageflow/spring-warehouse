@@ -1,11 +1,11 @@
 package nl.averageflow.springwarehouse.domain.authentication;
 
+import nl.averageflow.springwarehouse.domain.authentication.dto.RegisterRequest;
 import nl.averageflow.springwarehouse.domain.user.UserRole;
 import nl.averageflow.springwarehouse.domain.user.model.Role;
 import nl.averageflow.springwarehouse.domain.user.model.User;
 import nl.averageflow.springwarehouse.domain.user.repository.RoleRepository;
 import nl.averageflow.springwarehouse.domain.user.repository.UserRepository;
-import nl.averageflow.springwarehouse.domain.authentication.dto.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

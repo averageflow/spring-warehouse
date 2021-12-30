@@ -2,8 +2,8 @@ package nl.averageflow.springwarehouse.domain.product.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.averageflow.springwarehouse.domain.category.Category;
-import nl.averageflow.springwarehouse.domain.product.dto.ProductImagesData;
 import nl.averageflow.springwarehouse.domain.product.dto.AddProductsRequestItem;
+import nl.averageflow.springwarehouse.domain.product.dto.ProductImagesData;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -124,7 +124,7 @@ public final class Product {
 
         try {
             final ProductImagesData images = objectMapper.readValue(this.imageURLs, ProductImagesData.class);
-            return images.getUrls();
+            return images.urls();
         } catch (final Exception e) {
             return List.of(ELEMENTS);
         }

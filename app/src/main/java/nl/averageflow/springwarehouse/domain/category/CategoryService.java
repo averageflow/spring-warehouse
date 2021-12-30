@@ -1,8 +1,8 @@
 package nl.averageflow.springwarehouse.domain.category;
 
 import nl.averageflow.springwarehouse.domain.category.dto.AddCategoriesRequestItem;
+import nl.averageflow.springwarehouse.domain.category.dto.CategoryResponseItem;
 import nl.averageflow.springwarehouse.domain.category.dto.EditCategoryRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -15,37 +15,69 @@ import java.util.UUID;
 @Service
 public class CategoryService implements CategoryServiceContract {
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    public Page<Category> getCategories(final Pageable pageable) {
-        return this.categoryRepository.findAll(pageable);
+    public CategoryService(final CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
     }
 
-    public Optional<Category> getCategoryByUid(final UUID uid) {
-        return this.categoryRepository.findByUid(uid);
+    public Page<CategoryResponseItem> getCategories(final Pageable pageable) {
+        final Page<Category> page = this.categoryRepository.findAll(pageable);
+
+        return page.map(category -> new CategoryResponseItem(
+                category.getUid(),
+                category.getName(),
+                category.getDescription(),
+                category.getCreatedAt(),
+                category.getUpdatedAt()
+        ));
+    }
+
+    public CategoryResponseItem getCategoryByUid(final UUID uid) {
+        final Optional<Category> searchResult = this.categoryRepository.findByUid(uid);
+        if (searchResult.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        final Category category = searchResult.get();
+
+        return new CategoryResponseItem(
+                category.getUid(),
+                category.getName(),
+                category.getDescription(),
+                category.getCreatedAt(),
+                category.getUpdatedAt()
+        );
     }
 
     public void addCategories(final Iterable<AddCategoriesRequestItem> rawItems) {
         rawItems.forEach(rawItem -> {
-            final Category article = new Category(rawItem);
-            this.categoryRepository.save(article);
+            final Category category = new Category(rawItem);
+            this.categoryRepository.save(category);
         });
     }
 
-    public Category editCategory(final UUID uid, final EditCategoryRequest request) {
-        final Optional<Category> wantedArticleSearchResult = this.categoryRepository.findByUid(uid);
+    public CategoryResponseItem editCategory(final UUID uid, final EditCategoryRequest request) {
+        final Optional<Category> searchResult = this.categoryRepository.findByUid(uid);
 
-        if (wantedArticleSearchResult.isEmpty()) {
+        if (searchResult.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID");
         }
 
-        final Category itemToUpdate = wantedArticleSearchResult.get();
+        final Category itemToUpdate = searchResult.get();
 
         itemToUpdate.setName(request.name());
         itemToUpdate.setDescription(request.description());
 
-        return this.categoryRepository.save(itemToUpdate);
+        final Category updatedItem = this.categoryRepository.save(itemToUpdate);
+
+        return new CategoryResponseItem(
+                updatedItem.getUid(),
+                updatedItem.getName(),
+                updatedItem.getDescription(),
+                updatedItem.getCreatedAt(),
+                updatedItem.getUpdatedAt()
+        );
     }
 
     public void deleteCategoryByUid(final UUID uid) {

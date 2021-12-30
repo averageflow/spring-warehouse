@@ -1,18 +1,15 @@
 package nl.averageflow.springwarehouse.domain.product;
 
 import nl.averageflow.springwarehouse.domain.article.model.Article;
-import nl.averageflow.springwarehouse.domain.product.dto.SellProductsRequest;
-import nl.averageflow.springwarehouse.domain.product.dto.SellProductsRequestItem;
+import nl.averageflow.springwarehouse.domain.article.repository.ArticleRepository;
+import nl.averageflow.springwarehouse.domain.category.Category;
+import nl.averageflow.springwarehouse.domain.category.CategoryRepository;
+import nl.averageflow.springwarehouse.domain.category.dto.CategoryResponseItem;
+import nl.averageflow.springwarehouse.domain.product.dto.*;
 import nl.averageflow.springwarehouse.domain.product.model.ArticleAmountInProduct;
 import nl.averageflow.springwarehouse.domain.product.model.Product;
 import nl.averageflow.springwarehouse.domain.product.repository.ProductArticleRepository;
 import nl.averageflow.springwarehouse.domain.product.repository.ProductRepository;
-import nl.averageflow.springwarehouse.domain.category.Category;
-import nl.averageflow.springwarehouse.domain.article.repository.ArticleRepository;
-import nl.averageflow.springwarehouse.domain.category.CategoryRepository;
-import nl.averageflow.springwarehouse.domain.product.dto.AddProductsRequestItem;
-import nl.averageflow.springwarehouse.domain.product.dto.EditProductRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -28,25 +25,67 @@ import java.util.stream.StreamSupport;
 @Service
 public class ProductService implements ProductServiceContract {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    @Autowired
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    private ProductArticleRepository productArticleRepository;
+    private final ProductArticleRepository productArticleRepository;
 
-
-    public Page<Product> getProducts(final Pageable pageable) {
-        return this.productRepository.findAll(pageable);
+    public ProductService(final ProductRepository productRepository, final ArticleRepository articleRepository, final CategoryRepository categoryRepository, final ProductArticleRepository productArticleRepository) {
+        this.productRepository = productRepository;
+        this.articleRepository = articleRepository;
+        this.categoryRepository = categoryRepository;
+        this.productArticleRepository = productArticleRepository;
     }
 
-    public Optional<Product> getProductByUid(final UUID uid) {
-        return this.productRepository.findByUid(uid);
+
+    public Page<ProductResponseItem> getProducts(final Pageable pageable) {
+        final Page<Product> page = this.productRepository.findAll(pageable);
+
+        return page.map(product -> new ProductResponseItem(
+                product.getUid(),
+                product.getName(),
+                product.getImageURLs(),
+                product.getPrice(),
+                new CategoryResponseItem(
+                        product.getCategory().getUid(),
+                        product.getCategory().getName(),
+                        product.getCategory().getDescription(),
+                        product.getCategory().getCreatedAt(),
+                        product.getCategory().getUpdatedAt()
+                ),
+                product.getCreatedAt(),
+                product.getUpdatedAt(),
+                product.getArticles()
+        ));
+    }
+
+    public ProductResponseItem getProductByUid(final UUID uid) {
+        final Optional<Product> searchResult = this.productRepository.findByUid(uid);
+        if (searchResult.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        final Product product = searchResult.get();
+
+        return new ProductResponseItem(
+                product.getUid(),
+                product.getName(),
+                product.getImageURLs(),
+                product.getPrice(),
+                new CategoryResponseItem(
+                        product.getCategory().getUid(),
+                        product.getCategory().getName(),
+                        product.getCategory().getDescription(),
+                        product.getCategory().getCreatedAt(),
+                        product.getCategory().getUpdatedAt()
+                ),
+                product.getCreatedAt(),
+                product.getUpdatedAt(),
+                product.getArticles()
+        );
     }
 
     public void deleteProductByUid(final UUID uid) {
@@ -116,11 +155,11 @@ public class ProductService implements ProductServiceContract {
         this.productRepository.save(product);
     }
 
-    public Product editProduct(final UUID uid, final EditProductRequest request) {
-        final Optional<Product> wantedProductSearchResult = this.productRepository.findByUid(uid);
+    public ProductResponseItem editProduct(final UUID uid, final EditProductRequest request) {
+        final Optional<Product> searchResult = this.productRepository.findByUid(uid);
         final Optional<Category> category = this.categoryRepository.findByUid(request.categoryUid());
 
-        if (wantedProductSearchResult.isEmpty()) {
+        if (searchResult.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find product with wanted UUID");
         }
 
@@ -128,7 +167,7 @@ public class ProductService implements ProductServiceContract {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find category with wanted UUID");
         }
 
-        final Product itemToUpdate = wantedProductSearchResult.get();
+        final Product itemToUpdate = searchResult.get();
 
 
         itemToUpdate.setName(request.name());
@@ -136,6 +175,23 @@ public class ProductService implements ProductServiceContract {
         itemToUpdate.setImageURLs(request.imageURLs());
         itemToUpdate.setCategory(category.get());
 
-        return this.productRepository.save(itemToUpdate);
+        final Product updatedItem = this.productRepository.save(itemToUpdate);
+
+        return new ProductResponseItem(
+                updatedItem.getUid(),
+                updatedItem.getName(),
+                updatedItem.getImageURLs(),
+                updatedItem.getPrice(),
+                new CategoryResponseItem(
+                        updatedItem.getCategory().getUid(),
+                        updatedItem.getCategory().getName(),
+                        updatedItem.getCategory().getDescription(),
+                        updatedItem.getCategory().getCreatedAt(),
+                        updatedItem.getCategory().getUpdatedAt()
+                ),
+                updatedItem.getCreatedAt(),
+                updatedItem.getUpdatedAt(),
+                updatedItem.getArticles()
+        );
     }
 }
