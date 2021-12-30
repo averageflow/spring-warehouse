@@ -1,13 +1,12 @@
 package nl.averageflow.springwarehouse.domain.transaction;
 
+import nl.averageflow.springwarehouse.domain.product.dto.SellProductsRequest;
 import nl.averageflow.springwarehouse.domain.product.model.Product;
+import nl.averageflow.springwarehouse.domain.product.repository.ProductRepository;
 import nl.averageflow.springwarehouse.domain.transaction.model.Transaction;
 import nl.averageflow.springwarehouse.domain.transaction.model.TransactionProduct;
-import nl.averageflow.springwarehouse.domain.product.repository.ProductRepository;
 import nl.averageflow.springwarehouse.domain.transaction.repository.TransactionProductRepository;
 import nl.averageflow.springwarehouse.domain.transaction.repository.TransactionRepository;
-import nl.averageflow.springwarehouse.domain.product.dto.SellProductsRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,24 +19,43 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class TransactionService implements TransactionServiceContract {
-    @Autowired
-    private TransactionRepository transactionRepository;
+    private final TransactionRepository transactionRepository;
 
-    @Autowired
-    private TransactionProductRepository transactionProductRepository;
+    private final TransactionProductRepository transactionProductRepository;
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    public Page<Transaction> getTransactions(final Pageable pageable) {
-        return this.transactionRepository.findAll(pageable);
+    public TransactionService(final TransactionRepository transactionRepository, final TransactionProductRepository transactionProductRepository, final ProductRepository productRepository) {
+        this.transactionRepository = transactionRepository;
+        this.transactionProductRepository = transactionProductRepository;
+        this.productRepository = productRepository;
     }
 
-    public Optional<Transaction> getTransactionByUid(final UUID uid) {
-        return this.transactionRepository.findByUid(uid);
+    public Page<TransactionResponseItem> getTransactions(final Pageable pageable) {
+        final Page<Transaction> page = this.transactionRepository.findAll(pageable);
+
+        return page.map(transaction -> new TransactionResponseItem(
+                transaction.getUid(),
+                transaction.getCreatedAt()
+        ));
     }
 
-    public Transaction createTransaction(final SellProductsRequest request) {
+    public TransactionResponseItem getTransactionByUid(final UUID uid) {
+        final Optional<Transaction> searchResult = this.transactionRepository.findByUid(uid);
+
+        if (searchResult.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find transaction with wanted UUID");
+        }
+
+        final Transaction transaction = searchResult.get();
+
+        return new TransactionResponseItem(
+                transaction.getUid(),
+                transaction.getCreatedAt()
+        );
+    }
+
+    public TransactionResponseItem createTransaction(final SellProductsRequest request) {
         final Transaction transaction = new Transaction();
 
         final HashMap<UUID, Long> wantedProductAmounts = new HashMap<>();
@@ -66,6 +84,9 @@ public class TransactionService implements TransactionServiceContract {
 
         this.transactionProductRepository.saveAll(transactionProducts);
 
-        return updatedTransaction;
+        return new TransactionResponseItem(
+                updatedTransaction.getUid(),
+                updatedTransaction.getCreatedAt()
+        );
     }
 }
