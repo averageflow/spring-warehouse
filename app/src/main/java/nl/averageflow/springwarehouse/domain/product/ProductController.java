@@ -2,8 +2,8 @@ package nl.averageflow.springwarehouse.domain.product;
 
 import nl.averageflow.springwarehouse.domain.product.dto.AddProductRequest;
 import nl.averageflow.springwarehouse.domain.product.dto.EditProductRequest;
+import nl.averageflow.springwarehouse.domain.product.dto.ProductResponseItem;
 import nl.averageflow.springwarehouse.domain.product.dto.SellProductsRequest;
-import nl.averageflow.springwarehouse.domain.product.model.Product;
 import nl.averageflow.springwarehouse.domain.transaction.TransactionService;
 import nl.averageflow.springwarehouse.domain.transaction.TransactionServiceContract;
 import nl.averageflow.springwarehouse.domain.transaction.model.Transaction;
@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -19,6 +18,7 @@ import java.util.UUID;
 public final class ProductController {
 
     private final ProductServiceContract productService;
+    
     private final TransactionServiceContract transactionService;
 
     public ProductController(final ProductService productService, final TransactionService transactionService) {
@@ -27,12 +27,12 @@ public final class ProductController {
     }
 
     @GetMapping("/api/products")
-    public Page<Product> getProducts(final Pageable pageable) {
+    public Page<ProductResponseItem> getProducts(final Pageable pageable) {
         return this.productService.getProducts(pageable);
     }
 
     @GetMapping("/api/products/{uid}")
-    public Optional<Product> getProduct(@PathVariable final UUID uid) {
+    public ProductResponseItem getProduct(@PathVariable final UUID uid) {
         return this.productService.getProductByUid(uid);
     }
 
@@ -47,7 +47,7 @@ public final class ProductController {
     }
 
     @PatchMapping("/api/products/{uid}")
-    public Product editProduct(@PathVariable final UUID uid, @RequestBody final EditProductRequest request) {
+    public ProductResponseItem editProduct(@PathVariable final UUID uid, @RequestBody final EditProductRequest request) {
         return this.productService.editProduct(uid, request);
     }
 
