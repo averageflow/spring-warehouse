@@ -1,6 +1,6 @@
 # Spring Warehouse
 
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)! ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white) ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
 ![GPL licensed](https://img.shields.io/badge/license-GPL-blue.svg) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/0696080f9fa14ab3b7334cb1fc40b76e)](https://www.codacy.com/gh/averageflow/spring-warehouse/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=averageflow/spring-warehouse&amp;utm_campaign=Badge_Grade)
 
