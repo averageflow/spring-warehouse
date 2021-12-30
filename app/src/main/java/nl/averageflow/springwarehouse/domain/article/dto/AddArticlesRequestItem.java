@@ -1,4 +1,8 @@
 package nl.averageflow.springwarehouse.domain.article.dto;
 
-public record AddArticlesRequestItem(String name, long stock) {
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+public record AddArticlesRequestItem(@NotBlank @NotNull String name, @Min(1) long stock) {
 }

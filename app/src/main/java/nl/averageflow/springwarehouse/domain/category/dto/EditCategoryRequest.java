@@ -1,4 +1,7 @@
 package nl.averageflow.springwarehouse.domain.category.dto;
 
-public record EditCategoryRequest(String name, String description) {
+import javax.validation.constraints.NotBlank;
+
+public record EditCategoryRequest(@NotBlank String name,
+                                  @NotBlank String description) {
 }

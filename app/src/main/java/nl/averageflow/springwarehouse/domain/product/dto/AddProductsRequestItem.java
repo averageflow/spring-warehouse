@@ -1,11 +1,14 @@
 package nl.averageflow.springwarehouse.domain.product.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public record AddProductsRequestItem(
-        String name,
-        Double price,
-        UUID categoryUid,
-        Iterable<AddProductsRequestArticleItem> containArticles,
-        Iterable<String> imageURLs) {
+        @NotBlank String name,
+        @NotNull Double price,
+        @NotNull UUID categoryUid,
+        @NotEmpty Iterable<AddProductsRequestArticleItem> containArticles,
+        @NotEmpty Iterable<String> imageURLs) {
 }

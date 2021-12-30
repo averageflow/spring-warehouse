@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @RestController
@@ -20,27 +22,27 @@ public class CategoryController {
     }
 
     @GetMapping("/api/categories")
-    public Page<CategoryResponseItem> getCategories(final Pageable pageable) {
+    public Page<CategoryResponseItem> getCategories(@NotNull final Pageable pageable) {
         return this.categoryService.getCategories(pageable);
     }
 
     @GetMapping("/api/categories/{uid}")
-    public CategoryResponseItem getCategory(@PathVariable final UUID uid) {
+    public CategoryResponseItem getCategory(@PathVariable @NotNull final UUID uid) {
         return this.categoryService.getCategoryByUid(uid);
     }
 
     @PostMapping("/api/categories")
-    public void addCategories(@RequestBody final AddCategoriesRequest request) {
+    public void addCategories(@RequestBody @Valid final AddCategoriesRequest request) {
         this.categoryService.addCategories(request.items());
     }
 
     @PatchMapping("/api/categories/{uid}")
-    public CategoryResponseItem editCategory(@PathVariable final UUID uid, @RequestBody final EditCategoryRequest request) {
+    public CategoryResponseItem editCategory(@PathVariable @NotNull final UUID uid, @RequestBody @Valid final EditCategoryRequest request) {
         return this.categoryService.editCategory(uid, request);
     }
 
     @DeleteMapping("/api/categories/{uid}")
-    public void deleteCategory(@PathVariable final UUID uid) {
+    public void deleteCategory(@PathVariable @NotNull final UUID uid) {
         this.categoryService.deleteCategoryByUid(uid);
     }
 }

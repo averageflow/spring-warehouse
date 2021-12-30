@@ -45,12 +45,8 @@ public class ArticleService implements ArticleServiceContract {
     }
 
     public ArticleResponseItem getArticleByUid(final UUID uid) {
-        final Optional<Article> searchResult = this.articleRepository.findByUid(uid);
-        if (searchResult.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-
-        final Article article = searchResult.get();
+        final var article = this.articleRepository.findByUid(uid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return new ArticleResponseItem(
                 article.getUid(),
@@ -63,13 +59,7 @@ public class ArticleService implements ArticleServiceContract {
 
 
     public void addArticles(final Iterable<AddArticlesRequestItem> rawItems) {
-        rawItems.forEach(rawItem -> {
-            final Article article = new Article(rawItem);
-            final ArticleStock articleStock = new ArticleStock(article, rawItem.stock());
-
-            this.articleRepository.save(article);
-            this.articleStocksRepository.save(articleStock);
-        });
+        rawItems.forEach(this::addSingleArticle);
     }
 
 
@@ -100,5 +90,18 @@ public class ArticleService implements ArticleServiceContract {
         this.productArticleRepository.deleteByArticleUid(uid);
         this.articleStocksRepository.deleteByArticleUid(uid);
         this.articleRepository.deleteByUid(uid);
+    }
+
+    /**
+     * Add a single article into the system
+     *
+     * @param rawItem the article
+     */
+    private void addSingleArticle(AddArticlesRequestItem rawItem) {
+        final Article article = new Article(rawItem);
+        final ArticleStock articleStock = new ArticleStock(article, rawItem.stock());
+
+        this.articleRepository.save(article);
+        this.articleStocksRepository.save(articleStock);
     }
 }

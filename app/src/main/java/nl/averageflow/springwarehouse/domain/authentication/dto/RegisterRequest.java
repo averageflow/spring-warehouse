@@ -1,4 +1,9 @@
 package nl.averageflow.springwarehouse.domain.authentication.dto;
 
-public record RegisterRequest(String name, String email, String password) {
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+public record RegisterRequest(@NotBlank String name,
+                              @Email @NotBlank String email,
+                              @NotBlank String password) {
 }
