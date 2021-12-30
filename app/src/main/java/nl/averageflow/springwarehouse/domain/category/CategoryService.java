@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -34,12 +33,8 @@ public class CategoryService implements CategoryServiceContract {
     }
 
     public CategoryResponseItem getCategoryByUid(final UUID uid) {
-        final Optional<Category> searchResult = this.categoryRepository.findByUid(uid);
-        if (searchResult.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-
-        final Category category = searchResult.get();
+        final Category category = this.categoryRepository.findByUid(uid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return new CategoryResponseItem(
                 category.getUid(),
@@ -58,13 +53,8 @@ public class CategoryService implements CategoryServiceContract {
     }
 
     public CategoryResponseItem editCategory(final UUID uid, final EditCategoryRequest request) {
-        final Optional<Category> searchResult = this.categoryRepository.findByUid(uid);
-
-        if (searchResult.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID");
-        }
-
-        final Category itemToUpdate = searchResult.get();
+        final Category itemToUpdate = this.categoryRepository.findByUid(uid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID"));
 
         itemToUpdate.setName(request.name());
         itemToUpdate.setDescription(request.description());

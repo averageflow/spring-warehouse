@@ -41,13 +41,8 @@ public class TransactionService implements TransactionServiceContract {
     }
 
     public TransactionResponseItem getTransactionByUid(final UUID uid) {
-        final Optional<Transaction> searchResult = this.transactionRepository.findByUid(uid);
-
-        if (searchResult.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find transaction with wanted UUID");
-        }
-
-        final Transaction transaction = searchResult.get();
+        final Transaction transaction = this.transactionRepository.findByUid(uid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find transaction with wanted UUID"));
 
         return new TransactionResponseItem(
                 transaction.getUid(),
@@ -74,8 +69,11 @@ public class TransactionService implements TransactionServiceContract {
         }
 
         final Set<TransactionProduct> transactionProducts = StreamSupport.stream(wantedProducts.spliterator(), false)
-                .map(item -> new TransactionProduct(transaction, item, wantedProductAmounts.get(item.getUid())))
-                .collect(Collectors.toSet());
+                .map(item -> new TransactionProduct(
+                        transaction,
+                        item,
+                        wantedProductAmounts.get(item.getUid()))
+                ).collect(Collectors.toSet());
 
         transaction.setTransactionProducts(transactionProducts);
 

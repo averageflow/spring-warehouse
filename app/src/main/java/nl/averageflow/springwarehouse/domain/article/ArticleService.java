@@ -45,7 +45,7 @@ public class ArticleService implements ArticleServiceContract {
     }
 
     public ArticleResponseItem getArticleByUid(final UUID uid) {
-        final var article = this.articleRepository.findByUid(uid)
+        final Article article = this.articleRepository.findByUid(uid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return new ArticleResponseItem(
@@ -97,7 +97,7 @@ public class ArticleService implements ArticleServiceContract {
      *
      * @param rawItem the article
      */
-    private void addSingleArticle(AddArticlesRequestItem rawItem) {
+    private void addSingleArticle(final AddArticlesRequestItem rawItem) {
         final Article article = new Article(rawItem);
         final ArticleStock articleStock = new ArticleStock(article, rawItem.stock());
 

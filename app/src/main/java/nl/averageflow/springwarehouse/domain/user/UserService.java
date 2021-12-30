@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,12 +36,8 @@ public class UserService implements UserDetailsService, UserServiceContract {
     }
 
     public UserResponseItem getUserByUid(final UUID uid) {
-        final Optional<User> searchResult = this.userRepository.findByUid(uid);
-        if (searchResult.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-
-        final User user = searchResult.get();
+        final User user = this.userRepository.findByUid(uid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return new UserResponseItem(
                 user.getUid(),
@@ -60,12 +55,9 @@ public class UserService implements UserDetailsService, UserServiceContract {
 
     @Override
     public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
-        final Optional<User> user = this.userRepository.findByEmail(email);
+        final User user = this.userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("could not find email: " + email));
 
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException("could not find email: " + email);
-        }
-
-        return new nl.averageflow.springwarehouse.domain.authentication.dto.UserDetails(user.get());
+        return new nl.averageflow.springwarehouse.domain.authentication.dto.UserDetails(user);
     }
 }

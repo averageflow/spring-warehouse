@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -63,12 +62,9 @@ public class ProductService implements ProductServiceContract {
     }
 
     public ProductResponseItem getProductByUid(final UUID uid) {
-        final Optional<Product> searchResult = this.productRepository.findByUid(uid);
-        if (searchResult.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        final Product product = this.productRepository.findByUid(uid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        final Product product = searchResult.get();
 
         return new ProductResponseItem(
                 product.getUid(),
@@ -94,23 +90,19 @@ public class ProductService implements ProductServiceContract {
 
     public void addProducts(final Iterable<AddProductsRequestItem> rawItems) {
         rawItems.forEach(rawItem -> {
-            final Optional<Category> category = this.categoryRepository.findByUid(rawItem.categoryUid());
-            if (category.isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted category");
-            }
+            final Category category = this.categoryRepository.findByUid(rawItem.categoryUid())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted category"));
 
-            final Product product = new Product(rawItem, category.get());
+            final Product product = new Product(rawItem, category);
 
             final Iterable<ArticleAmountInProduct> productArticles = StreamSupport.stream(rawItem.containArticles().spliterator(), false)
                     .map(articleItem -> {
-                        final Optional<Article> article = this.articleRepository.findByUid(articleItem.uid());
-                        if (article.isEmpty()) {
-                            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted article");
-                        }
+                        final Article article = this.articleRepository.findByUid(articleItem.uid())
+                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted article"));
 
                         return new ArticleAmountInProduct(
                                 product,
-                                article.get(),
+                                article,
                                 articleItem.amountOf()
                         );
                     }).toList();
@@ -156,26 +148,17 @@ public class ProductService implements ProductServiceContract {
     }
 
     public ProductResponseItem editProduct(final UUID uid, final EditProductRequest request) {
-        final Optional<Product> searchResult = this.productRepository.findByUid(uid);
-        final Optional<Category> category = this.categoryRepository.findByUid(request.categoryUid());
+        final Product product = this.productRepository.findByUid(uid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find product with wanted UUID"));
+        final Category category = this.categoryRepository.findByUid(request.categoryUid())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find category with wanted UUID"));
 
-        if (searchResult.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find product with wanted UUID");
-        }
+        product.setName(request.name());
+        product.setPrice(request.price());
+        product.setImageURLs(request.imageURLs());
+        product.setCategory(category);
 
-        if (category.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find category with wanted UUID");
-        }
-
-        final Product itemToUpdate = searchResult.get();
-
-
-        itemToUpdate.setName(request.name());
-        itemToUpdate.setPrice(request.price());
-        itemToUpdate.setImageURLs(request.imageURLs());
-        itemToUpdate.setCategory(category.get());
-
-        final Product updatedItem = this.productRepository.save(itemToUpdate);
+        final Product updatedItem = this.productRepository.save(product);
 
         return new ProductResponseItem(
                 updatedItem.getUid(),
