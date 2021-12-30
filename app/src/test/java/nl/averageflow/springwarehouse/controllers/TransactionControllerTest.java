@@ -1,7 +1,7 @@
 package nl.averageflow.springwarehouse.controllers;
 
-import nl.averageflow.springwarehouse.transaction.TransactionController;
-import nl.averageflow.springwarehouse.transaction.TransactionService;
+import nl.averageflow.springwarehouse.domain.transaction.TransactionController;
+import nl.averageflow.springwarehouse.domain.transaction.TransactionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
