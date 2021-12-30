@@ -9,6 +9,10 @@ warehouse.
 This project has been created in an effort to provide an up-to-date example of using the best practices of Java 17 and
 Spring Boot with Data JPA and Liquibase and being a reference project, similar to Spring Pet Clinic.
 
+Take a moment to
+read [the contributing guidelines](https://github.com/averageflow/spring-warehouse/blob/master/CONTRIBUTING.md) and feel
+welcome to participate in this project in technical and non-technical ways.
+
 ## Table of contents
 
 * [Technologies used](#technologies-used)
