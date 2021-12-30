@@ -1,6 +1,5 @@
 package nl.averageflow.springwarehouse.domain.user.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -23,7 +22,6 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -35,7 +33,7 @@ public class User {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     private Role role;
 
 
@@ -70,7 +68,6 @@ public class User {
         return updatedAt;
     }
 
-
     public String getPassword() {
         return this.password;
     }
@@ -78,7 +75,6 @@ public class User {
     public void setPassword(final String password) {
         this.password = password;
     }
-
 
     public Role getRole() {
         return role;
