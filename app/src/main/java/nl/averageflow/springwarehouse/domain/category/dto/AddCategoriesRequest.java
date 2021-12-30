@@ -1,4 +1,6 @@
 package nl.averageflow.springwarehouse.domain.category.dto;
 
-public record AddCategoriesRequest(Iterable<AddCategoriesRequestItem> items) {
+import javax.validation.constraints.NotEmpty;
+
+public record AddCategoriesRequest(@NotEmpty Iterable<AddCategoriesRequestItem> items) {
 }

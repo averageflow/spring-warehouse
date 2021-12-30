@@ -1,4 +1,6 @@
 package nl.averageflow.springwarehouse.domain.product.dto;
 
-public record SellProductsRequest(Iterable<SellProductsRequestItem> wantedItemsForSale) {
+import javax.validation.constraints.NotEmpty;
+
+public record SellProductsRequest(@NotEmpty Iterable<SellProductsRequestItem> wantedItemsForSale) {
 }
