@@ -6,6 +6,7 @@ import nl.averageflow.springwarehouse.domain.article.dto.EditArticleRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Collection;
 import java.util.UUID;
 
 public interface ArticleServiceContract {
@@ -13,7 +14,7 @@ public interface ArticleServiceContract {
 
     ArticleResponseItem getArticleByUid(final UUID uid);
 
-    void addArticles(final Iterable<AddArticlesRequestItem> rawItems);
+    void addArticles(final Collection<AddArticlesRequestItem> rawItems);
 
     ArticleResponseItem editArticle(final UUID uid, final EditArticleRequest request);
 

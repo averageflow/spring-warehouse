@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -88,7 +89,7 @@ public class ProductService implements ProductServiceContract {
         this.productRepository.deleteByUid(uid);
     }
 
-    public void addProducts(final Iterable<AddProductsRequestItem> rawItems) {
+    public void addProducts(final Collection<AddProductsRequestItem> rawItems) {
         rawItems.forEach(rawItem -> {
             final Category category = this.categoryRepository.findByUid(rawItem.categoryUid())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted category"));

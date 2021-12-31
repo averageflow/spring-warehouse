@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin
 public final class ProductController {
@@ -38,7 +40,7 @@ public final class ProductController {
     }
 
     @PostMapping("/api/products")
-    public void addProducts(@RequestBody final AddProductRequest request) {
+    public void addProducts(@RequestBody @Valid final AddProductRequest request) {
         this.productService.addProducts(request.products());
     }
 
@@ -53,7 +55,7 @@ public final class ProductController {
     }
 
     @PatchMapping("/api/products/sell")
-    public TransactionResponseItem sellProducts(final Authentication authentication, @RequestBody final SellProductsRequest request) {
+    public TransactionResponseItem sellProducts(final Authentication authentication, @RequestBody @Valid final SellProductsRequest request) {
         this.productService.sellProducts(request);
         return this.transactionService.createTransaction(request, authentication);
     }
