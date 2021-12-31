@@ -1,4 +1,4 @@
-package nl.averageflow.springwarehouse.domain.errorhandling;
+package nl.averageflow.springwarehouse.infrastructure.errorhandling;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,7 +15,7 @@ public class ErrorHandlingControllerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    List<Violation> onMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    List<Violation> onMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
 
         return e.getBindingResult()
                 .getFieldErrors()
