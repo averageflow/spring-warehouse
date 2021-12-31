@@ -1,6 +1,6 @@
 package nl.averageflow.springwarehouse.domain.transaction.model;
 
-import nl.averageflow.springwarehouse.domain.product.dto.SellProductsRequest;
+import nl.averageflow.springwarehouse.domain.user.model.User;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -16,6 +16,10 @@ public final class Transaction {
     @Column(name = "uid", nullable = false)
     private UUID uid;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_uid", nullable = false)
+    private User user;
+
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
@@ -27,8 +31,8 @@ public final class Transaction {
 
     }
 
-    public Transaction(final SellProductsRequest request) {
-
+    public Transaction(final User user) {
+        this.user = user;
     }
 
     public UUID getUid() {
@@ -45,5 +49,9 @@ public final class Transaction {
 
     public void setTransactionProducts(final Set<TransactionProduct> transactionProducts) {
         this.transactionProducts = transactionProducts;
+    }
+
+    public User getUser() {
+        return user;
     }
 }
