@@ -11,8 +11,7 @@ This project has been created in an effort to provide an up-to-date example of u
 Spring Boot with Data JPA and Liquibase and being a reference project, similar to Spring Pet Clinic.
 
 Take a moment to
-read [the contributing guidelines](https://github.com/averageflow/spring-warehouse/blob/master/CONTRIBUTING.md) and feel
-welcome to participate in this project in technical and non-technical ways.
+read [the contributing guidelines](https://github.com/averageflow/spring-warehouse/blob/master/CONTRIBUTING.md) and participate in this project in technical and non-technical ways.
 
 Feel free to join [the Discord server for Spring Warehouse here](https://discord.gg/eTKDeTDC3j).
 
