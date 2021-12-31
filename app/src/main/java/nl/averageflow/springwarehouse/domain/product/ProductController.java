@@ -54,7 +54,7 @@ public final class ProductController {
     }
 
     @PatchMapping("/api/products/sell")
-    public TransactionResponseItem sellProducts(@RequestBody final SellProductsRequest request) {
+    public TransactionResponseItem sellProducts(@RequestBody @Valid final SellProductsRequest request) {
         this.productService.sellProducts(request);
         return this.transactionService.createTransaction(request);
     }
