@@ -27,6 +27,7 @@ Feel free to join [the Discord server for Spring Warehouse here](https://discord
 * [Unit tests](#unit-tests)
 * [Authentication and Authorization](#authentication-and-authorization)
 * [Possible Improvements](#possible-improvements)
+* [Front-ends](#front-ends)
 
 <p align="center">
   <img src="https://res.cloudinary.com/dehs6irlh/image/upload/c_scale,w_256/v1640818163/Github/Warehouse-PNG-Photos_jcaebq.png" alt="Spring Warehouse logo"/>
@@ -156,3 +157,10 @@ track of the progress and create separate branches for the features.
   in its operations. Personal choice would be [Jaeger](https://www.jaegertracing.io/).
 
 
+## Front-ends
+
+Due to Spring Warehouse being a REST API this means we can build all kinds of front-ends around it, whether web, native, mobile, etc. This also serves the purpose of allowing developing our skills further and exploring more technologies, due to the de-coupled nature. 
+
+Find some honorable mentions below: 
+
+* [Spring Warehouse Frontend (React)](https://github.com/averageflow/spring-warehouse-frontend)
