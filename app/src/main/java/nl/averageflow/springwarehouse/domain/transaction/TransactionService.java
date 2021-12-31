@@ -1,5 +1,7 @@
 package nl.averageflow.springwarehouse.domain.transaction;
 
+import nl.averageflow.springwarehouse.domain.category.dto.CategoryResponseItem;
+import nl.averageflow.springwarehouse.domain.product.dto.ProductResponseItem;
 import nl.averageflow.springwarehouse.domain.product.dto.SellProductsRequest;
 import nl.averageflow.springwarehouse.domain.product.model.Product;
 import nl.averageflow.springwarehouse.domain.product.repository.ProductRepository;
@@ -46,8 +48,10 @@ public class TransactionService implements TransactionServiceContract {
     public Page<TransactionResponseItem> getTransactions(final Pageable pageable) {
         final Page<Transaction> page = this.transactionRepository.findAll(pageable);
 
+
         return page.map(transaction -> new TransactionResponseItem(
                 transaction.getUid(),
+                mapResponseProductFromTransaction(transaction),
                 new UserResponseItem(
                         transaction.getUser().getUid(),
                         transaction.getUser().getItemName(),
@@ -60,12 +64,33 @@ public class TransactionService implements TransactionServiceContract {
         ));
     }
 
+    private Iterable<ProductResponseItem> mapResponseProductFromTransaction(final Transaction transaction) {
+        return transaction.getTransactionProducts()
+                .stream().map(product -> new ProductResponseItem(
+                        product.getProduct().getUid(),
+                        product.getProduct().getName(),
+                        product.getProduct().getImageURLs(),
+                        product.getProduct().getPrice(),
+                        new CategoryResponseItem(
+                                product.getProduct().getCategory().getUid(),
+                                product.getProduct().getCategory().getName(),
+                                product.getProduct().getCategory().getDescription(),
+                                product.getProduct().getCategory().getCreatedAt(),
+                                product.getProduct().getCategory().getUpdatedAt()
+                        ),
+                        product.getProduct().getCreatedAt(),
+                        product.getProduct().getUpdatedAt(),
+                        product.getProduct().getArticles()
+                )).toList();
+    }
+
     public TransactionResponseItem getTransactionByUid(final UUID uid) {
         final Transaction transaction = this.transactionRepository.findByUid(uid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find transaction with wanted UUID"));
 
         return new TransactionResponseItem(
                 transaction.getUid(),
+                mapResponseProductFromTransaction(transaction),
                 new UserResponseItem(
                         transaction.getUser().getUid(),
                         transaction.getUser().getItemName(),
@@ -117,6 +142,7 @@ public class TransactionService implements TransactionServiceContract {
 
         return new TransactionResponseItem(
                 updatedTransaction.getUid(),
+                mapResponseProductFromTransaction(transaction),
                 new UserResponseItem(
                         transaction.getUser().getUid(),
                         transaction.getUser().getItemName(),
