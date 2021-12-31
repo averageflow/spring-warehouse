@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -58,7 +59,7 @@ public class ArticleService implements ArticleServiceContract {
     }
 
 
-    public void addArticles(final Iterable<AddArticlesRequestItem> rawItems) {
+    public void addArticles(final Collection<AddArticlesRequestItem> rawItems) {
         rawItems.forEach(this::addSingleArticle);
     }
 

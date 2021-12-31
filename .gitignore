@@ -39,3 +39,6 @@ build/
 
 # Ignore Gradle build output directory
 build
+
+# Ignore jdtls build output directory
+bin

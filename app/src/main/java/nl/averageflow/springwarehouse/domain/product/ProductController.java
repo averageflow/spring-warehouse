@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin
 public final class ProductController {
@@ -37,7 +39,7 @@ public final class ProductController {
     }
 
     @PostMapping("/api/products")
-    public void addProducts(@RequestBody final AddProductRequest request) {
+    public void addProducts(@RequestBody @Valid AddProductRequest request) {
         this.productService.addProducts(request.products());
     }
 
