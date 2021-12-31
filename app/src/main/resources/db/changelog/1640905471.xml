@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet author="averageflow" id="1640905471-1">
+        <addColumn catalogName="use"
+                   schemaName="public"
+                   tableName="transactions">
+            <column afterColumn="uid"
+                    name="user_uid"
+                    type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="averageflow" id="1640905471-2">
+        <addForeignKeyConstraint baseColumnNames="user_uid" baseTableName="transactions"
+                                 constraintName="fk_user_transactions" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+                                 referencedColumnNames="uid" referencedTableName="users" validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>

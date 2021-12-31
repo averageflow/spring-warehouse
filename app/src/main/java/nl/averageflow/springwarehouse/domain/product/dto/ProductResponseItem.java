@@ -12,8 +12,8 @@ public record ProductResponseItem(
         String name,
         Iterable<String> imageURLs,
         Double price,
-        CategoryResponseItem categoryResponseItem,
+        CategoryResponseItem category,
         Timestamp createdAt,
         Timestamp updatedAt,
-        Set<ArticleAmountInProduct> articleAmountInProductSet) {
+        Set<ArticleAmountInProduct> articles) {
 }

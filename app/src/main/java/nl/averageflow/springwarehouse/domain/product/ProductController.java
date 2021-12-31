@@ -9,6 +9,7 @@ import nl.averageflow.springwarehouse.domain.transaction.TransactionService;
 import nl.averageflow.springwarehouse.domain.transaction.TransactionServiceContract;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -39,7 +40,7 @@ public final class ProductController {
     }
 
     @PostMapping("/api/products")
-    public void addProducts(@RequestBody @Valid AddProductRequest request) {
+    public void addProducts(@RequestBody @Valid final AddProductRequest request) {
         this.productService.addProducts(request.products());
     }
 
@@ -54,8 +55,8 @@ public final class ProductController {
     }
 
     @PatchMapping("/api/products/sell")
-    public TransactionResponseItem sellProducts(@RequestBody @Valid final SellProductsRequest request) {
+    public TransactionResponseItem sellProducts(final Authentication authentication, @RequestBody @Valid final SellProductsRequest request) {
         this.productService.sellProducts(request);
-        return this.transactionService.createTransaction(request);
+        return this.transactionService.createTransaction(request, authentication);
     }
 }
