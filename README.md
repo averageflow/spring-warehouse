@@ -102,13 +102,26 @@ In summary the application can:
 
 To kickstart the application and all dependencies required for its operation, you should be running on a machine with
 Docker installed. Clone the project, or download the zip file with the source code
-from [the releases' page](https://github.com/averageflow/spring-warehouse/releases). Then all you need is to
-run `docker-compose up`, optionally `docker-compose up -d` for daemon behaviour.
+from [the releases' page](https://github.com/averageflow/spring-warehouse/releases).
+
+All you need is to run `docker-compose up` for a one-time initialization.
+
+Optionally `docker-compose up -d` for daemon behaviour (running in the background and even started at system boot).
+
+**IMPORTANT** make sure that port 8080 and 5432 of the machine are available and there are no running applications using
+them.
 
 ### Running for development
 
 IntelliJ IDEA is recommended for this project. Launch configurations for this project are available in the `.run`
-folder. Gradle will need to be installed. You can start it with `./gradlew bootRun`.
+folder. Gradle will need to be installed.
+
+You can start it with `./gradlew bootRun`.
+
+You can build the project and create distributable .jar with `./gradlew bootJar`.
+
+It is of course recommended for development to start the Docker stack (app + database docker containers) and keep the DB
+running to develop against.
 
 ### Domain information
 
@@ -118,8 +131,8 @@ product is of "infinite stock".
 
 A list of transactions performed (sales) that have occurred can be obtained via the API.
 
-Bear in mind if you want to add new products, the articles which compose the product should obviously already be present
-in the database.
+Bear in mind if you want to add new products, the articles which compose the product and the category to which the
+product belongs to should obviously already be present in the database.
 
 This application includes a graceful shutdown mechanics and so whenever you stop it, or it receives a stop signal, it
 will first wait for any HTTP request currently being processed to be finished and then gracefully shutdown. This makes
