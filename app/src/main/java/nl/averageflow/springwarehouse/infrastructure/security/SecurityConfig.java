@@ -1,4 +1,4 @@
-package nl.averageflow.springwarehouse.domain.security;
+package nl.averageflow.springwarehouse.infrastructure.security;
 
 import nl.averageflow.springwarehouse.domain.user.UserRole;
 import nl.averageflow.springwarehouse.domain.user.UserService;
@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
