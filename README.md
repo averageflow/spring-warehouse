@@ -10,8 +10,13 @@ warehouse.
 This project has been created in an effort to provide an up-to-date example of using the best practices of Java 17 and
 Spring Boot with Data JPA and Liquibase and being a reference project, similar to Spring Pet Clinic.
 
+You will also find in this repository both a `Dockerfile` for Spring Warehouse and a `docker-compose.yaml` which will
+set up a stack in your machine with Spring Warehouse + a PostgreSQL instance in Docker containers. This project has been
+developed with horizontal scalability in mind.
+
 Take a moment to
-read [the contributing guidelines](https://github.com/averageflow/spring-warehouse/blob/master/CONTRIBUTING.md) and participate in this project in technical and non-technical ways.
+read [the contributing guidelines](https://github.com/averageflow/spring-warehouse/blob/master/CONTRIBUTING.md) and
+participate in this project in technical and non-technical ways.
 
 Feel free to join [the Discord server for Spring Warehouse here](https://discord.gg/eTKDeTDC3j).
 
@@ -155,11 +160,12 @@ track of the progress and create separate branches for the features.
 * Distributed tracing would be a good addition to the application specially if it were to communicate with more services
   in its operations. Personal choice would be [Jaeger](https://www.jaegertracing.io/).
 
-
 ## Front-ends
 
-Due to Spring Warehouse being a REST API this means we can build all kinds of front-ends around it, whether web, native, mobile, etc. This also serves the purpose of allowing developing our skills further and exploring more technologies, due to the de-coupled nature. 
+Due to Spring Warehouse being a REST API this means we can build all kinds of front-ends around it, whether web, native,
+mobile, etc. This also serves the purpose of allowing developing our skills further and exploring more technologies, due
+to the de-coupled nature.
 
-Find some honorable mentions below: 
+Find some honorable mentions below:
 
 * [Spring Warehouse Frontend (React)](https://github.com/averageflow/spring-warehouse-frontend)
