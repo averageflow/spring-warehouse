@@ -64,7 +64,7 @@ public class TransactionService implements TransactionServiceContract {
         ));
     }
 
-    private Iterable<ProductResponseItem> mapResponseProductFromTransaction(final Transaction transaction) {
+    private Collection<ProductResponseItem> mapResponseProductFromTransaction(final Transaction transaction) {
         return transaction.getTransactionProducts()
                 .stream().map(product -> new ProductResponseItem(
                         product.getProduct().getUid(),

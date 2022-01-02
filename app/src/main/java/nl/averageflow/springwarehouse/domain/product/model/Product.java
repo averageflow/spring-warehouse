@@ -119,7 +119,7 @@ public final class Product {
         return this.articleProductRelation;
     }
 
-    public Iterable<String> getImageURLs() {
+    public Collection<String> getImageURLs() {
         final ObjectMapper objectMapper = new ObjectMapper();
 
         try {
@@ -130,7 +130,7 @@ public final class Product {
         }
     }
 
-    public void setImageURLs(final Iterable<String> imageURLs) {
+    public void setImageURLs(final Collection<String> imageURLs) {
         final ObjectMapper objectMapper = new ObjectMapper();
 
         try {
