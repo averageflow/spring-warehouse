@@ -12,6 +12,7 @@ public record ProductResponseItem(
         String name,
         Collection<String> imageURLs,
         Double price,
+        long stock,
         CategoryResponseItem category,
         Timestamp createdAt,
         Timestamp updatedAt,

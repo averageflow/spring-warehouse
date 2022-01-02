@@ -71,6 +71,7 @@ public class TransactionService implements TransactionServiceContract {
                         product.getProduct().getName(),
                         product.getProduct().getImageURLs(),
                         product.getProduct().getPrice(),
+                        product.getProduct().getProductStock(),
                         new CategoryResponseItem(
                                 product.getProduct().getCategory().getUid(),
                                 product.getProduct().getCategory().getName(),

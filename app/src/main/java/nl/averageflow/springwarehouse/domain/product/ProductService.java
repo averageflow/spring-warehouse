@@ -49,6 +49,7 @@ public class ProductService implements ProductServiceContract {
                 product.getName(),
                 product.getImageURLs(),
                 product.getPrice(),
+                product.getProductStock(),
                 new CategoryResponseItem(
                         product.getCategory().getUid(),
                         product.getCategory().getName(),
@@ -72,6 +73,7 @@ public class ProductService implements ProductServiceContract {
                 product.getName(),
                 product.getImageURLs(),
                 product.getPrice(),
+                product.getProductStock(),
                 new CategoryResponseItem(
                         product.getCategory().getUid(),
                         product.getCategory().getName(),
@@ -166,6 +168,7 @@ public class ProductService implements ProductServiceContract {
                 updatedItem.getName(),
                 updatedItem.getImageURLs(),
                 updatedItem.getPrice(),
+                updatedItem.getProductStock(),
                 new CategoryResponseItem(
                         updatedItem.getCategory().getUid(),
                         updatedItem.getCategory().getName(),
