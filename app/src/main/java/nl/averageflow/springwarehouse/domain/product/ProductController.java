@@ -16,7 +16,6 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin
 public final class ProductController {
 
     private final ProductServiceContract productService;

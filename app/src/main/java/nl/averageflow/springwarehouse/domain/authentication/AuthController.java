@@ -3,13 +3,11 @@ package nl.averageflow.springwarehouse.domain.authentication;
 import nl.averageflow.springwarehouse.domain.authentication.dto.LoginRequest;
 import nl.averageflow.springwarehouse.domain.authentication.dto.RegisterRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin
 public final class AuthController {
 
     private final AuthServiceContract authService;

@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin
 public class CategoryController {
 
     private final CategoryServiceContract categoryService;
