@@ -29,8 +29,7 @@ public class CategoryController {
 
     @GetMapping("/api/categories")
     @Operation(summary = "Returns the requested page of categories",
-            description = "Returns the requested page of categories specifying the page number",
-    tags = "category")
+            description = "Returns the requested page of categories specifying the page number")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = Page.class))),
