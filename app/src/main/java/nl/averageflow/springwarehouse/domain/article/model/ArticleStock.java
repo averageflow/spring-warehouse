@@ -38,6 +38,10 @@ public final class ArticleStock {
         this.stock = stock;
     }
 
+    public ArticleStock(final long stock) {
+        this.stock = stock;
+    }
+
     public long getStock() {
         return this.stock;
     }
@@ -45,6 +49,5 @@ public final class ArticleStock {
     public void setStock(final long stock) {
         this.stock = stock;
     }
-
 
 }

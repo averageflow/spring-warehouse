@@ -61,6 +61,10 @@ public final class Article {
         return this.stock.getStock();
     }
 
+    public void setStock(ArticleStock stock) {
+        this.stock.setStock(stock.getStock());
+    }
+
     public void performStockBooking(final long amountOf) {
         this.stock.setStock(this.getStock() - amountOf);
     }

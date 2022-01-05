@@ -1,8 +1,6 @@
 package nl.averageflow.springwarehouse.domain.article;
 
-import nl.averageflow.springwarehouse.domain.article.dto.AddArticlesRequestItem;
-import nl.averageflow.springwarehouse.domain.article.dto.ArticleResponseItem;
-import nl.averageflow.springwarehouse.domain.article.dto.EditArticleRequest;
+import nl.averageflow.springwarehouse.domain.article.dto.*;
 import nl.averageflow.springwarehouse.domain.article.model.Article;
 import nl.averageflow.springwarehouse.domain.article.model.ArticleStock;
 import nl.averageflow.springwarehouse.domain.article.repository.ArticleRepository;
@@ -86,6 +84,29 @@ public class ArticleService implements ArticleServiceContract {
         );
     }
 
+    public Page<ArticleResponseItem> editMultipleArticleStock(final Pageable pageable, final Collection<EditMultipleArticleStockRequestItem> articles) {
+        final Page<Article> page = this.articleRepository.findAll(pageable);
+
+        for(EditMultipleArticleStockRequestItem article : articles){
+
+            final Optional<Article> searchResult = this.articleRepository.findByUid(article.itemUid());
+            if (searchResult.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID");
+            }
+            final Article itemToUpdate = searchResult.get();
+
+            itemToUpdate.setStock(new ArticleStock(article.stock()));
+
+            final Article updatedItem = this.articleRepository.save(itemToUpdate);
+        }
+        return page.map(articleStock -> new ArticleResponseItem(
+                articleStock.getUid(),
+                articleStock.getName(),
+                articleStock.getStock(),
+                articleStock.getCreatedAt(),
+                articleStock.getUpdatedAt()
+        ));
+    }
 
     public void deleteArticleByUid(final UUID uid) {
         this.productArticleRepository.deleteByArticleUid(uid);
