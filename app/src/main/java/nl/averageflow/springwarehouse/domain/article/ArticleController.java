@@ -9,10 +9,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import nl.averageflow.springwarehouse.domain.article.dto.AddArticlesRequest;
 import nl.averageflow.springwarehouse.domain.article.dto.ArticleResponseItem;
 import nl.averageflow.springwarehouse.domain.article.dto.EditArticleRequest;
+import nl.averageflow.springwarehouse.domain.article.dto.EditMultipleArticleStockRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
@@ -75,6 +75,19 @@ public final class ArticleController {
     })
     public ArticleResponseItem editArticle(@PathVariable @NotNull final UUID uid, @RequestBody @Valid final EditArticleRequest request) {
         return this.articleService.editArticle(uid, request);
+    }
+
+    @PatchMapping("/api/articles/stock")
+    @Operation(summary = "Edit multiple article's stock",
+            description = "The service permits editing multiple article's stock.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful Response",
+                    content = @Content(schema = @Schema(implementation = ArticleResponseItem.class))),
+            @ApiResponse(responseCode = "404", description = "Not Found"),
+            @ApiResponse(responseCode = "400", description = "Bad Request")
+    })
+    public Page<ArticleResponseItem> editMultipleArticleStock(@NotNull final Pageable pageable, @RequestBody @Valid final EditMultipleArticleStockRequest request) {
+        return this.articleService.editMultipleArticleStock(pageable, request.articles());
     }
 
     @DeleteMapping("/api/articles/{uid}")
