@@ -97,7 +97,7 @@ public class ArticleService implements ArticleServiceContract {
 
             itemToUpdate.setStock(new ArticleStock(article.stock()));
 
-            final Article updatedItem = this.articleRepository.save(itemToUpdate);
+            this.articleRepository.save(itemToUpdate);
         }
         return page.map(articleStock -> new ArticleResponseItem(
                 articleStock.getUid(),
