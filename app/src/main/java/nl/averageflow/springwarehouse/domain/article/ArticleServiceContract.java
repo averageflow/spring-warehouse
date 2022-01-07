@@ -1,6 +1,9 @@
 package nl.averageflow.springwarehouse.domain.article;
 
-import nl.averageflow.springwarehouse.domain.article.dto.*;
+import nl.averageflow.springwarehouse.domain.article.dto.AddArticlesRequestItem;
+import nl.averageflow.springwarehouse.domain.article.dto.ArticleResponseItem;
+import nl.averageflow.springwarehouse.domain.article.dto.EditArticleRequest;
+import nl.averageflow.springwarehouse.domain.article.dto.EditMultipleArticleStockRequestItem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

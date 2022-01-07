@@ -1,10 +1,13 @@
 package nl.averageflow.springwarehouse.domain.user;
 
+import nl.averageflow.springwarehouse.domain.user.dto.UpdateUserRequest;
 import nl.averageflow.springwarehouse.domain.user.model.User;
+import nl.averageflow.springwarehouse.domain.user.repository.RoleRepository;
 import nl.averageflow.springwarehouse.domain.user.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,9 +20,11 @@ import java.util.UUID;
 public class UserService implements UserDetailsService, UserServiceContract {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    public UserService(final UserRepository userRepository) {
+    public UserService(final UserRepository userRepository, final RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public Page<UserResponseItem> getUsers(final Pageable pageable) {
@@ -51,6 +56,23 @@ public class UserService implements UserDetailsService, UserServiceContract {
 
     public void deleteUserByUid(final UUID uid) {
         this.userRepository.deleteByUid(uid);
+    }
+
+    @Override
+    public ResponseEntity<String> updateUserRole(UpdateUserRequest request) {
+        final var email = request.email();
+       return this.userRepository.findByEmail(email)
+                .map(u -> updateRole(u, request.role()))
+                .orElseThrow(() -> new UsernameNotFoundException("could not find email: " + email));
+
+    }
+
+    private ResponseEntity<String> updateRole(User user, String roleRequested) {
+        final var role = this.roleRepository.findByItemName(roleRequested.toUpperCase())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        user.setRole(role);
+        this.userRepository.save(user);
+        return new ResponseEntity<>("User's role updated successfully!", HttpStatus.OK);
     }
 
     @Override
