@@ -13,6 +13,7 @@ import nl.averageflow.springwarehouse.domain.article.dto.EditMultipleArticleStoc
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
