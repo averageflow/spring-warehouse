@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY . ./
 
-RUN mv app/src/main/resources/application-docker.properties app/src/main/resources/application.properties
+RUN mv app/src/main/resources/application-docker.yml app/src/main/resources/application.yml
 
 RUN gradle bootJar --no-daemon
 

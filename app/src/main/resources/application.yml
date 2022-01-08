@@ -1,0 +1,29 @@
+logging:
+  level:
+    org:
+      springframework: "ERROR"
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/warehouse_db"
+    platform: "postgres"
+    username: "warehouse_user"
+    password: "warehouse_user_password"
+    initialization-mode: "always"
+  jpa:
+    hibernate:
+      ddl-auto: "none"
+    database-platform: "org.hibernate.dialect.PostgreSQLDialect"
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: "true"
+        dialect: "org.hibernate.dialect.PostgreSQLDialect"
+  liquibase:
+    change-log: "classpath:db/changelog/db.changelog-master.xml"
+
+springdoc:
+  swagger-ui:
+    path: "/swagger-ui.html"
+    tagsSorter: "alpha"
