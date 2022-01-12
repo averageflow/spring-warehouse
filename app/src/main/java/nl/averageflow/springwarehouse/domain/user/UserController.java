@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @RestController
@@ -61,5 +61,18 @@ public class UserController {
     })
     public ResponseEntity<String> updateRole(@RequestBody UpdateUserRequest request) {
         return this.userService.updateUserRole(request);
+    }
+
+    @DeleteMapping("/api/users/{uid}")
+    @Operation(summary = "Deletes a single user",
+            description = "Deletes a single user by uuid")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful Response",
+                    content = @Content(schema = @Schema(implementation = CategoryResponseItem.class))),
+            @ApiResponse(responseCode = "404", description = "Not Found"),
+            @ApiResponse(responseCode = "400", description = "Bad Request")
+    })
+    public ResponseEntity<String> deleteUser(@PathVariable @NotNull final UUID uid) {
+        return this.userService.deleteUserByUid(uid);
     }
 }
