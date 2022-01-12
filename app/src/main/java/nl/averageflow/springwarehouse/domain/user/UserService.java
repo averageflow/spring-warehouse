@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Service
@@ -54,8 +55,10 @@ public class UserService implements UserDetailsService, UserServiceContract {
         );
     }
 
-    public void deleteUserByUid(final UUID uid) {
+    @Transactional
+    public ResponseEntity<String> deleteUserByUid(final UUID uid) {
         this.userRepository.deleteByUid(uid);
+        return new ResponseEntity<>("User deleted successfully!", HttpStatus.OK);
     }
 
     @Override

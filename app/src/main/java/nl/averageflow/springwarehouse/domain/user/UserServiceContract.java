@@ -12,7 +12,7 @@ public interface UserServiceContract {
 
     UserResponseItem getUserByUid(final UUID uid);
 
-    void deleteUserByUid(final UUID uid);
+    ResponseEntity<String> deleteUserByUid(final UUID uid);
 
     ResponseEntity<String> updateUserRole(UpdateUserRequest request);
 }
