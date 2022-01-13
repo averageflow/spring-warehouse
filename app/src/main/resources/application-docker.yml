@@ -6,10 +6,8 @@ logging:
 spring:
   datasource:
     url: "${SPRING_DATASOURCE_URL}"
-    platform: "postgres"
     username: "warehouse_user"
     password: "warehouse_user_password"
-    initialization-mode: "always"
   jpa:
     hibernate:
       ddl-auto: "none"
@@ -22,6 +20,10 @@ spring:
         dialect: "org.hibernate.dialect.PostgreSQLDialect"
   liquibase:
     change-log: "classpath:db/changelog/db.changelog-master.xml"
+  sql:
+    init:
+      mode: always
+      platform: "postgres"
 
 springdoc:
   swagger-ui:
