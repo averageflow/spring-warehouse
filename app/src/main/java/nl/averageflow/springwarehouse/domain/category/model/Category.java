@@ -1,6 +1,5 @@
 package nl.averageflow.springwarehouse.domain.category.model;
 
-import nl.averageflow.springwarehouse.domain.category.dto.AddCategoriesRequestItem;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 

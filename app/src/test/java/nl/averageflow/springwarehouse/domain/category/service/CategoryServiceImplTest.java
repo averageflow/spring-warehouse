@@ -2,7 +2,6 @@ package nl.averageflow.springwarehouse.domain.category.service;
 
 
 import com.github.javafaker.Faker;
-import nl.averageflow.springwarehouse.domain.article.dto.AddArticlesRequestItem;
 import nl.averageflow.springwarehouse.domain.category.dto.AddCategoriesRequestItem;
 import nl.averageflow.springwarehouse.domain.category.dto.CategoryResponseItem;
 import nl.averageflow.springwarehouse.domain.category.dto.EditCategoryRequest;
@@ -41,8 +40,8 @@ public class CategoryServiceImplTest {
     @Test
     public void testGetCategoryByUid() {
         final var category = new Category(
-            this.faker.commerce().department(),
-            this.faker.commerce().productName()
+                this.faker.commerce().department(),
+                this.faker.commerce().productName()
         );
 
         final var uid = UUID.randomUUID();
@@ -70,7 +69,7 @@ public class CategoryServiceImplTest {
                 this.faker.commerce().productName()
         );
 
-        final Pageable pageable = mock(Pageable.class);
+        final var pageable = mock(Pageable.class);
 
         final var formattedItem = new CategoryResponseItem(
                 category.getUid(),
@@ -125,7 +124,7 @@ public class CategoryServiceImplTest {
     }
 
     @Test
-    public void testEditCategory(){
+    public void testEditCategory() {
         final var category = new EditCategoryRequest(
                 this.faker.commerce().department(),
                 this.faker.commerce().productName()

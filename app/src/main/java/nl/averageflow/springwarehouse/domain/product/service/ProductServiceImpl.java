@@ -19,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -98,7 +97,7 @@ public class ProductServiceImpl implements ProductService {
 
             final var product = new Product(rawItem, category);
 
-            final Iterable<ArticleAmountInProduct> productArticles = StreamSupport.stream(rawItem.containArticles().spliterator(), false)
+            final Collection<ArticleAmountInProduct> productArticles = rawItem.containArticles().stream()
                     .map(articleItem -> {
                         final Article article = this.articleRepository.findByUid(articleItem.uid())
                                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted article"));
@@ -116,9 +115,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public void sellProducts(final SellProductsRequest request) {
-        final Iterable<UUID> wantedUUIDs = request.wantedItemsForSale().stream()
+        final Collection<UUID> wantedUUIDs = request.wantedItemsForSale().stream()
                 .map(SellProductsRequestItem::itemUid)
-                .collect(Collectors.toList());
+                .toList();
 
         final HashMap<UUID, Long> wantedAmountsPerProduct = new HashMap<>();
         request.wantedItemsForSale()

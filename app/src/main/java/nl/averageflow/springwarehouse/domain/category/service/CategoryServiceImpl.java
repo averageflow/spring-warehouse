@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collection;
 import java.util.UUID;
 
 @Service
@@ -22,6 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
+    @Override
     public Page<CategoryResponseItem> getCategories(final Pageable pageable) {
         final Page<Category> page = this.categoryRepository.findAll(pageable);
 
@@ -34,6 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
         ));
     }
 
+    @Override
     public CategoryResponseItem getCategoryByUid(final UUID uid) {
         final Category category = this.categoryRepository.findByUid(uid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -47,13 +50,15 @@ public class CategoryServiceImpl implements CategoryService {
         );
     }
 
-    public void addCategories(final Iterable<AddCategoriesRequestItem> rawItems) {
+    @Override
+    public void addCategories(final Collection<AddCategoriesRequestItem> rawItems) {
         rawItems.forEach(rawItem -> {
             final var category = new Category(rawItem.name(), rawItem.description());
             this.categoryRepository.save(category);
         });
     }
 
+    @Override
     public CategoryResponseItem editCategory(final UUID uid, final EditCategoryRequest request) {
         final Category itemToUpdate = this.categoryRepository.findByUid(uid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID"));
@@ -72,6 +77,7 @@ public class CategoryServiceImpl implements CategoryService {
         );
     }
 
+    @Override
     public void deleteCategoryByUid(final UUID uid) {
         this.categoryRepository.deleteByUid(uid);
     }

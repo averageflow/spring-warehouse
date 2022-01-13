@@ -4,23 +4,20 @@ import com.github.javafaker.Faker;
 import nl.averageflow.springwarehouse.domain.article.dto.AddArticlesRequestItem;
 import nl.averageflow.springwarehouse.domain.article.dto.ArticleResponseItem;
 import nl.averageflow.springwarehouse.domain.article.dto.EditArticleRequest;
+import nl.averageflow.springwarehouse.domain.article.dto.EditMultipleArticleStockRequestItem;
 import nl.averageflow.springwarehouse.domain.article.model.Article;
 import nl.averageflow.springwarehouse.domain.article.repository.ArticleRepository;
 import nl.averageflow.springwarehouse.domain.article.repository.ArticleStocksRepository;
 import nl.averageflow.springwarehouse.domain.product.repository.ProductArticleRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,7 +40,7 @@ public class ArticleServiceImplTest {
     private Faker faker;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         this.faker = new Faker();
 
         this.articleService = new ArticleServiceImpl(
@@ -54,7 +51,7 @@ public class ArticleServiceImplTest {
     }
 
     @Test
-    public void testGetArticleByUid(){
+    public void testGetArticleByUid() {
         final var article = new Article(this.faker.commerce().productName());
         final var uid = UUID.randomUUID();
 
@@ -75,9 +72,9 @@ public class ArticleServiceImplTest {
     }
 
     @Test
-    public void testGetArticles(){
+    public void testGetArticles() {
         final var article = new Article(this.faker.commerce().productName());
-        final Pageable pageable = mock(Pageable.class);
+        final var pageable = mock(Pageable.class);
 
         final var formattedItem = new ArticleResponseItem(
                 article.getUid(),
@@ -98,14 +95,14 @@ public class ArticleServiceImplTest {
     }
 
     @Test
-    public void testAddArticlesEmptyIterable() {
+    public void testAddArticlesEmptyCollection() {
         this.articleService.addArticles(Collections.emptyList());
 
         verify(this.articleRepository, times(0)).save(any());
     }
 
     @Test
-    public void testAddArticles(){
+    public void testAddArticles() {
         final var addArticlesRequestItem = new AddArticlesRequestItem(
                 this.faker.commerce().productName(),
                 this.faker.number().numberBetween(1, 100)
@@ -123,7 +120,7 @@ public class ArticleServiceImplTest {
     }
 
     @Test
-    public void testDeleteArticleByUid(){
+    public void testDeleteArticleByUid() {
         final var uid = UUID.randomUUID();
 
         this.articleService.deleteArticleByUid(uid);
@@ -134,10 +131,44 @@ public class ArticleServiceImplTest {
     }
 
     @Test
-    public void testEditArticle(){
+    public void testEditArticle() {
         final var uid = UUID.randomUUID();
         final var editArticleRequest = new EditArticleRequest(
                 this.faker.commerce().productName()
         );
+        final var fakeArticle = new Article(this.faker.commerce().productName());
+
+        when(this.articleRepository.findByUid(uid)).thenReturn(Optional.of(fakeArticle));
+        when(this.articleRepository.save(any(Article.class))).thenReturn(fakeArticle);
+
+        this.articleService.editArticle(uid, editArticleRequest);
+
+        verify(this.articleRepository, times(1)).save(any(Article.class));
+    }
+
+    @Test
+    public void testEditMultipleArticleStock() {
+        final var pageable = mock(Pageable.class);
+        final var fakeUpdateItem = new EditMultipleArticleStockRequestItem(
+                UUID.randomUUID(),
+                this.faker.number().numberBetween(1L, 100L)
+        );
+        final var fakeArticle = new Article(this.faker.commerce().productName());
+        final Collection<EditMultipleArticleStockRequestItem> editMultipleArticleStockRequestItems = List.of(
+                fakeUpdateItem,
+                fakeUpdateItem,
+                fakeUpdateItem
+        );
+
+        when(this.articleRepository.findByUid(any(UUID.class))).thenReturn(Optional.of(fakeArticle));
+        when(this.articleRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(
+                fakeArticle,
+                fakeArticle,
+                fakeArticle
+        )));
+
+        this.articleService.editMultipleArticleStock(pageable, editMultipleArticleStockRequestItems);
+
+        verify(this.articleRepository, times(editMultipleArticleStockRequestItems.size())).findByUid(any(UUID.class));
     }
 }

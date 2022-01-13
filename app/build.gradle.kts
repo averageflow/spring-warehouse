@@ -3,7 +3,7 @@ import org.springframework.boot.gradle.tasks.run.BootRun
 plugins {
     idea
     jacoco
-    //checkstyle
+//    checkstyle
     eclipse
     application
     java

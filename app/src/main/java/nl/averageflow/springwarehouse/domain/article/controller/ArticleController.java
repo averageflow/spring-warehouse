@@ -23,6 +23,7 @@ import java.util.UUID;
 @RestController
 @Tag(name = "Article", description = "Article API")
 public final class ArticleController {
+
     private final ArticleService articleService;
 
     public ArticleController(final ArticleServiceImpl articleService) {
@@ -76,7 +77,8 @@ public final class ArticleController {
             @ApiResponse(responseCode = "404", description = "Not Found"),
             @ApiResponse(responseCode = "400", description = "Bad Request")
     })
-    public ArticleResponseItem editArticle(@PathVariable @NotNull final UUID uid, @RequestBody @Valid final EditArticleRequest request) {
+    public ArticleResponseItem editArticle(@PathVariable @NotNull final UUID uid,
+                                           @RequestBody @Valid final EditArticleRequest request) {
         return this.articleService.editArticle(uid, request);
     }
 
@@ -89,7 +91,8 @@ public final class ArticleController {
             @ApiResponse(responseCode = "404", description = "Not Found"),
             @ApiResponse(responseCode = "400", description = "Bad Request")
     })
-    public Page<ArticleResponseItem> editMultipleArticleStock(@NotNull final Pageable pageable, @RequestBody @Valid final EditMultipleArticleStockRequest request) {
+    public Page<ArticleResponseItem> editMultipleArticleStock(@NotNull final Pageable pageable,
+                                                              @RequestBody @Valid final EditMultipleArticleStockRequest request) {
         return this.articleService.editMultipleArticleStock(pageable, request.articles());
     }
 

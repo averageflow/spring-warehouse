@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -28,12 +27,15 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final ProductArticleRepository productArticleRepository;
 
-    public ArticleServiceImpl(final ArticleRepository articleRepository, final ArticleStocksRepository articleStocksRepository, final ProductArticleRepository productArticleRepository) {
+    public ArticleServiceImpl(final ArticleRepository articleRepository,
+                              final ArticleStocksRepository articleStocksRepository,
+                              final ProductArticleRepository productArticleRepository) {
         this.articleRepository = articleRepository;
         this.articleStocksRepository = articleStocksRepository;
         this.productArticleRepository = productArticleRepository;
     }
 
+    @Override
     public Page<ArticleResponseItem> getArticles(final Pageable pageable) {
         final Page<Article> page = this.articleRepository.findAll(pageable);
 
@@ -46,6 +48,7 @@ public class ArticleServiceImpl implements ArticleService {
         ));
     }
 
+    @Override
     public ArticleResponseItem getArticleByUid(final UUID uid) {
         final Article article = this.articleRepository.findByUid(uid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -59,20 +62,15 @@ public class ArticleServiceImpl implements ArticleService {
         );
     }
 
-
+    @Override
     public void addArticles(final Collection<AddArticlesRequestItem> rawItems) {
         rawItems.forEach(this::addSingleArticle);
     }
 
-
+    @Override
     public ArticleResponseItem editArticle(final UUID uid, final EditArticleRequest request) {
-        final Optional<Article> searchResult = this.articleRepository.findByUid(uid);
-
-        if (searchResult.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID");
-        }
-
-        final Article itemToUpdate = searchResult.get();
+        final Article itemToUpdate = this.articleRepository.findByUid(uid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         itemToUpdate.setName(request.name());
 
@@ -87,21 +85,18 @@ public class ArticleServiceImpl implements ArticleService {
         );
     }
 
-    public Page<ArticleResponseItem> editMultipleArticleStock(final Pageable pageable, final Collection<EditMultipleArticleStockRequestItem> articles) {
+    @Override
+    public Page<ArticleResponseItem> editMultipleArticleStock(final Pageable pageable,
+                                                              final Collection<EditMultipleArticleStockRequestItem> articles) {
         final Page<Article> page = this.articleRepository.findAll(pageable);
 
-        for (final EditMultipleArticleStockRequestItem article : articles) {
-
-            final Optional<Article> searchResult = this.articleRepository.findByUid(article.itemUid());
-            if (searchResult.isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find item with wanted UUID");
-            }
-            final Article itemToUpdate = searchResult.get();
-
+        articles.forEach(article -> {
+            final Article itemToUpdate = this.articleRepository.findByUid(article.itemUid())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             itemToUpdate.setStock(new ArticleStock(article.stock()));
-
             this.articleRepository.save(itemToUpdate);
-        }
+        });
+
         return page.map(articleStock -> new ArticleResponseItem(
                 articleStock.getUid(),
                 articleStock.getName(),
@@ -111,6 +106,7 @@ public class ArticleServiceImpl implements ArticleService {
         ));
     }
 
+    @Override
     public void deleteArticleByUid(final UUID uid) {
         this.productArticleRepository.deleteByArticleUid(uid);
         this.articleStocksRepository.deleteByArticleUid(uid);
@@ -118,7 +114,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     /**
-     * Add a single article into the system
+     * Add a single article into the system.
      *
      * @param rawItem the article
      */
