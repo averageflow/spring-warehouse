@@ -55,7 +55,7 @@ public class CategoryControllerIntegrationTest {
     @WithMockUser
     @Test
     public void getCategoryByUidShouldReturnCorrectServiceResponse() throws Exception {
-        final UUID randomUid = UUID.randomUUID();
+        final var randomUid = UUID.randomUUID();
         when(this.categoryService.getCategoryByUid(randomUid)).thenReturn(this.mockCategory);
 
         this.mockMvc.perform(get("/api/categories/" + randomUid))

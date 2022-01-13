@@ -123,8 +123,8 @@ public class ArticleServiceImpl implements ArticleService {
      * @param rawItem the article
      */
     private void addSingleArticle(final AddArticlesRequestItem rawItem) {
-        final Article article = new Article(rawItem.name());
-        final ArticleStock articleStock = new ArticleStock(article, rawItem.stock());
+        final var article = new Article(rawItem.name());
+        final var articleStock = new ArticleStock(article, rawItem.stock());
 
         this.articleRepository.save(article);
         this.articleStocksRepository.save(articleStock);

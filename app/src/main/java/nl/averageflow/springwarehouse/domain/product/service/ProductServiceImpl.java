@@ -96,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
             final Category category = this.categoryRepository.findByUid(rawItem.categoryUid())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted category"));
 
-            final Product product = new Product(rawItem, category);
+            final var product = new Product(rawItem, category);
 
             final Iterable<ArticleAmountInProduct> productArticles = StreamSupport.stream(rawItem.containArticles().spliterator(), false)
                     .map(articleItem -> {
@@ -116,12 +116,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public void sellProducts(final SellProductsRequest request) {
-        final Iterable<UUID> wantedUUIDs = StreamSupport.stream(request.wantedItemsForSale().spliterator(), false)
+        final Iterable<UUID> wantedUUIDs = request.wantedItemsForSale().stream()
                 .map(SellProductsRequestItem::itemUid)
                 .collect(Collectors.toList());
 
         final HashMap<UUID, Long> wantedAmountsPerProduct = new HashMap<>();
-        StreamSupport.stream(request.wantedItemsForSale().spliterator(), false)
+        request.wantedItemsForSale()
                 .forEach(item -> wantedAmountsPerProduct.put(item.itemUid(), item.amountOf()));
 
         final Iterable<Product> wantedProducts = this.productRepository.findAllById(wantedUUIDs);

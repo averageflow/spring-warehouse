@@ -120,7 +120,7 @@ public final class Product {
     }
 
     public Collection<String> getImageURLs() {
-        final ObjectMapper objectMapper = new ObjectMapper();
+        final var objectMapper = new ObjectMapper();
 
         try {
             final ProductImagesData images = objectMapper.readValue(this.imageURLs, ProductImagesData.class);
@@ -131,7 +131,7 @@ public final class Product {
     }
 
     public void setImageURLs(final Collection<String> imageURLs) {
-        final ObjectMapper objectMapper = new ObjectMapper();
+        final var objectMapper = new ObjectMapper();
 
         try {
             this.imageURLs = objectMapper.writeValueAsString(new ProductImagesData(imageURLs));

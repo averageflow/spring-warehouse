@@ -54,7 +54,7 @@ public class ArticleControllerIntegrationTest {
     @WithMockUser
     @Test
     public void getArticleByUidShouldReturnCorrectServiceResponse() throws Exception {
-        final UUID randomUid = UUID.randomUUID();
+        final var randomUid = UUID.randomUUID();
         when(this.articleServiceImpl.getArticleByUid(randomUid)).thenReturn(this.mockArticle);
 
         this.mockMvc.perform(get("/api/articles/" + randomUid))

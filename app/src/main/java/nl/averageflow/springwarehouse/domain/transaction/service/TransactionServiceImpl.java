@@ -112,12 +112,12 @@ public class TransactionServiceImpl implements TransactionService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find valid user to perform transaction with"));
 
 
-        final Transaction transaction = new Transaction(currentUser);
+        final var transaction = new Transaction(currentUser);
 
         final HashMap<UUID, Long> wantedProductAmounts = new HashMap<>();
         final Collection<UUID> wantedProductUUIDs = new ArrayList<>();
 
-        StreamSupport.stream(request.wantedItemsForSale().spliterator(), false)
+        request.wantedItemsForSale()
                 .forEach(item -> {
                     wantedProductAmounts.put(item.itemUid(), item.amountOf());
                     wantedProductUUIDs.add(item.itemUid());

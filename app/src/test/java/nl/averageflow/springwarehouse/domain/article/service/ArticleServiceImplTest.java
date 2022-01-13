@@ -3,6 +3,7 @@ package nl.averageflow.springwarehouse.domain.article.service;
 import com.github.javafaker.Faker;
 import nl.averageflow.springwarehouse.domain.article.dto.AddArticlesRequestItem;
 import nl.averageflow.springwarehouse.domain.article.dto.ArticleResponseItem;
+import nl.averageflow.springwarehouse.domain.article.dto.EditArticleRequest;
 import nl.averageflow.springwarehouse.domain.article.model.Article;
 import nl.averageflow.springwarehouse.domain.article.repository.ArticleRepository;
 import nl.averageflow.springwarehouse.domain.article.repository.ArticleStocksRepository;
@@ -54,10 +55,10 @@ public class ArticleServiceImplTest {
 
     @Test
     public void testGetArticleByUid(){
-        final Article article = new Article(this.faker.commerce().productName());
-        final UUID uid = UUID.randomUUID();
+        final var article = new Article(this.faker.commerce().productName());
+        final var uid = UUID.randomUUID();
 
-        final ArticleResponseItem expectedResult = new ArticleResponseItem(
+        final var expectedResult = new ArticleResponseItem(
                 article.getUid(),
                 article.getName(),
                 article.getStock(),
@@ -75,10 +76,10 @@ public class ArticleServiceImplTest {
 
     @Test
     public void testGetArticles(){
-        final Article article = new Article(this.faker.commerce().productName());
+        final var article = new Article(this.faker.commerce().productName());
         final Pageable pageable = mock(Pageable.class);
 
-        final ArticleResponseItem formattedItem = new ArticleResponseItem(
+        final var formattedItem = new ArticleResponseItem(
                 article.getUid(),
                 article.getName(),
                 article.getStock(),
@@ -105,7 +106,7 @@ public class ArticleServiceImplTest {
 
     @Test
     public void testAddArticles(){
-        final AddArticlesRequestItem addArticlesRequestItem = new AddArticlesRequestItem(
+        final var addArticlesRequestItem = new AddArticlesRequestItem(
                 this.faker.commerce().productName(),
                 this.faker.number().numberBetween(1, 100)
         );
@@ -123,7 +124,7 @@ public class ArticleServiceImplTest {
 
     @Test
     public void testDeleteArticleByUid(){
-        final UUID uid = UUID.randomUUID();
+        final var uid = UUID.randomUUID();
 
         this.articleService.deleteArticleByUid(uid);
 
@@ -132,4 +133,11 @@ public class ArticleServiceImplTest {
         verify(this.articleRepository, times(1)).deleteByUid(uid);
     }
 
+    @Test
+    public void testEditArticle(){
+        final var uid = UUID.randomUUID();
+        final var editArticleRequest = new EditArticleRequest(
+                this.faker.commerce().productName()
+        );
+    }
 }

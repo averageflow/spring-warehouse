@@ -49,7 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     public void addCategories(final Iterable<AddCategoriesRequestItem> rawItems) {
         rawItems.forEach(rawItem -> {
-            final Category category = new Category(rawItem.name(), rawItem.description());
+            final var category = new Category(rawItem.name(), rawItem.description());
             this.categoryRepository.save(category);
         });
     }

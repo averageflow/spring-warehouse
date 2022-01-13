@@ -40,14 +40,14 @@ public class CategoryServiceImplTest {
 
     @Test
     public void testGetCategoryByUid() {
-        final Category category = new Category(
+        final var category = new Category(
             this.faker.commerce().department(),
             this.faker.commerce().productName()
         );
 
-        final UUID uid = UUID.randomUUID();
+        final var uid = UUID.randomUUID();
 
-        final CategoryResponseItem expectedResult = new CategoryResponseItem(
+        final var expectedResult = new CategoryResponseItem(
                 category.getUid(),
                 category.getName(),
                 category.getDescription(),
@@ -65,14 +65,14 @@ public class CategoryServiceImplTest {
 
     @Test
     public void testGetCategories() {
-        final Category category = new Category(
+        final var category = new Category(
                 this.faker.commerce().department(),
                 this.faker.commerce().productName()
         );
 
         final Pageable pageable = mock(Pageable.class);
 
-        final CategoryResponseItem formattedItem = new CategoryResponseItem(
+        final var formattedItem = new CategoryResponseItem(
                 category.getUid(),
                 category.getName(),
                 category.getDescription(),
@@ -99,7 +99,7 @@ public class CategoryServiceImplTest {
 
     @Test
     public void testAddCategories() {
-        final AddCategoriesRequestItem addCategoriesRequestItem = new AddCategoriesRequestItem(
+        final var addCategoriesRequestItem = new AddCategoriesRequestItem(
                 this.faker.commerce().department(),
                 this.faker.commerce().productName()
         );
@@ -117,7 +117,7 @@ public class CategoryServiceImplTest {
 
     @Test
     public void testDeleteCategoryByUid() {
-        final UUID uid = UUID.randomUUID();
+        final var uid = UUID.randomUUID();
 
         this.categoryService.deleteCategoryByUid(uid);
 
@@ -126,12 +126,12 @@ public class CategoryServiceImplTest {
 
     @Test
     public void testEditCategory(){
-        final EditCategoryRequest category = new EditCategoryRequest( this.
-                faker.commerce().department(),
+        final var category = new EditCategoryRequest(
+                this.faker.commerce().department(),
                 this.faker.commerce().productName()
         );
-        final UUID uid = UUID.randomUUID();
-        final Category categoryModel = new Category(category.name(), category.description());
+        final var uid = UUID.randomUUID();
+        final var categoryModel = new Category(category.name(), category.description());
 
         when(this.categoryRepository.findByUid(uid)).thenReturn(Optional.of(categoryModel));
         when(this.categoryRepository.save(any())).thenReturn(categoryModel);

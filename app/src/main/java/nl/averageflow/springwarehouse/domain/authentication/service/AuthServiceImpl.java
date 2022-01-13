@@ -50,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
             return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
         }
 
-        final User user = new User();
+        final var user = new User();
 
         user.setItemName(registerRequest.name());
         user.setEmail(registerRequest.email());
