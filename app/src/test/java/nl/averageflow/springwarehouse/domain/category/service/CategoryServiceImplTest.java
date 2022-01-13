@@ -39,10 +39,9 @@ public class CategoryServiceImplTest {
     @Test
     public void testGetCategoryByUid() {
         final Category category = mock(Category.class);
+        final UUID uid = UUID.randomUUID();
 
-        when(this.categoryRepository.findByUid(any())).thenReturn(Optional.of(category));
-
-        final CategoryResponseItem sut = new CategoryResponseItem(
+        final CategoryResponseItem expectedResult = new CategoryResponseItem(
                 category.getUid(),
                 category.getName(),
                 category.getDescription(),
@@ -50,9 +49,11 @@ public class CategoryServiceImplTest {
                 category.getUpdatedAt()
         );
 
-        final UUID uid = UUID.randomUUID();
+        when(this.categoryRepository.findByUid(any())).thenReturn(Optional.of(category));
 
-        assertEquals(this.categoryService.getCategoryByUid(uid), sut);
+        final CategoryResponseItem sut = this.categoryService.getCategoryByUid(uid);
+
+        assertEquals(sut, expectedResult);
         verify(this.categoryRepository, times(1)).findByUid(uid);
     }
 
@@ -61,7 +62,7 @@ public class CategoryServiceImplTest {
         final Category category = mock(Category.class);
         final Pageable pageable = mock(Pageable.class);
 
-        final CategoryResponseItem sut = new CategoryResponseItem(
+        final CategoryResponseItem formattedItem = new CategoryResponseItem(
                 category.getUid(),
                 category.getName(),
                 category.getDescription(),
@@ -73,7 +74,9 @@ public class CategoryServiceImplTest {
 
         when(this.categoryRepository.findAll(pageable)).thenReturn(categoryPage);
 
-        assertEquals(this.categoryService.getCategories(pageable), new PageImpl<>(List.of(sut)));
+        final Page<CategoryResponseItem> sut = this.categoryService.getCategories(pageable);
+
+        assertEquals(sut, new PageImpl<>(List.of(formattedItem)));
         verify(this.categoryRepository, times(1)).findAll(any(Pageable.class));
     }
 
@@ -86,8 +89,9 @@ public class CategoryServiceImplTest {
 
     @Test
     public void testAddCategories() {
-        final AddCategoriesRequestItem category = new AddCategoriesRequestItem("name", "description");
-        this.categoryService.addCategories(List.of(category, category, category));
+        final AddCategoriesRequestItem addCategoriesRequestItem = new AddCategoriesRequestItem("name", "description");
+
+        this.categoryService.addCategories(List.of(addCategoriesRequestItem, addCategoriesRequestItem, addCategoriesRequestItem));
 
         verify(this.categoryRepository, times(3)).save(any(Category.class));
     }

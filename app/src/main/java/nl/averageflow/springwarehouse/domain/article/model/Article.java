@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Table(name = "articles", schema = "public")
 @Entity
-public final class Article {
+public class Article {
     @Id
     @GeneratedValue
     @Column(name = "uid", nullable = false)
