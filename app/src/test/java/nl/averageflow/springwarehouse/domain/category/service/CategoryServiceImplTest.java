@@ -1,6 +1,8 @@
 package nl.averageflow.springwarehouse.domain.category.service;
 
 
+import com.github.javafaker.Faker;
+import nl.averageflow.springwarehouse.domain.article.dto.AddArticlesRequestItem;
 import nl.averageflow.springwarehouse.domain.category.dto.AddCategoriesRequestItem;
 import nl.averageflow.springwarehouse.domain.category.dto.CategoryResponseItem;
 import nl.averageflow.springwarehouse.domain.category.dto.EditCategoryRequest;
@@ -15,10 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -31,14 +30,21 @@ public class CategoryServiceImplTest {
 
     private CategoryService categoryService;
 
+    private Faker faker;
+
     @BeforeEach
     public void setUp() {
+        this.faker = new Faker();
         this.categoryService = new CategoryServiceImpl(this.categoryRepository);
     }
 
     @Test
     public void testGetCategoryByUid() {
-        final Category category = mock(Category.class);
+        final Category category = new Category(
+            this.faker.commerce().department(),
+            this.faker.commerce().productName()
+        );
+
         final UUID uid = UUID.randomUUID();
 
         final CategoryResponseItem expectedResult = new CategoryResponseItem(
@@ -59,7 +65,11 @@ public class CategoryServiceImplTest {
 
     @Test
     public void testGetCategories() {
-        final Category category = mock(Category.class);
+        final Category category = new Category(
+                this.faker.commerce().department(),
+                this.faker.commerce().productName()
+        );
+
         final Pageable pageable = mock(Pageable.class);
 
         final CategoryResponseItem formattedItem = new CategoryResponseItem(
@@ -89,11 +99,20 @@ public class CategoryServiceImplTest {
 
     @Test
     public void testAddCategories() {
-        final AddCategoriesRequestItem addCategoriesRequestItem = new AddCategoriesRequestItem("name", "description");
+        final AddCategoriesRequestItem addCategoriesRequestItem = new AddCategoriesRequestItem(
+                this.faker.commerce().department(),
+                this.faker.commerce().productName()
+        );
 
-        this.categoryService.addCategories(List.of(addCategoriesRequestItem, addCategoriesRequestItem, addCategoriesRequestItem));
+        final Collection<AddCategoriesRequestItem> itemsToAdd = List.of(
+                addCategoriesRequestItem,
+                addCategoriesRequestItem,
+                addCategoriesRequestItem
+        );
 
-        verify(this.categoryRepository, times(3)).save(any(Category.class));
+        this.categoryService.addCategories(itemsToAdd);
+
+        verify(this.categoryRepository, times(itemsToAdd.size())).save(any(Category.class));
     }
 
     @Test
@@ -107,7 +126,10 @@ public class CategoryServiceImplTest {
 
     @Test
     public void testEditCategory(){
-        final EditCategoryRequest category = new EditCategoryRequest("name", "description");
+        final EditCategoryRequest category = new EditCategoryRequest( this.
+                faker.commerce().department(),
+                this.faker.commerce().productName()
+        );
         final UUID uid = UUID.randomUUID();
         final Category categoryModel = new Category(category.name(), category.description());
 

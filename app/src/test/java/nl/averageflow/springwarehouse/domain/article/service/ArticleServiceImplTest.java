@@ -1,5 +1,6 @@
 package nl.averageflow.springwarehouse.domain.article.service;
 
+import com.github.javafaker.Faker;
 import nl.averageflow.springwarehouse.domain.article.dto.AddArticlesRequestItem;
 import nl.averageflow.springwarehouse.domain.article.dto.ArticleResponseItem;
 import nl.averageflow.springwarehouse.domain.article.model.Article;
@@ -19,10 +20,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -41,8 +39,12 @@ public class ArticleServiceImplTest {
 
     private ArticleService articleService;
 
+    private Faker faker;
+
     @BeforeEach
     public void setUp(){
+        this.faker = new Faker();
+
         this.articleService = new ArticleServiceImpl(
                 this.articleRepository,
                 this.articleStocksRepository,
@@ -52,7 +54,7 @@ public class ArticleServiceImplTest {
 
     @Test
     public void testGetArticleByUid(){
-        final Article article = mock(Article.class);
+        final Article article = new Article(this.faker.commerce().productName());
         final UUID uid = UUID.randomUUID();
 
         final ArticleResponseItem expectedResult = new ArticleResponseItem(
@@ -73,7 +75,7 @@ public class ArticleServiceImplTest {
 
     @Test
     public void testGetArticles(){
-        final Article article = mock(Article.class);
+        final Article article = new Article(this.faker.commerce().productName());
         final Pageable pageable = mock(Pageable.class);
 
         final ArticleResponseItem formattedItem = new ArticleResponseItem(
@@ -104,13 +106,30 @@ public class ArticleServiceImplTest {
     @Test
     public void testAddArticles(){
         final AddArticlesRequestItem addArticlesRequestItem = new AddArticlesRequestItem(
-                "name",
-                1
+                this.faker.commerce().productName(),
+                this.faker.number().numberBetween(1, 100)
         );
 
-        this.articleService.addArticles(List.of(addArticlesRequestItem, addArticlesRequestItem, addArticlesRequestItem));
+        final Collection<AddArticlesRequestItem> itemsToAdd = List.of(
+                addArticlesRequestItem,
+                addArticlesRequestItem,
+                addArticlesRequestItem
+        );
 
-        verify(this.articleRepository, times(3)).save(any(Article.class));
+        this.articleService.addArticles(itemsToAdd);
+
+        verify(this.articleRepository, times(itemsToAdd.size())).save(any(Article.class));
+    }
+
+    @Test
+    public void testDeleteArticleByUid(){
+        final UUID uid = UUID.randomUUID();
+
+        this.articleService.deleteArticleByUid(uid);
+
+        verify(this.productArticleRepository, times(1)).deleteByArticleUid(uid);
+        verify(this.articleStocksRepository, times(1)).deleteByArticleUid(uid);
+        verify(this.articleRepository, times(1)).deleteByUid(uid);
     }
 
 }

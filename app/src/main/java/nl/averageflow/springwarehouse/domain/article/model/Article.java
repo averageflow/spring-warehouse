@@ -33,8 +33,8 @@ public class Article {
     public Article() {
     }
 
-    public Article(final AddArticlesRequestItem rawItem) {
-        this.name = rawItem.name();
+    public Article(final String name) {
+        this.name = name;
     }
 
     public UUID getUid() {
@@ -58,7 +58,7 @@ public class Article {
     }
 
     public long getStock() {
-        return this.stock.getStock();
+        return this.stock == null ? 0L : this.stock.getStock();
     }
 
     public void setStock(final ArticleStock stock) {
