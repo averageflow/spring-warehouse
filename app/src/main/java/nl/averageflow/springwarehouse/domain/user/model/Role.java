@@ -32,18 +32,18 @@ public class Role {
     }
 
     public UUID getUid() {
-        return uid;
+        return this.uid;
     }
 
     public Timestamp getCreatedAt() {
-        return createdAt;
+        return this.createdAt;
     }
 
     public Timestamp getUpdatedAt() {
-        return updatedAt;
+        return this.updatedAt;
     }
 
     public String getItemName() {
-        return itemName;
+        return this.itemName;
     }
 }

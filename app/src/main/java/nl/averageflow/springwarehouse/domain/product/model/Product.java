@@ -1,7 +1,7 @@
 package nl.averageflow.springwarehouse.domain.product.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nl.averageflow.springwarehouse.domain.category.Category;
+import nl.averageflow.springwarehouse.domain.category.model.Category;
 import nl.averageflow.springwarehouse.domain.product.dto.AddProductsRequestItem;
 import nl.averageflow.springwarehouse.domain.product.dto.ProductImagesData;
 import org.hibernate.annotations.CreationTimestamp;
@@ -88,7 +88,7 @@ public final class Product {
 
     public long getProductStock() {
         final Collection<Long> amountOfProductsPossibleList = new ArrayList<>();
-        if (this.articleProductRelation == null || articleProductRelation.isEmpty()) {
+        if (this.articleProductRelation == null || this.articleProductRelation.isEmpty()) {
             return 0L;
         }
 
@@ -141,7 +141,7 @@ public final class Product {
     }
 
     public Category getCategory() {
-        return category;
+        return this.category;
     }
 
     public void setCategory(final Category category) {

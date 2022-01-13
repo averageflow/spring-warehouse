@@ -54,6 +54,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
         final Collection<String> roles = new ArrayList<>();
         roles.add(this.user.getRole().getItemName());
 
-        return mapRolesToAuthorities(roles);
+        return this.mapRolesToAuthorities(roles);
     }
 }

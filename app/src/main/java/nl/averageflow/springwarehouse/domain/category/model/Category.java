@@ -1,6 +1,6 @@
-package nl.averageflow.springwarehouse.domain.article.model;
+package nl.averageflow.springwarehouse.domain.category.model;
 
-import nl.averageflow.springwarehouse.domain.article.dto.AddArticlesRequestItem;
+import nl.averageflow.springwarehouse.domain.category.dto.AddCategoriesRequestItem;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -8,9 +8,9 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-@Table(name = "articles", schema = "public")
+@Table(name = "categories", schema = "public")
 @Entity
-public final class Article {
+public class Category {
     @Id
     @GeneratedValue
     @Column(name = "uid", nullable = false)
@@ -19,8 +19,8 @@ public final class Article {
     @Column(name = "item_name", nullable = false)
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "article")
-    private ArticleStock stock;
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "created_at", nullable = false)
     @CreationTimestamp
@@ -30,11 +30,12 @@ public final class Article {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    public Article() {
+    public Category() {
     }
 
-    public Article(final AddArticlesRequestItem rawItem) {
-        this.name = rawItem.name();
+    public Category(final String name, final String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public UUID getUid() {
@@ -57,16 +58,11 @@ public final class Article {
         return this.updatedAt;
     }
 
-    public long getStock() {
-        return this.stock.getStock();
+    public String getDescription() {
+        return this.description;
     }
 
-    public void setStock(final ArticleStock stock) {
-        this.stock.setStock(stock.getStock());
+    public void setDescription(final String description) {
+        this.description = description;
     }
-
-    public void performStockBooking(final long amountOf) {
-        this.stock.setStock(this.getStock() - amountOf);
-    }
-
 }
