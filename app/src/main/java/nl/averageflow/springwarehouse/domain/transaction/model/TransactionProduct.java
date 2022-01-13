@@ -42,18 +42,18 @@ public final class TransactionProduct {
 
     @NonNull
     public UUID getUid() {
-        return uid;
+        return this.uid;
     }
 
     public Product getProduct() {
-        return product;
+        return this.product;
     }
 
     public Long getAmountOf() {
-        return amountOf;
+        return this.amountOf;
     }
 
     public Timestamp getCreatedAt() {
-        return createdAt;
+        return this.createdAt;
     }
 }

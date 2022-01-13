@@ -44,7 +44,7 @@ public final class Transaction {
     }
 
     public Set<TransactionProduct> getTransactionProducts() {
-        return transactionProducts;
+        return this.transactionProducts;
     }
 
     public void setTransactionProducts(final Set<TransactionProduct> transactionProducts) {
@@ -52,6 +52,6 @@ public final class Transaction {
     }
 
     public User getUser() {
-        return user;
+        return this.user;
     }
 }

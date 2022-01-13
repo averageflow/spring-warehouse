@@ -1,7 +1,7 @@
 package nl.averageflow.springwarehouse.infrastructure.security;
 
 import nl.averageflow.springwarehouse.domain.user.UserRole;
-import nl.averageflow.springwarehouse.domain.user.UserService;
+import nl.averageflow.springwarehouse.domain.user.service.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userService;
 
-    public SecurityConfig(final UserService userService) {
+    public SecurityConfig(final UserServiceImpl userService) {
         this.userService = userService;
     }
 
@@ -56,6 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(this.userService)
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(this.passwordEncoder());
     }
 }

@@ -41,11 +41,11 @@ public class User {
     }
 
     public UUID getUid() {
-        return uid;
+        return this.uid;
     }
 
     public String getItemName() {
-        return itemName;
+        return this.itemName;
     }
 
     public void setItemName(final String itemName) {
@@ -53,7 +53,7 @@ public class User {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(final String email) {
@@ -61,11 +61,11 @@ public class User {
     }
 
     public Timestamp getCreatedAt() {
-        return createdAt;
+        return this.createdAt;
     }
 
     public Timestamp getUpdatedAt() {
-        return updatedAt;
+        return this.updatedAt;
     }
 
     public String getPassword() {
@@ -77,7 +77,7 @@ public class User {
     }
 
     public Role getRole() {
-        return role;
+        return this.role;
     }
 
     public void setRole(final Role role) {

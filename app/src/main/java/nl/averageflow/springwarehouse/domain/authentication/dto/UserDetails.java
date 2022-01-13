@@ -6,7 +6,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.StreamSupport;
 
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
     private final User user;
@@ -15,8 +14,8 @@ public class UserDetails implements org.springframework.security.core.userdetail
         this.user = user;
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(final Iterable<String> roles) {
-        return StreamSupport.stream(roles.spliterator(), false).map(SimpleGrantedAuthority::new).toList();
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(final Collection<String> roles) {
+        return roles.stream().map(SimpleGrantedAuthority::new).toList();
     }
 
     @Override
@@ -54,6 +53,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
         final Collection<String> roles = new ArrayList<>();
         roles.add(this.user.getRole().getItemName());
 
-        return mapRolesToAuthorities(roles);
+        return this.mapRolesToAuthorities(roles);
     }
 }

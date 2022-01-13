@@ -88,18 +88,18 @@
 
         <!-- Checks for Javadoc comments.                     -->
         <!-- See https://checkstyle.org/config_javadoc.html -->
-        <module name="InvalidJavadocPosition"/>
-        <module name="JavadocMethod">
-            <property name="tokens" value="METHOD_DEF"/>
-        </module>
-        <module name="JavadocType"/>
-        <module name="JavadocStyle"/>
-        <module name="MissingJavadocMethod">
-            <property name="allowMissingPropertyJavadoc" value="true" />
-            <property name="tokens" value="METHOD_DEF"/>
-            <property name="ignoreMethodNamesRegex" value="main"/>
-            <property name="allowedAnnotations" value="Override, Bean, ApiOperation"/>
-        </module>
+<!--        <module name="InvalidJavadocPosition"/>-->
+<!--        <module name="JavadocMethod">-->
+<!--            <property name="tokens" value="METHOD_DEF"/>-->
+<!--        </module>-->
+<!--        <module name="JavadocType"/>-->
+<!--        <module name="JavadocStyle"/>-->
+<!--        <module name="MissingJavadocMethod">-->
+<!--            <property name="allowMissingPropertyJavadoc" value="true" />-->
+<!--            <property name="tokens" value="METHOD_DEF"/>-->
+<!--            <property name="ignoreMethodNamesRegex" value="main"/>-->
+<!--            <property name="allowedAnnotations" value="Override, Bean, ApiOperation"/>-->
+<!--        </module>-->
 
         <!-- Checks for Naming Conventions.                  -->
         <!-- See https://checkstyle.org/config_naming.html -->
@@ -145,7 +145,7 @@
         <!-- Modifier Checks                                    -->
         <!-- See https://checkstyle.org/config_modifiers.html -->
         <module name="ModifierOrder"/>
-        <module name="RedundantModifier"/>
+<!--        <module name="RedundantModifier"/>-->
 
         <!-- Checks for blocks. You know, those {}'s         -->
         <!-- See https://checkstyle.org/config_blocks.html -->

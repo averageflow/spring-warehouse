@@ -3,7 +3,7 @@ import org.springframework.boot.gradle.tasks.run.BootRun
 plugins {
     idea
     jacoco
-    //checkstyle
+//    checkstyle
     eclipse
     application
     java
@@ -45,6 +45,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("com.h2database:h2:1.4.200")
     testImplementation("org.springframework.security:spring-security-test:5.6.1")
+    testImplementation("com.github.javafaker:javafaker:1.0.2")
 
 }
 
