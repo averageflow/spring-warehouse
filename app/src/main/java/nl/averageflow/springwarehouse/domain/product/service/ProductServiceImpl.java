@@ -32,7 +32,10 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductArticleRepository productArticleRepository;
 
-    public ProductServiceImpl(final ProductRepository productRepository, final ArticleRepository articleRepository, final CategoryRepository categoryRepository, final ProductArticleRepository productArticleRepository) {
+    public ProductServiceImpl(final ProductRepository productRepository,
+                              final ArticleRepository articleRepository,
+                              final CategoryRepository categoryRepository,
+                              final ProductArticleRepository productArticleRepository) {
         this.productRepository = productRepository;
         this.articleRepository = articleRepository;
         this.categoryRepository = categoryRepository;
@@ -66,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
         final Product product = this.productRepository.findByUid(uid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        final Category productCategory = product.getCategory();
 
         return new ProductResponseItem(
                 product.getUid(),
@@ -74,11 +78,11 @@ public class ProductServiceImpl implements ProductService {
                 product.getPrice(),
                 product.getProductStock(),
                 new CategoryResponseItem(
-                        product.getCategory().getUid(),
-                        product.getCategory().getName(),
-                        product.getCategory().getDescription(),
-                        product.getCategory().getCreatedAt(),
-                        product.getCategory().getUpdatedAt()
+                        productCategory.getUid(),
+                        productCategory.getName(),
+                        productCategory.getDescription(),
+                        productCategory.getCreatedAt(),
+                        productCategory.getUpdatedAt()
                 ),
                 product.getCreatedAt(),
                 product.getUpdatedAt(),
@@ -95,7 +99,12 @@ public class ProductServiceImpl implements ProductService {
             final Category category = this.categoryRepository.findByUid(rawItem.categoryUid())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find wanted category"));
 
-            final var product = new Product(rawItem, category);
+            final var product = new Product(
+                    rawItem.name(),
+                    rawItem.price(),
+                    rawItem.imageURLs(),
+                    category
+            );
 
             final Collection<ArticleAmountInProduct> productArticles = rawItem.containArticles().stream()
                     .map(articleItem -> {

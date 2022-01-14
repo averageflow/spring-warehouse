@@ -51,10 +51,10 @@ public final class Product {
     public Product() {
     }
 
-    public Product(final AddProductsRequestItem item, final Category category) {
-        this.name = item.name();
-        this.price = item.price();
-        this.setImageURLs(item.imageURLs());
+    public Product(final String name, final Double price, final Collection<String> imageURLs, final Category category) {
+        this.name = name;
+        this.price = price;
+        this.setImageURLs(imageURLs);
         this.category = category;
     }
 
