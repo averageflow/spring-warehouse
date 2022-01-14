@@ -5,7 +5,11 @@ import nl.averageflow.springwarehouse.domain.article.repository.ArticleRepositor
 import nl.averageflow.springwarehouse.domain.category.dto.CategoryResponseItem;
 import nl.averageflow.springwarehouse.domain.category.model.Category;
 import nl.averageflow.springwarehouse.domain.category.repository.CategoryRepository;
-import nl.averageflow.springwarehouse.domain.product.dto.*;
+import nl.averageflow.springwarehouse.domain.product.dto.AddProductsRequestItem;
+import nl.averageflow.springwarehouse.domain.product.dto.EditProductRequest;
+import nl.averageflow.springwarehouse.domain.product.dto.ProductResponseItem;
+import nl.averageflow.springwarehouse.domain.product.dto.SellProductsRequest;
+import nl.averageflow.springwarehouse.domain.product.dto.SellProductsRequestItem;
 import nl.averageflow.springwarehouse.domain.product.model.ArticleAmountInProduct;
 import nl.averageflow.springwarehouse.domain.product.model.Product;
 import nl.averageflow.springwarehouse.domain.product.repository.ProductArticleRepository;

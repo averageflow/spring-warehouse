@@ -18,7 +18,13 @@ import nl.averageflow.springwarehouse.domain.transaction.service.TransactionServ
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -39,7 +45,7 @@ public final class ProductController {
     @GetMapping("/api/products")
     @Operation(summary = "Returns the requested page of products",
             description = "Returns the requested page of products specifying the page number")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = Page.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),
@@ -52,7 +58,7 @@ public final class ProductController {
     @GetMapping("/api/products/{uid}")
     @Operation(summary = "Returns a single product",
             description = "Returns a single product specifying its uuid")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = ProductResponseItem.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),
@@ -65,7 +71,7 @@ public final class ProductController {
     @PostMapping("/api/products")
     @Operation(summary = "Add products",
             description = "Add a collection of products into the system. The collection should not be empty.")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response"),
             @ApiResponse(responseCode = "404", description = "Not Found"),
             @ApiResponse(responseCode = "400", description = "Bad Request")
@@ -77,7 +83,7 @@ public final class ProductController {
     @DeleteMapping("/api/products/{uid}")
     @Operation(summary = "Delete a product",
             description = "The service permits deleting a single product by its uuid")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response"),
             @ApiResponse(responseCode = "404", description = "Not Found"),
             @ApiResponse(responseCode = "400", description = "Bad Request")
@@ -89,7 +95,7 @@ public final class ProductController {
     @PatchMapping("/api/products/{uid}")
     @Operation(summary = "Edit a product",
             description = "The service permits editing a single product")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = ProductResponseItem.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),
@@ -102,7 +108,7 @@ public final class ProductController {
     @PatchMapping("/api/products/sell")
     @Operation(summary = "Sell products",
             description = "The service permits selling a collection of products")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = TransactionResponseItem.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),

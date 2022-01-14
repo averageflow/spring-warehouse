@@ -14,7 +14,12 @@ import nl.averageflow.springwarehouse.domain.user.service.UserServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
@@ -32,7 +37,7 @@ public class UserController {
     @GetMapping("/api/users")
     @Operation(summary = "Returns users",
             description = "Returns the requested page of users")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = Page.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),
@@ -45,7 +50,7 @@ public class UserController {
     @GetMapping("/api/users/{uid}")
     @Operation(summary = "Returns a single user",
             description = "Returns a single user by uuid")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = CategoryResponseItem.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),
@@ -58,7 +63,7 @@ public class UserController {
     @PatchMapping("/api/users/update-role")
     @Operation(summary = "Update a user's role",
             description = "Update a user's role. The requester has to have admin privileges.")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response"),
             @ApiResponse(responseCode = "404", description = "Not Found"),
             @ApiResponse(responseCode = "400", description = "Bad Request")
@@ -70,7 +75,7 @@ public class UserController {
     @DeleteMapping("/api/users/{uid}")
     @Operation(summary = "Deletes a single user",
             description = "Deletes a single user by uuid")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = CategoryResponseItem.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),

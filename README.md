@@ -31,6 +31,7 @@ Feel free to join [the Discord server for Spring Warehouse here](https://discord
 * [Possible Improvements](#possible-improvements)
 * [Front-ends](#front-ends)
 
+<!--suppress HtmlDeprecatedAttribute -->
 <p align="center">
   <img src="https://res.cloudinary.com/dehs6irlh/image/upload/c_scale,w_256/v1640818163/Github/Warehouse-PNG-Photos_jcaebq.png" alt="Spring Warehouse logo"/>
 </p>

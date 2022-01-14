@@ -6,7 +6,6 @@ import nl.averageflow.springwarehouse.domain.user.model.Role;
 import nl.averageflow.springwarehouse.domain.user.model.User;
 import nl.averageflow.springwarehouse.domain.user.repository.RoleRepository;
 import nl.averageflow.springwarehouse.domain.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,17 +20,23 @@ import java.util.Optional;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+
+    public AuthServiceImpl(final AuthenticationManager authenticationManager,
+                           final UserRepository userRepository,
+                           final RoleRepository roleRepository,
+                           final PasswordEncoder passwordEncoder){
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public ResponseEntity<String> authenticateUser(final String email, final String password) {
         final Authentication authToken = new UsernamePasswordAuthenticationToken(email, password);

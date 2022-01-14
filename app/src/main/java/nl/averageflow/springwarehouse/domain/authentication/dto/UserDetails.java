@@ -14,7 +14,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
         this.user = user;
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(final Collection<String> roles) {
+    private static Collection<? extends GrantedAuthority> mapRolesToAuthorities(final Collection<String> roles) {
         return roles.stream().map(SimpleGrantedAuthority::new).toList();
     }
 
@@ -53,6 +53,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
         final Collection<String> roles = new ArrayList<>();
         roles.add(this.user.getRole().getItemName());
 
-        return this.mapRolesToAuthorities(roles);
+        return UserDetails.mapRolesToAuthorities(roles);
     }
 }

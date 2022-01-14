@@ -24,7 +24,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -101,6 +104,7 @@ public class ProductServiceImplTest {
         verify(this.productRepository, times(1)).findAll(pageable);
     }
 
+    @Test
     public void testGetProductByUid() {
         final var uid = UUID.randomUUID();
         final var fakeCategory = new Category(

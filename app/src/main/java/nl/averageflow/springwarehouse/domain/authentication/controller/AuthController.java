@@ -28,7 +28,7 @@ public final class AuthController {
     @PostMapping("/api/auth/authenticate")
     @Operation(summary = "Authenticate user",
             description = "The service permits authenticating a user")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = ResponseEntity.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),
@@ -41,7 +41,7 @@ public final class AuthController {
     @PostMapping("/api/auth/register")
     @Operation(summary = "Register user",
             description = "The service permits registering a user")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = ResponseEntity.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),

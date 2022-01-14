@@ -13,7 +13,13 @@ import nl.averageflow.springwarehouse.domain.category.service.CategoryService;
 import nl.averageflow.springwarehouse.domain.category.service.CategoryServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -32,7 +38,7 @@ public class CategoryController {
     @GetMapping("/api/categories")
     @Operation(summary = "Returns the requested page of categories",
             description = "Returns the requested page of categories specifying the page number")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = Page.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),
@@ -45,7 +51,7 @@ public class CategoryController {
     @GetMapping("/api/categories/{uid}")
     @Operation(summary = "Returns a single category",
             description = "Returns a single category specifying its uuid")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = CategoryResponseItem.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),
@@ -58,7 +64,7 @@ public class CategoryController {
     @PostMapping("/api/categories")
     @Operation(summary = "Add categories",
             description = "Add a collection of categories into the system. The collection should not be empty.")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response"),
             @ApiResponse(responseCode = "404", description = "Not Found"),
             @ApiResponse(responseCode = "400", description = "Bad Request")
@@ -70,7 +76,7 @@ public class CategoryController {
     @PatchMapping("/api/categories/{uid}")
     @Operation(summary = "Edit a category",
             description = "The service permits editing a single category")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = CategoryResponseItem.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),
@@ -83,7 +89,7 @@ public class CategoryController {
     @DeleteMapping("/api/categories/{uid}")
     @Operation(summary = "Delete a category",
             description = "The service permits deleting a single category")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response"),
             @ApiResponse(responseCode = "404", description = "Not Found"),
             @ApiResponse(responseCode = "400", description = "Bad Request")

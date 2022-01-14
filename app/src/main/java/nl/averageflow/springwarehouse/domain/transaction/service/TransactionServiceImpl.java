@@ -20,7 +20,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -52,7 +56,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         return page.map(transaction -> new TransactionResponseItem(
                 transaction.getUid(),
-                this.mapResponseProductFromTransaction(transaction),
+                TransactionServiceImpl.mapResponseProductFromTransaction(transaction),
                 new UserResponseItem(
                         transaction.getUser().getUid(),
                         transaction.getUser().getItemName(),
@@ -65,7 +69,7 @@ public class TransactionServiceImpl implements TransactionService {
         ));
     }
 
-    private Collection<ProductResponseItem> mapResponseProductFromTransaction(final Transaction transaction) {
+    private static Collection<ProductResponseItem> mapResponseProductFromTransaction(final Transaction transaction) {
         return transaction.getTransactionProducts()
                 .stream().map(product -> new ProductResponseItem(
                         product.getProduct().getUid(),
@@ -92,7 +96,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         return new TransactionResponseItem(
                 transaction.getUid(),
-                this.mapResponseProductFromTransaction(transaction),
+                TransactionServiceImpl.mapResponseProductFromTransaction(transaction),
                 new UserResponseItem(
                         transaction.getUser().getUid(),
                         transaction.getUser().getItemName(),
@@ -144,7 +148,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         return new TransactionResponseItem(
                 updatedTransaction.getUid(),
-                this.mapResponseProductFromTransaction(transaction),
+                TransactionServiceImpl.mapResponseProductFromTransaction(transaction),
                 new UserResponseItem(
                         transaction.getUser().getUid(),
                         transaction.getUser().getItemName(),

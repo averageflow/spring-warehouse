@@ -2,19 +2,33 @@ package nl.averageflow.springwarehouse.domain.product.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.averageflow.springwarehouse.domain.category.model.Category;
-import nl.averageflow.springwarehouse.domain.product.dto.AddProductsRequestItem;
 import nl.averageflow.springwarehouse.domain.product.dto.ProductImagesData;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 @Table(name = "products")
 @Entity
 public final class Product {
-    public static final String[] ELEMENTS = new String[]{};
+    public static final String[] ELEMENTS = {};
 
     @Id
     @GeneratedValue

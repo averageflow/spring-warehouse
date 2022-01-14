@@ -32,7 +32,7 @@ public final class TransactionController {
     @GetMapping("/api/transactions")
     @Operation(summary = "Returns the requested page of transactions",
             description = "Returns the requested page of transactions specifying the page number")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = CategoryResponseItem.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),
@@ -46,7 +46,7 @@ public final class TransactionController {
     @GetMapping("/api/transactions/{uid}")
     @Operation(summary = "Returns a transaction",
             description = "Returns a single transaction by its uuid")
-    @ApiResponses(value = {
+    @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successful Response",
                     content = @Content(schema = @Schema(implementation = CategoryResponseItem.class))),
             @ApiResponse(responseCode = "404", description = "Not Found"),
