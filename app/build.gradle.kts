@@ -27,6 +27,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:2.6.2")
     implementation("org.springframework.boot:spring-boot-starter-validation:2.6.2")
     implementation("org.springframework.boot:spring-boot-starter-security:2.6.2")
+    implementation("org.springframework.boot:spring-boot-starter-mail:2.6.2")
     implementation("org.liquibase:liquibase-core:4.6.2")
     implementation("org.springdoc:springdoc-openapi-ui:1.6.3")
     runtimeOnly("org.springframework.boot:spring-boot-devtools:2.6.2")
