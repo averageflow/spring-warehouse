@@ -37,6 +37,12 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
+
+    @Value("${spring.mail.username")
+    private String senderMail;
+
     public AuthServiceImpl(final AuthenticationManager authenticationManager,
                            final UserRepository userRepository,
                            final RoleRepository roleRepository,
@@ -46,12 +52,6 @@ public class AuthServiceImpl implements AuthService {
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
-    @Autowired
-    private JavaMailSender javaMailSender;
-
-    @Value("${spring.mail.username")
-    private String senderMail;
 
     public ResponseEntity<String> authenticateUser(final String email, final String password) {
         final Authentication authToken = new UsernamePasswordAuthenticationToken(email, password);
@@ -90,7 +90,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
 	@Override
-	public ResponseEntity<String> forgotPassword(String email, String url) {
+	public ResponseEntity<String> forgotPassword(final String email, final String url) {
 
         return userRepository.findByEmail(email)
                 .map(user -> this.sendPasswordResetLink(user, url))
@@ -98,7 +98,7 @@ public class AuthServiceImpl implements AuthService {
 	}
 
     @Override
-    public ResponseEntity<String> resetPassword(User userIn) {
+    public ResponseEntity<String> resetPassword(final User userIn) {
 
         return userRepository.findByToken(userIn.getToken())
                 .map(user -> this.validateAndResetPassword(user, userIn.getPassword()))
@@ -150,7 +150,6 @@ public class AuthServiceImpl implements AuthService {
     private String getMailBody(String url, String token) {
         String anchorStart = StringUtils.join("<a href=", url, "/reset-password?token=", token, ">");
         String anchorEnd = "</a>";
-        String msg = StringUtils.join("Click ", anchorStart, "here", anchorEnd, " to reset your password");
-        return msg;
+        return StringUtils.join("Click ", anchorStart, "here", anchorEnd, " to reset your password");
     }
 }

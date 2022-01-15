@@ -12,7 +12,10 @@ import nl.averageflow.springwarehouse.domain.user.model.User;
 import nl.averageflow.springwarehouse.domain.authentication.service.AuthService;
 import nl.averageflow.springwarehouse.domain.authentication.service.AuthServiceImpl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,8 +58,8 @@ public final class AuthController {
 
     @PostMapping("/api/auth/forgot-password")
     public ResponseEntity<String> forgotPassword(
-            @RequestParam(value = "email", required = true) String email,
-            HttpServletRequest request) {
+            final String email,
+            final HttpServletRequest request) {
 
         String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
                 .replacePath(null)
@@ -66,7 +69,7 @@ public final class AuthController {
     }
 
     @PostMapping("/api/auth/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestBody User user) {
+    public ResponseEntity<String> resetPassword(@RequestBody final User user) {
 
         return authService.resetPassword(user);
     }

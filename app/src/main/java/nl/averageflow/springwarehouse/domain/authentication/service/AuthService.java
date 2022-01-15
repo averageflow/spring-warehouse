@@ -9,7 +9,7 @@ public interface AuthService {
 
     ResponseEntity<String> registerUser(final RegisterRequest registerRequest);
 
-    ResponseEntity<String> forgotPassword(final String email, String url);
+    ResponseEntity<String> forgotPassword(final String email, final String url);
 
-    ResponseEntity<String> resetPassword(User user);
+    ResponseEntity<String> resetPassword(final User user);
 }
