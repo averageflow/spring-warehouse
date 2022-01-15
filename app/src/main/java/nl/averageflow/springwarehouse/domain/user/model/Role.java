@@ -3,7 +3,11 @@ package nl.averageflow.springwarehouse.domain.user.model;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -32,18 +36,18 @@ public class Role {
     }
 
     public UUID getUid() {
-        return uid;
+        return this.uid;
     }
 
     public Timestamp getCreatedAt() {
-        return createdAt;
+        return this.createdAt;
     }
 
     public Timestamp getUpdatedAt() {
-        return updatedAt;
+        return this.updatedAt;
     }
 
     public String getItemName() {
-        return itemName;
+        return this.itemName;
     }
 }

@@ -4,7 +4,13 @@ import nl.averageflow.springwarehouse.domain.product.model.Product;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.NonNull;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -42,18 +48,18 @@ public final class TransactionProduct {
 
     @NonNull
     public UUID getUid() {
-        return uid;
+        return this.uid;
     }
 
     public Product getProduct() {
-        return product;
+        return this.product;
     }
 
     public Long getAmountOf() {
-        return amountOf;
+        return this.amountOf;
     }
 
     public Timestamp getCreatedAt() {
-        return createdAt;
+        return this.createdAt;
     }
 }

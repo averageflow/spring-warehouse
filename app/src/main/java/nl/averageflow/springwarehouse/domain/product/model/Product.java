@@ -1,20 +1,34 @@
 package nl.averageflow.springwarehouse.domain.product.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nl.averageflow.springwarehouse.domain.category.Category;
-import nl.averageflow.springwarehouse.domain.product.dto.AddProductsRequestItem;
+import nl.averageflow.springwarehouse.domain.category.model.Category;
 import nl.averageflow.springwarehouse.domain.product.dto.ProductImagesData;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 @Table(name = "products")
 @Entity
 public final class Product {
-    public static final String[] ELEMENTS = new String[]{};
+    public static final String[] ELEMENTS = {};
 
     @Id
     @GeneratedValue
@@ -51,10 +65,10 @@ public final class Product {
     public Product() {
     }
 
-    public Product(final AddProductsRequestItem item, final Category category) {
-        this.name = item.name();
-        this.price = item.price();
-        this.setImageURLs(item.imageURLs());
+    public Product(final String name, final Double price, final Collection<String> imageURLs, final Category category) {
+        this.name = name;
+        this.price = price;
+        this.setImageURLs(imageURLs);
         this.category = category;
     }
 
@@ -88,7 +102,7 @@ public final class Product {
 
     public long getProductStock() {
         final Collection<Long> amountOfProductsPossibleList = new ArrayList<>();
-        if (this.articleProductRelation == null || articleProductRelation.isEmpty()) {
+        if (this.articleProductRelation == null || this.articleProductRelation.isEmpty()) {
             return 0L;
         }
 
@@ -120,7 +134,7 @@ public final class Product {
     }
 
     public Collection<String> getImageURLs() {
-        final ObjectMapper objectMapper = new ObjectMapper();
+        final var objectMapper = new ObjectMapper();
 
         try {
             final ProductImagesData images = objectMapper.readValue(this.imageURLs, ProductImagesData.class);
@@ -131,7 +145,7 @@ public final class Product {
     }
 
     public void setImageURLs(final Collection<String> imageURLs) {
-        final ObjectMapper objectMapper = new ObjectMapper();
+        final var objectMapper = new ObjectMapper();
 
         try {
             this.imageURLs = objectMapper.writeValueAsString(new ProductImagesData(imageURLs));
@@ -141,7 +155,7 @@ public final class Product {
     }
 
     public Category getCategory() {
-        return category;
+        return this.category;
     }
 
     public void setCategory(final Category category) {

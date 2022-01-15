@@ -1,0 +1,24 @@
+logging:
+  level:
+    org:
+      springframework: ERROR
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    password: mypass
+    url: jdbc:h2:mem:jpadb
+    username: sa
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  sql:
+    init:
+      mode: always
