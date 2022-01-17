@@ -1,0 +1,41 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "spring-warehouse-app"
+  namespace: "default"
+  labels:
+    app: "spring-warehouse-app"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "spring-warehouse-app"
+  template:
+    metadata:
+      labels:
+        app: "spring-warehouse-app"
+    spec:
+      containers:
+        - name: "app-1"
+          image: "gcr.io/spring-warehouse/app:latest"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "spring-warehouse-app-hpa-txwu"
+  namespace: "default"
+  labels:
+    app: "spring-warehouse-app"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "spring-warehouse-app"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: "Resource"
+      resource:
+        name: "cpu"
+        targetAverageUtilization: 80
