@@ -1,5 +1,6 @@
-name: Build & Test code on PR / push
-on: [pull_request, push]
+name: Build & Test code on PR
+on: [pull_request]
+
 jobs:
   gradle:
     strategy:
@@ -18,11 +19,3 @@ jobs:
 
       - name: Build and test
         run: ./gradlew clean build test jacocoTestCoverageVerification
-
-      - name: Upload JaCoCo coverage report
-        uses: actions/upload-artifact@v2
-        if: success()
-        with:
-          name: jacoco-report
-          path: app/build/reports/jacoco/
-          if-no-files-found: warn
