@@ -16,11 +16,8 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Build application
-        run: ./gradlew build
-
-      - name: Test application
-        run: ./gradlew test
+      - name: Build and test
+        run: ./gradlew clean build test jacocoTestCoverageVerification
 
       - name: Upload JaCoCo coverage report
         uses: actions/upload-artifact@v2
