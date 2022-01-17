@@ -18,7 +18,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-val baseDockerImage: String = "openjdk:17-alpine"
+val baseDockerImage: String = "openjdk:17"
 
 version = "1.0.0"
 group = "nl.averageflow.springwarehouse"
