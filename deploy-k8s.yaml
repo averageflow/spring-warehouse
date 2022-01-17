@@ -19,6 +19,9 @@ spec:
       containers:
         - name: "app-1"
           image: "gcr.io/spring-warehouse/app:latest"
+          env:
+            - name: "spring_profiles_active"
+              value: "google-cloud"
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
