@@ -42,6 +42,12 @@ public class User {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     private Role role;
 
+    @Column(name = "token")
+    private String token;
+
+    public User() {
+    }
+
     public UUID getUid() {
         return this.uid;
     }
@@ -86,4 +92,11 @@ public class User {
         this.role = role;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

@@ -37,6 +37,7 @@ dependencies {
     implementation("org.springframework.boot", "spring-boot-starter-webflux")
     implementation("org.springframework.boot", "spring-boot-starter-security")
     implementation("org.springframework.boot", "spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-mail")
 
     runtimeOnly("org.springframework.boot:spring-boot-devtools:2.6.2")
     runtimeOnly("org.postgresql:postgresql:42.3.1")

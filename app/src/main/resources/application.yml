@@ -20,6 +20,17 @@ spring:
         dialect: "org.hibernate.dialect.PostgreSQLDialect"
   liquibase:
     change-log: "classpath:db/changelog/db.changelog-master.xml"
+  mail:
+    host: "smtp.gmail.com"
+    port: 587
+    username: ""
+    password: ""
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   sql:
     init:
       platform: "postgres"

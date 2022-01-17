@@ -8,12 +8,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import nl.averageflow.springwarehouse.domain.authentication.dto.LoginRequest;
 import nl.averageflow.springwarehouse.domain.authentication.dto.RegisterRequest;
+import nl.averageflow.springwarehouse.domain.user.model.User;
 import nl.averageflow.springwarehouse.domain.authentication.service.AuthService;
 import nl.averageflow.springwarehouse.domain.authentication.service.AuthServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @Tag(name = "Authentication", description = "Authentication API")
@@ -49,5 +54,23 @@ public final class AuthController {
     })
     public ResponseEntity<String> registerUser(@RequestBody final RegisterRequest registerRequest) {
         return this.authService.registerUser(registerRequest);
+    }
+
+    @PostMapping("/api/auth/forgot-password")
+    public ResponseEntity<String> forgotPassword(
+            final String email,
+            final HttpServletRequest request) {
+
+        String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
+                .replacePath(null)
+                .build()
+                .toUriString();
+        return authService.forgotPassword(email, baseUrl);
+    }
+
+    @PostMapping("/api/auth/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody final User user) {
+
+        return authService.resetPassword(user);
     }
 }
