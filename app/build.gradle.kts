@@ -10,6 +10,7 @@ plugins {
     war
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.springframework.boot") version ("2.6.2")
+    id("com.google.cloud.tools.jib") version "3.1.1"
 }
 
 java {
@@ -17,6 +18,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+val baseDockerImage: String = "openjdk:17-alpine"
 
 version = "1.0.0"
 group = "nl.averageflow.springwarehouse"
@@ -58,6 +60,7 @@ tasks.named<Test>("test") {
     finalizedBy("jacocoTestReport")
 }
 
+
 tasks.jacocoTestReport {
     reports {
         xml.required.set(true)
@@ -67,6 +70,16 @@ tasks.jacocoTestReport {
 tasks.getByName<BootRun>("bootRun") {
     main = applicationMainClass
     sourceResources(sourceSets["main"])
+}
+
+jib {
+    from {
+        image = baseDockerImage
+    }
+    to {
+        image = "gcr.io/spring-warehouse/app"
+        credHelper = "gcr"
+    }
 }
 
 application {
