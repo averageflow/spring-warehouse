@@ -52,6 +52,16 @@ dependencies {
 
 tasks.named<Test>("test") {
     useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+    finalizedBy("jacocoTestReport")
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+    }
 }
 
 tasks.getByName<BootRun>("bootRun") {
