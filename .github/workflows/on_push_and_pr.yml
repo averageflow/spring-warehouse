@@ -11,6 +11,7 @@ jobs:
       - uses: actions/setup-java@v2
         with:
           java-version: 17
+          distributions: 'adopt'
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -20,3 +21,11 @@ jobs:
 
       - name: Test application
         run: ./gradlew test
+
+      - name: Upload JaCoCo coverage report
+        uses: actions/upload-artifact@v2
+        if: success()
+        with:
+          name: jacoco-report
+          path: build/reports/jacoco/
+          if-no-files-found: warn
