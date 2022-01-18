@@ -10,7 +10,7 @@ plugins {
     war
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.springframework.boot") version ("2.6.2")
-    id("com.google.cloud.tools.jib") version "3.1.1"
+    id("com.google.cloud.tools.jib") version "3.1.4"
 }
 
 java {
@@ -18,7 +18,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-val baseDockerImage: String = "openjdk:17"
+val baseDockerImage: String = "eclipse-temurin:17.0.1_12-jre-alpine"
 
 version = "1.0.0"
 group = "nl.averageflow.springwarehouse"
@@ -72,6 +72,8 @@ tasks.getByName<BootRun>("bootRun") {
     sourceResources(sourceSets["main"])
 }
 
+val exposedPorts = mutableListOf("8080")
+
 jib {
     from {
         image = baseDockerImage
@@ -79,6 +81,11 @@ jib {
     to {
         image = "gcr.io/spring-warehouse/app"
         credHelper = "gcr"
+    }
+    container {
+        mainClass = applicationMainClass
+        ports = exposedPorts
+        format = com.google.cloud.tools.jib.api.buildplan.ImageFormat.OCI
     }
 }
 
