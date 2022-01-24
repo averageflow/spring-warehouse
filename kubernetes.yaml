@@ -1,4 +1,16 @@
 ---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "spring-warehouse-app-config-eynj"
+  namespace: "default"
+  labels:
+    app: "spring-warehouse-app"
+data:
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://10.153.128.3:5432/warehouse_db"
+  SPRING_DATASOURCE_USERNAME: "warehouse_user"
+  SPRING_DATASOURCE_PASSWORD: "warehouse_user_password"
+---
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
@@ -17,16 +29,29 @@ spec:
         app: "spring-warehouse-app"
     spec:
       containers:
-        - name: "app-1"
+        - name: "app-sha256-1"
           image: "gcr.io/spring-warehouse/app:latest"
           env:
-            - name: "spring_profiles_active"
-              value: "google-cloud"
+            - name: "SPRING_DATASOURCE_URL"
+              valueFrom:
+                configMapKeyRef:
+                  key: "SPRING_DATASOURCE_URL"
+                  name: "spring-warehouse-app-config-eynj"
+            - name: "SPRING_DATASOURCE_USERNAME"
+              valueFrom:
+                configMapKeyRef:
+                  key: "SPRING_DATASOURCE_USERNAME"
+                  name: "spring-warehouse-app-config-eynj"
+            - name: "SPRING_DATASOURCE_PASSWORD"
+              valueFrom:
+                configMapKeyRef:
+                  key: "SPRING_DATASOURCE_PASSWORD"
+                  name: "spring-warehouse-app-config-eynj"
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "spring-warehouse-app-hpa-txwu"
+  name: "spring-warehouse-app-hpa-yybr"
   namespace: "default"
   labels:
     app: "spring-warehouse-app"
