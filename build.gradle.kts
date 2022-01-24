@@ -57,6 +57,9 @@ tasks {
     named("jib") {
         enabled = false
     }
+    named("bootRun") {
+        enabled = false
+    }
 }
 
 tasks.register<Copy>("copyTestLogs") {

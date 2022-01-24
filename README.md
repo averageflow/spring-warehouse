@@ -97,30 +97,32 @@ In summary the application can:
 * Delete article by UUID
 * Delete category by UUID
 
-## Running the application
+## Running the application's dependencies
 
-To kickstart the application and all dependencies required for its operation, you should be running on a machine with
-Docker installed. Clone the project, or download the zip file with the source code
+You should be running on a machine with Docker installed. Clone the project, or download the zip file with the source code
 from [the releases' page](https://github.com/averageflow/spring-warehouse/releases).
 
-All you need is to run `docker-compose up` for a one-time initialization.
+In the root folder of the project, run `docker-compose up -d` for starting a database with daemon behaviour (running in the background and even started at system boot) for your database. This should set you up with a PostgreSQL instance running on your machine, configured with the needed credentials.
 
-Optionally `docker-compose up -d` for daemon behaviour (running in the background and even started at system boot).
+**IMPORTANT** make sure that port 5432 of the machine is available and there are no other DB instances using
+it.
 
-**IMPORTANT** make sure that port 8080 and 5432 of the machine are available and there are no running applications using
-them.
 
 ### Running for development
 
-IntelliJ IDEA is recommended for this project. Launch configurations for this project are available in the `.run`
-folder. Gradle will need to be installed.
+IntelliJ IDEA is recommended for this project. This IDE will automatically detect it's a Spring application and provide you with a runnable configuration. For more options see all the available Gradle tasks of this project with `./gradlew tasks`.
 
 You can start it with `./gradlew bootRun`.
 
-You can build the project and create distributable .jar with `./gradlew bootJar`.
+This project uses the [jib](https://github.com/GoogleContainerTools/jib) tool to build deployable images and docker images too. This makes it easy to deploy it to the Cloud and to build prepared images.
 
-It is of course recommended for development to start the Docker stack (app + database docker containers) and keep the DB
-running to develop against.
+If you would like to create and run a Docker image of Spring Warehouse locally run:
+```sh
+./gradlew jibDockerBuild --image=<wanted name for the image>
+docker run -it <wanted name for the image>
+```
+
+For publishing to the Google Cloud Registry it is as simple as `./gradlew jib`. This step could easily be automated and integrated into the CI / CD pipeline with GitHub Actions.
 
 ### Domain information
 
