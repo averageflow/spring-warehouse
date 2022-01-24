@@ -30,6 +30,7 @@ Feel free to join [the Discord server for Spring Warehouse here](https://discord
 * [Authentication and Authorization](#authentication-and-authorization)
 * [Possible Improvements](#possible-improvements)
 * [Front-ends](#front-ends)
+* [Deploying](#deploying)
 
 <!--suppress HtmlDeprecatedAttribute -->
 <p align="center">
@@ -198,3 +199,9 @@ to the de-coupled nature.
 Find some honorable mentions below:
 
 * [Spring Warehouse Frontend (React)](https://github.com/averageflow/spring-warehouse-frontend)
+
+## Deploying
+
+For learning purposes I created a possible [infrastructure running fully on Google Cloud, designed with Terraform](https://github.com/averageflow/spring-warehouse-cloud-infra).
+This will setup a Google Kubernetes engine cluster and a PostgreSQL Cloud SQL instance too.
+We can then learn further on how to deploy a Java application into the cluster.
