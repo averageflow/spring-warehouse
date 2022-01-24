@@ -30,6 +30,7 @@ Feel free to join [the Discord server for Spring Warehouse here](https://discord
 * [Authentication and Authorization](#authentication-and-authorization)
 * [Possible Improvements](#possible-improvements)
 * [Front-ends](#front-ends)
+* [Deploying](#deploying)
 
 <!--suppress HtmlDeprecatedAttribute -->
 <p align="center">
@@ -97,30 +98,47 @@ In summary the application can:
 * Delete article by UUID
 * Delete category by UUID
 
-## Running the application
+## Running the application's dependencies
 
-To kickstart the application and all dependencies required for its operation, you should be running on a machine with
-Docker installed. Clone the project, or download the zip file with the source code
+You should be running on a machine with Docker installed. Clone the project, or download the zip file with the source code
 from [the releases' page](https://github.com/averageflow/spring-warehouse/releases).
 
-All you need is to run `docker-compose up` for a one-time initialization.
+In the root folder of the project, run `docker-compose up -d` for starting a database with daemon behaviour (running in the background and even started at system boot) for your database. This should set you up with a PostgreSQL instance running on your machine, configured with the default credentials.
 
-Optionally `docker-compose up -d` for daemon behaviour (running in the background and even started at system boot).
+The default credentials are: database `warehouse_db`, user `warehouse_user`, password `warehouse_user_password`.
 
-**IMPORTANT** make sure that port 8080 and 5432 of the machine are available and there are no running applications using
-them.
+**IMPORTANT** make sure that port 5432 of the machine is available and there are no other DB instances using
+it.
+
 
 ### Running for development
 
-IntelliJ IDEA is recommended for this project. Launch configurations for this project are available in the `.run`
-folder. Gradle will need to be installed.
+IntelliJ IDEA is recommended for this project. This IDE will automatically detect it's a Spring application and provide you with a runnable configuration. For more options see all the available Gradle tasks of this project with `./gradlew tasks`.
 
 You can start it with `./gradlew bootRun`.
 
-You can build the project and create distributable .jar with `./gradlew bootJar`.
+This project uses the [jib](https://github.com/GoogleContainerTools/jib) tool to build deployable images and docker images too. This makes it easy to deploy it to the Cloud and to build prepared images.
 
-It is of course recommended for development to start the Docker stack (app + database docker containers) and keep the DB
-running to develop against.
+The application requires 3 environment variables to be present when running. There are several ways to go about this and you should choose what suits your workflow better. 
+
+My default approach is for local development, create a file called `.env` at the root of the project with the content:
+```sh
+SPRING_DATASOURCE_URL="jdbc:postgresql://localhost:5432/warehouse_db"
+SPRING_DATASOURCE_USERNAME="warehouse_user"
+SPRING_DATASOURCE_PASSWORD="warehouse_user_password"
+```
+
+then load the variables with `source .env`. If you run the project via IntelliJ make sure to add the `.env` file in the run configuration by checking `Enable env file` and then adding a valid `.env` file.
+
+This approach using environment variables makes it easier to deploy this to the cloud / other environments since we control the database connection / other variables from the running environment.
+
+If you would like to create and run a Docker image of Spring Warehouse locally run:
+```sh
+./gradlew jibDockerBuild --image=<wanted name for the image>
+docker run -it <wanted name for the image>
+```
+
+For publishing to the Google Cloud Registry it is as simple as `./gradlew jib`. This step could easily be automated and integrated into the CI / CD pipeline with GitHub Actions.
 
 ### Domain information
 
@@ -181,3 +199,9 @@ to the de-coupled nature.
 Find some honorable mentions below:
 
 * [Spring Warehouse Frontend (React)](https://github.com/averageflow/spring-warehouse-frontend)
+
+## Deploying
+
+For learning purposes I created a possible [infrastructure running fully on Google Cloud, designed with Terraform](https://github.com/averageflow/spring-warehouse-cloud-infra).
+This will setup a Google Kubernetes engine cluster and a PostgreSQL Cloud SQL instance too.
+We can then learn further on how to deploy a Java application into the cluster.
