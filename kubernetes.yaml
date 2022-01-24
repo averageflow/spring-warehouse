@@ -67,3 +67,26 @@ spec:
       resource:
         name: "cpu"
         targetAverageUtilization: 80
+
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "spring-warehouse-app-service"
+  namespace: "default"
+  labels:
+    app: "spring-warehouse-app"
+spec:
+  ports:
+    - name: "80-to-8080-tcp"
+      protocol: "TCP"
+      port: 80
+      targetPort: 8080
+    - name: "443-to-8080-tcp"
+      protocol: "TCP"
+      port: 443
+      targetPort: 8080
+  selector:
+    app: "spring-warehouse-app"
+  type: "LoadBalancer"
+  loadBalancerIP: ""
