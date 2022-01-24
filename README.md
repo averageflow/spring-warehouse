@@ -102,7 +102,9 @@ In summary the application can:
 You should be running on a machine with Docker installed. Clone the project, or download the zip file with the source code
 from [the releases' page](https://github.com/averageflow/spring-warehouse/releases).
 
-In the root folder of the project, run `docker-compose up -d` for starting a database with daemon behaviour (running in the background and even started at system boot) for your database. This should set you up with a PostgreSQL instance running on your machine, configured with the needed credentials.
+In the root folder of the project, run `docker-compose up -d` for starting a database with daemon behaviour (running in the background and even started at system boot) for your database. This should set you up with a PostgreSQL instance running on your machine, configured with the default credentials.
+
+The default credentials are: database `warehouse_db`, user `warehouse_user`, password `warehouse_user_password`.
 
 **IMPORTANT** make sure that port 5432 of the machine is available and there are no other DB instances using
 it.
@@ -115,6 +117,19 @@ IntelliJ IDEA is recommended for this project. This IDE will automatically detec
 You can start it with `./gradlew bootRun`.
 
 This project uses the [jib](https://github.com/GoogleContainerTools/jib) tool to build deployable images and docker images too. This makes it easy to deploy it to the Cloud and to build prepared images.
+
+The application requires 3 environment variables to be present when running. There are several ways to go about this and you should choose what suits your workflow better. 
+
+My default approach is for local development, create a file called `.env` at the root of the project with the content:
+```sh
+SPRING_DATASOURCE_URL="jdbc:postgresql://localhost:5432/warehouse_db"
+SPRING_DATASOURCE_USERNAME="warehouse_user"
+SPRING_DATASOURCE_PASSWORD="warehouse_user_password"
+```
+
+then load the variables with `source .env`. If you run the project via IntelliJ make sure to add the `.env` file in the run configuration by checking `Enable env file` and then adding a valid `.env` file.
+
+This approach using environment variables makes it easier to deploy this to the cloud / other environments since we control the database connection / other variables from the running environment.
 
 If you would like to create and run a Docker image of Spring Warehouse locally run:
 ```sh
