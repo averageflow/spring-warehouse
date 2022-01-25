@@ -1,5 +1,5 @@
 val baseDockerImage: String = "eclipse-temurin:17.0.1_12-jre-alpine"
-val projectVersion: String = "1.0.0"
+val projectVersion: String = "1.0.1"
 val projectGroup: String = "nl.averageflow.springwarehouse"
 
 object Versions {

@@ -13,8 +13,7 @@ public class CORSConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(@NonNull final CorsRegistry registry) {
-                // if want to restrict origin then .allowedOrigins("<origin>")
-                registry.addMapping("/**").allowCredentials(true);
+                registry.addMapping("/**").allowedOrigins("*").allowCredentials(true);
             }
         };
     }

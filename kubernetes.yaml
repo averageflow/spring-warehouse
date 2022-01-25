@@ -27,6 +27,7 @@ spec:
     metadata:
       labels:
         app: "spring-warehouse-app"
+        version: "1.0.1"
     spec:
       containers:
         - name: "app-sha256-1"
