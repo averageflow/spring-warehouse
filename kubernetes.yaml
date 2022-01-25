@@ -32,6 +32,9 @@ spec:
       containers:
         - name: "app-sha256-1"
           image: "gcr.io/spring-warehouse/app:latest"
+          ports:
+            - containerPort: 8080
+              protocol: TCP
           env:
             - name: "SPRING_DATASOURCE_URL"
               valueFrom:
@@ -73,7 +76,7 @@ spec:
 apiVersion: "v1"
 kind: "Service"
 metadata:
-  name: "spring-warehouse-app-service"
+  name: "spring-warehouse-lb"
   namespace: "default"
   labels:
     app: "spring-warehouse-app"
@@ -83,11 +86,8 @@ spec:
       protocol: "TCP"
       port: 80
       targetPort: 8080
-    - name: "443-to-8080-tcp"
-      protocol: "TCP"
-      port: 443
-      targetPort: 8080
   selector:
     app: "spring-warehouse-app"
   type: "LoadBalancer"
   loadBalancerIP: ""
+
