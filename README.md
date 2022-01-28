@@ -9,7 +9,7 @@ This project has been created in an effort to provide an up-to-date example of u
 Spring Boot with Data JPA and Liquibase and being a reference project, similar to Spring Pet Clinic.
 
 You will also find in this repository a `docker-compose.yaml` which will
-set up a stack in your a PostgreSQL instance in Docker containers. This project has been
+set up a stack in your machine with PostgreSQL. This project has been
 developed with horizontal scalability in mind.
 
 Take a moment to
