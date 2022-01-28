@@ -8,8 +8,8 @@ warehouse.
 This project has been created in an effort to provide an up-to-date example of using the best practices of Java 17 and
 Spring Boot with Data JPA and Liquibase and being a reference project, similar to Spring Pet Clinic.
 
-You will also find in this repository both a `Dockerfile` for Spring Warehouse and a `docker-compose.yaml` which will
-set up a stack in your machine with Spring Warehouse + a PostgreSQL instance in Docker containers. This project has been
+You will also find in this repository a `docker-compose.yaml` which will
+set up a stack in your a PostgreSQL instance in Docker containers. This project has been
 developed with horizontal scalability in mind.
 
 Take a moment to
